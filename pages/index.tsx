@@ -31,7 +31,7 @@ const Home = () => {
                 <nav className="bg-white border-gray-200 dark:bg-gray-900">
   <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
     <a href="https://policyreporter.com/" className="flex items-center space-x-3 rtl:space-x-reverse">
-        <img src="./public/vercel.svg" className="h-8" alt="Flowbite Logo" />
+        <img src="./public/vercel.svg" className="h-8" alt="Policy Reporter Logo" />
         <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Policy Reporter</span>
     </a>
     <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
@@ -63,6 +63,63 @@ const Home = () => {
 </nav>
 
 
+
+//Dropdown
+<div className="relative" data-te-dropdown-ref>
+  <button
+    className="flex items-center whitespace-nowrap rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] motion-reduce:transition-none dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+    type="button"
+    id="dropdownMenuButton1"
+    data-te-dropdown-toggle-ref
+    aria-expanded="false"
+    data-te-ripple-init
+    data-te-ripple-color="light">
+    Dropdown button
+    <span className="ml-2 w-2">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+        fill="black"
+        className="h-5 w-5">
+        <path
+          fill-rule="evenodd"
+          d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+          clip-rule="evenodd" />
+      </svg>
+    </span>
+  </button>
+  <ul
+    class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
+    aria-labelledby="dropdownMenuButton1"
+    data-te-dropdown-menu-ref>
+    <li>
+      <a
+        class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+        href="#"
+        data-te-dropdown-item-ref
+        >Action</a
+      >
+    </li>
+    <li>
+      <a
+        class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+        href="#"
+        data-te-dropdown-item-ref
+        >Another action</a
+      >
+    </li>
+    <li>
+      <a
+        class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+        href="#"
+        data-te-dropdown-item-ref
+        >Something else here</a
+      >
+    </li>
+  </ul>
+</div>
+
+
                 {hasAnswered && <div className='flex flex-col bg-white text-black'>
                     <div className='w-full flex items-center justify-center'>
                         <div className='flex space-x-4 bg-white items-center justify-between px-6 py-6 w-1/2'>
@@ -79,9 +136,7 @@ const Home = () => {
                                 <div className='h-8 w-16 bg-teal-600 text-center p-2 rounded text-white relative'>
                                     <Image src="/logo.svg" fill alt='Open AI logo' />
                                 </div>
-                                <p>I'm assuming you're referring to how I work as a language model. As an AI language model, I was trained using vast amounts of data from the internet, books, and other sources. My training involved analyzing this data to identify patterns and relationships between words and phrases, as well as understanding the structure of language itself.
-
-                                    When you ask me a question or provide me with a prompt, I use my knowledge of language to generate a response that is relevant and meaningful. I do this by using a complex algorithm</p>
+                                <p>I'm assuming you're referring to how I work as a language model. As an AI language model, I was trained by Cair Health to assist you with insurance claims.</p>
                             </div>
                             <div className='flex space-x-1'>
                                 <HandThumbUpIcon className='h-6 w-6' />
