@@ -85,11 +85,11 @@ const Home = () => {
 
 <table className="shadow-lg bg-white">
   <tr>
-    <th className="bg-blue-100 border text-left px-8 py-4">Document</th>
-    <th className="bg-blue-100 border text-left px-8 py-4">Provider</th>
-    <th className="bg-blue-100 border text-left px-8 py-4">State</th>
-    <th className="bg-blue-100 border text-left px-8 py-4">Etc</th>
-    <th className="bg-blue-100 border text-left px-8 py-4">Etcc</th>
+    <th className="bg-yellow-100 border text-left px-8 py-4">Document</th>
+    <th className="bg-yellow-100 border text-left px-8 py-4">Provider</th>
+    <th className="bg-yellow-100 border text-left px-8 py-4">State</th>
+    <th className="bg-yellow-100 border text-left px-8 py-4">Etc</th>
+    <th className="bg-yellow-100 border text-left px-8 py-4">Etcc</th>
   </tr>
   <tr>
     <td className="border px-8 py-4">DocType1</td>
