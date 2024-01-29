@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { ArrowLeftOnRectangleIcon, BoltIcon, ChatBubbleLeftIcon, ExclamationTriangleIcon, HandThumbDownIcon, HandThumbUpIcon, LinkIcon, MoonIcon, PaperAirplaneIcon, PencilSquareIcon, PlusIcon, SignalIcon, SunIcon, TrashIcon, UserIcon } from "@heroicons/react/24/outline"
+import { BoltIcon, ChatBubbleLeftIcon, ExclamationTriangleIcon, HandThumbDownIcon, HandThumbUpIcon, LinkIcon, MoonIcon, PaperAirplaneIcon, PencilSquareIcon, PlusIcon, SignalIcon, SunIcon, TrashIcon, UserIcon } from "@heroicons/react/24/outline"
 import Link from 'next/link'
 import Image from 'next/image'
 const Home = () => {
@@ -73,7 +73,7 @@ const Home = () => {
 
                 <div className="bg-white border-gray-200 rounded-br-3xl" style={{ backgroundColor: '#22A9B2' }}>
   <div className="w- flex flex-wrap items-center justify-between mx-auto p-5">
-    <img src="./public/next.png" width={30} height={30} alt = "Cairlogo" />
+  <h1 className="text-4xl font-bold text-white">Cair Health</h1>
     <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>
     <div className="hidden w-full md:block md:w-auto" id="navbar-default">
       <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
