@@ -13,7 +13,7 @@ const Home = () => {
 
     return (
 
-<div style={{ backgroundColor: '#F9F6EE' }} className='h-screen text-black flex'>
+<div style={{ backgroundColor: '#FAF9F6' }} className='h-screen text-black flex'>
 
       {/* sidebar div*/}
       {/*sidebar extends full height of screen and is using rounded property because I'm trying to overlap it with the top nav*/}
@@ -25,24 +25,24 @@ const Home = () => {
 
       
   <div className='mt-0 w-42 overflow-y-auto bg-black pt-5 rounded-br-3xl' style={{ backgroundColor: '#bdedf0' }}>
-  <h1 className="text-2xl font-bold pl-4">DEMO</h1>
+  <h1 className="text-2xl font-bold pl-8">DEMO</h1>
     {/* Dropdown Menu */}
 
-      <button style = {{backgroundColor: '#FFA338'}}  className= 'flex items-center text-white p-2 rounded mt-44 onClick = {toggleDropdown}'>
+      <button style = {{backgroundColor: '#22A9B2'}}  className= 'flex items-center text-white p-2 rounded mt-96 onClick = {toggleDropdown}'>
         State
         <svg className="w-4 h-4 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
           <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
         </svg>
       </button>
 
-      <button style = {{backgroundColor: '#FFA338'}}  className= 'flex items-center text-white p-2 rounded mt-44 onClick = {toggleDropdown}'>
+      <button style = {{backgroundColor: '#22A9B2'}}  className= 'flex items-center text-white p-2 rounded mt-44 onClick = {toggleDropdown}'>
         Document Type
         <svg className="w-4 h-4 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
           <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
         </svg>
       </button>
 
-      <button style = {{backgroundColor: '#FFA338'}}  className= 'flex items-center text-white p-2 rounded mt-44 onClick = {toggleDropdown}'>
+      <button style = {{backgroundColor: '#22A9B2'}}  className= 'flex items-center text-white p-2 rounded mt-44 onClick = {toggleDropdown}'>
         Payer
         <svg className="w-4 h-4 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
           <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
