@@ -13,11 +13,7 @@ const Home = () => {
 
     return (
 
-
-  
-    
-
-    <div style={{ backgroundColor: '#F9F6EE' }} className='h-screen text-black flex'>
+<div style={{ backgroundColor: '#F9F6EE' }} className='h-screen text-black flex'>
 
       {/* sidebar div*/}
       {/*sidebar extends full height of screen and is using rounded property because I'm trying to overlap it with the top nav*/}
@@ -29,6 +25,7 @@ const Home = () => {
 
       
   <div className='mt-0 w-42 overflow-y-auto bg-black pt-5 rounded-br-3xl' style={{ backgroundColor: '#bdedf0' }}>
+  <h1 className="text-2xl font-bold pl-4">DEMO</h1>
     {/* Dropdown Menu */}
 
       <button style = {{backgroundColor: '#FFA338'}}  className= 'flex items-center text-white p-2 rounded mt-44 onClick = {toggleDropdown}'>
@@ -37,10 +34,6 @@ const Home = () => {
           <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
         </svg>
       </button>
-      <ul className={`absolute left-0 mt-2 p-2 bg-white border rounded ${isDropdownVisible ? '' : 'hidden'}`}>
-        <li><a href="#">Dropdown Item 1</a></li>
-        <li><a href="#">Dropdown Item 2</a></li>
-      </ul>
 
       <button style = {{backgroundColor: '#FFA338'}}  className= 'flex items-center text-white p-2 rounded mt-44 onClick = {toggleDropdown}'>
         Document Type
@@ -55,6 +48,11 @@ const Home = () => {
           <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
         </svg>
       </button>
+
+      <ul className={`absolute left-0 mt-2 p-2 bg-white border rounded ${isDropdownVisible ? '' : 'hidden'}`}>
+        <li><a href="#">Dropdown Item 1</a></li>
+        <li><a href="#">Dropdown Item 2</a></li>
+      </ul>
 
 
     {/* End of Sidebar content */}
@@ -123,11 +121,11 @@ const Home = () => {
 
 
 
-                <div className='absolute bottom-0 inset-x-0 mx-auto px-4 py-6 max-w-3xl'>
-                <div className='text-black border border-gray-300 flex justify-center items-center space-x-2 shadow-md rounded px-2'>
-                <input className='flex-1 bg-white p-2 border-0 focus:outline-none' />
-              <PaperAirplaneIcon className='h-4 w-4 text-right -rotate-45' onClick={() => setHasAnswered(true)} />
-          </div>
+        <div className='absolute bottom-0 inset-x-0 mx-auto px-4 py-6 max-w-3xl'>
+        <div className='text-black border border-gray-300 flex justify-center items-center space-x-2 shadow-md rounded px-2'>
+        <input className='flex-1 bg-white p-2 border-0 focus:outline-none' />
+        <PaperAirplaneIcon className='h-4 w-4 text-right -rotate-45' onClick={() => setHasAnswered(true)} />
+        </div>
       </div>
   </div>
 </div>
