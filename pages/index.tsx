@@ -9,6 +9,10 @@ const Home = () => {
 
     const handleInputChange = (e) => {
       setTableHeight(e.target.value.trim() !== '' ? '8%' : 'auto');
+
+      if (e.target.value.trim() === '') {
+        setHasAnswered(false);
+      }
     };
     
     const toggleDropdown = () => {
@@ -91,38 +95,43 @@ const Home = () => {
 <div className="overflow-x-auto transition-height duration-3000 ease-in-out" style={{ height: tableHeight}}>
   <table className="min-w-full bg-white border-collapse shadow-lg">
     <tr>
-      <th className="bg-blue-400 border-b-2 text-left px-8 py-4 text-white font-bold">Document</th>
-      <th className="bg-blue-300 border-b-2 text-left px-8 py-4 text-white font-bold">Provider</th>
-      <th className="bg-blue-200 border-b-2 text-left px-8 py-4 text-white font-bold">State</th>
-      <th className="bg-blue-100 border-b-2 text-left px-8 py-4 text-white font-bold">Etc</th>
-      <th className="bg-blue-50 border-b-2 text-left px-8 py-4 text-white font-bold">Etcc</th>
+      <th className="bg-indigo-300 border-b-2 text-left px-8 py-4 text-black font-bold">Document</th>
+      <th className="bg-indigo-200 border-b-2 text-left px-8 py-4 text-black font-bold">Provider</th>
+      <th className="bg-indigo-100 border-b-2 text-left px-8 py-4 text-black font-bold">State</th>
+      <th className="bg-indigo-50 border-b-2 text-left px-8 py-4 text-black font-bold">Etc</th>
     </tr>
     <tr>
       <td className="border px-8 py-4">DocType1</td>
       <td className="border px-8 py-4">Medicare</td>
       <td className="border px-8 py-4">Ohio</td>
       <td className="border px-8 py-4">Etc</td>
-      <td className="border px-8 py-4">Etc</td>
+    
     </tr>
   <tr>
   <td className="border px-8 py-4">DocType1</td>
     <td className="border px-8 py-4">Medicare</td>
     <td className="border px-8 py-4">Ohio</td>
     <td className="border px-8 py-4">Etc</td>
-    <td className="border px-8 py-4">Etc</td>
   </tr>
   <tr>
   <td className="border px-8 py-4">DocType1</td>
     <td className="border px-8 py-4">Medicare</td>
     <td className="border px-8 py-4">Ohio</td>
     <td className="border px-8 py-4">Etc</td>
-    <td className="border px-8 py-4">Etc</td>
+   
   </tr>
   <tr>
     <td className="border px-8 py-4">DocType1</td>
     <td className="border px-8 py-4">Medicare</td>
     <td className="border px-8 py-4">Ohio</td>
     <td className="border px-8 py-4">Etc</td>
+   
+
+  </tr>
+  <tr>
+  <td className="border px-8 py-4">DocType1</td>
+    <td className="border px-8 py-4">Medicare</td>
+    <td className="border px-8 py-4">Ohio</td>
     <td className="border px-8 py-4">Etc</td>
 
   </tr>
@@ -131,20 +140,56 @@ const Home = () => {
     <td className="border px-8 py-4">Medicare</td>
     <td className="border px-8 py-4">Ohio</td>
     <td className="border px-8 py-4">Etc</td>
-    <td className="border px-8 py-4">Etc</td>
-  </tr>
-  <tr>
-  <td className="border px-8 py-4">DocType1</td>
-    <td className="border px-8 py-4">Medicare</td>
-    <td className="border px-8 py-4">Ohio</td>
-    <td className="border px-8 py-4">Etc</td>
-    <td className="border px-8 py-4">Etc</td>
+
   </tr>
   <tr>
     <td className="border px-8 py-4">DocType1</td>
     <td className="border px-8 py-4">Medicare</td>
     <td className="border px-8 py-4">Ohio</td>
     <td className="border px-8 py-4">Etc</td>
+  
+
+  </tr>
+  <tr>
+  <td className="border px-8 py-4">DocType1</td>
+    <td className="border px-8 py-4">Medicare</td>
+    <td className="border px-8 py-4">Ohio</td>
+    <td className="border px-8 py-4">Etc</td>
+ 
+  </tr>
+  <tr>
+  <td className="border px-8 py-4">DocType1</td>
+    <td className="border px-8 py-4">Medicare</td>
+    <td className="border px-8 py-4">Ohio</td>
+    <td className="border px-8 py-4">Etc</td>
+    
+  </tr>
+  <tr>
+  <td className="border px-8 py-4">DocType1</td>
+    <td className="border px-8 py-4">Medicare</td>
+    <td className="border px-8 py-4">Ohio</td>
+    <td className="border px-8 py-4">Etc</td>
+  
+  </tr>
+  <tr>
+  <td className="border px-8 py-4">DocType1</td>
+    <td className="border px-8 py-4">Medicare</td>
+    <td className="border px-8 py-4">Ohio</td>
+    <td className="border px-8 py-4">Etc</td>
+
+  </tr>
+  <tr>
+    <td className="border px-8 py-4">DocType1</td>
+    <td className="border px-8 py-4">Medicare</td>
+    <td className="border px-8 py-4">Ohio</td>
+    <td className="border px-8 py-4">Etc</td>
+
+
+  </tr>
+  <tr>
+  <td className="border px-8 py-4">DocType1</td>
+    <td className="border px-8 py-4">Medicare</td>
+    <td className="border px-8 py-4">Ohio</td>
     <td className="border px-8 py-4">Etc</td>
 
   </tr>
@@ -153,35 +198,14 @@ const Home = () => {
     <td className="border px-8 py-4">Medicare</td>
     <td className="border px-8 py-4">Ohio</td>
     <td className="border px-8 py-4">Etc</td>
-    <td className="border px-8 py-4">Etc</td>
-  </tr>
-  <tr>
-  <td className="border px-8 py-4">DocType1</td>
-    <td className="border px-8 py-4">Medicare</td>
-    <td className="border px-8 py-4">Ohio</td>
-    <td className="border px-8 py-4">Etc</td>
-    <td className="border px-8 py-4">Etc</td>
-  </tr>
-  <tr>
-  <td className="border px-8 py-4">DocType1</td>
-    <td className="border px-8 py-4">Medicare</td>
-    <td className="border px-8 py-4">Ohio</td>
-    <td className="border px-8 py-4">Etc</td>
-    <td className="border px-8 py-4">Etc</td>
-  </tr>
-  <tr>
-  <td className="border px-8 py-4">DocType1</td>
-    <td className="border px-8 py-4">Medicare</td>
-    <td className="border px-8 py-4">Ohio</td>
-    <td className="border px-8 py-4">Etc</td>
-    <td className="border px-8 py-4">Etc</td>
+
   </tr>
   <tr>
     <td className="border px-8 py-4">DocType1</td>
     <td className="border px-8 py-4">Medicare</td>
     <td className="border px-8 py-4">Ohio</td>
     <td className="border px-8 py-4">Etc</td>
-    <td className="border px-8 py-4">Etc</td>
+
 
   </tr>
   <tr>
@@ -189,56 +213,55 @@ const Home = () => {
     <td className="border px-8 py-4">Medicare</td>
     <td className="border px-8 py-4">Ohio</td>
     <td className="border px-8 py-4">Etc</td>
-    <td className="border px-8 py-4">Etc</td>
+   
   </tr>
   <tr>
   <td className="border px-8 py-4">DocType1</td>
     <td className="border px-8 py-4">Medicare</td>
     <td className="border px-8 py-4">Ohio</td>
-    <td className="border px-8 py-4">Etc</td>
-    <td className="border px-8 py-4">Etc</td>
-  </tr>
-  <tr>
-    <td className="border px-8 py-4">DocType1</td>
-    <td className="border px-8 py-4">Medicare</td>
-    <td className="border px-8 py-4">Ohio</td>
-    <td className="border px-8 py-4">Etc</td>
     <td className="border px-8 py-4">Etc</td>
 
-  </tr>
-  <tr>
-  <td className="border px-8 py-4">DocType1</td>
-    <td className="border px-8 py-4">Medicare</td>
-    <td className="border px-8 py-4">Ohio</td>
-    <td className="border px-8 py-4">Etc</td>
-    <td className="border px-8 py-4">Etc</td>
-  </tr>
-  <tr>
-  <td className="border px-8 py-4">DocType1</td>
-    <td className="border px-8 py-4">Medicare</td>
-    <td className="border px-8 py-4">Ohio</td>
-    <td className="border px-8 py-4">Etc</td>
-    <td className="border px-8 py-4">Etc</td>
   </tr>
   
   
 </table>
 </div>
 
+ {hasAnswered && <div className='flex flex-col bg-white text-black'>
+                    <div className='w-full flex items-center justify-center'>
+                        <div className='flex space-x-4 bg-white items-center justify-between px-6 py-6 w-1/2'>
+                            <div className='flex space-x-4 items-center'>
+                                <div className='h-8 w-6 bg-indigo-500 text-center p-1 px-2 rounded text-white'>B</div>
+                                <p>How does this work</p>
+                            </div>
+                            <PencilSquareIcon className='h-6 w-6' />
+                        </div>
+                    </div>
+                    <div className='w-full flex items-center justify-center bg-gray-200 border-t border-b border-gray-500/40'>
+                        <div className='flex space-x-4 items-center justify-between px-6 py-6 w-1/2'>
+                            <div className='flex space-x-4 items-center'>
+                                <div className='h-8 w-16 bg-teal-600 text-center p-2 rounded text-white relative'>
+                                    <Image src="/logo.svg" fill alt='Open AI logo' />
+                                </div>
+                                <p>I'm assuming you're referring to how I work as a language model. As an AI language model, I was trained using vast amounts of data from the internet, books, and other sources. My training involved analyzing this data to identify patterns and relationships between words and phrases, as well as understanding the structure of language itself.
 
+                                    When you ask me a question or provide me with a prompt, I use my knowledge of language to generate a response that is relevant and meaningful. I do this by using a complex algorithm</p>
+                            </div>
+                            <div className='flex space-x-1'>
+                                <HandThumbUpIcon className='h-6 w-6' />
+                                <HandThumbDownIcon className='h-6 w-6' />
+                            </div>
+                        </div>
+                    </div>
+                </div>}
 
-
-
-
-
-        <div className='absolute bottom-0 inset-x-0 mx-auto px-4 py-6 max-w-3xl'>
-        <div className='text-black border border-gray-300 flex justify-center items-center space-x-2 shadow-md rounded px-2'>
-        <input className='flex-1 bg-white p-2 border-0 focus:outline-none'
-        onChange={handleInputChange}/>
-        <PaperAirplaneIcon className='h-4 w-4 text-right -rotate-45' onClick={() => setHasAnswered(true)} />
-        </div>
-      </div>
-  </div>
+                <div className='absolute bottom-0 inset-x-0 mx-auto px-4 py-6 max-w-3xl'>
+                    <div className='text-black border border-gray-300 flex justify-center items-center space-x-2 shadow-md rounded px-2'>
+                        <input className='flex-1 bg-white p-2 border-0 focus:outline-none' onChange = {handleInputChange} style = {{background: '#DDECED'}} />
+                        <PaperAirplaneIcon className='h-4 w-4 text-right -rotate-45' onClick={() => setHasAnswered(true)} />
+                    </div>
+                </div>
+            </div>
 </div>
 
     )
