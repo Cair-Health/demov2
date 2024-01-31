@@ -8,7 +8,7 @@ const Home = () => {
     const [tableHeight, setTableHeight] = useState('auto');
 
     const handleInputChange = (e) => {
-      setTableHeight(e.target.value.trim() !== '' ? '8%' : 'auto');
+      setTableHeight(e.target.value.trim() !== '' ? '5%' : 'auto');
 
       if (e.target.value.trim() === '') {
         setHasAnswered(false);
@@ -58,6 +58,14 @@ const Home = () => {
         </svg>
       </button>
 
+      <div className='mt-16 w-42 overflow-y-auto bg-black pt-5 rounded-br-3xl' style={{ backgroundColor: '#C7E5'}}>
+
+      <button style = {{ backgroundColor: '#FFA338', width: '100%', padding: '8px' }}  className= 'flex items-center text-white p-2 rounded mt-44 onClick = {toggleDropdown}'>
+        Conversation 1
+      </button>
+
+      
+
       <ul className={`absolute left-0 mt-2 p-2 bg-white border rounded ${isDropdownVisible ? '' : 'hidden'}`}>
         <li><a href="#">Dropdown Item 1</a></li>
         <li><a href="#">Dropdown Item 2</a></li>
@@ -65,6 +73,7 @@ const Home = () => {
 
 
     {/* End of Sidebar content */}
+    </div>
   </div>
 
 
