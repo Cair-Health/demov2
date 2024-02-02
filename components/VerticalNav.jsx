@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import close from '/images/close.svg'
+import Image from 'next/image'
 
 const CustomNav = () => {
   // Use singular naming for state variables
@@ -26,6 +28,11 @@ const CustomNav = () => {
 
   return (
     <div>
+      
+      <div style = {{marginLeft: '155px'}}>
+    <Image src={close} width={35} height={35} alt="not found" />
+    </div>
+
       <section className="mt-64 flex flex-col items-center space-y-4">
         {/* State Dropdown */}
         <select className="mb-12 w-36 flex items-center rounded-2xl">

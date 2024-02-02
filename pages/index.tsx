@@ -75,8 +75,9 @@ const Home = () => {
 </div>
 
 
+
 <div className="overflow-x-auto transition-height duration-3000 ease-in-out bg-gradient-to-b from-neutral-100 via-cyan-50 to-teal-50 rounded-xl" style={{ height: tableHeight }}>
-  <table className="min-w-full border-collapse shadow-lg rounded-xl border-2 border-gray-300">
+  <table className="min-w-full border-collapse shadow-lg rounded-xl border-2 border-gray-300 font-">
     <tr>
       <th className="border-b-2 text-left px-8 py-4 text-black font-bold border-gray-300">Document</th>
       <th className="border-b-2 text-left px-8 py-4 text-black font-bold border-gray-300">Provider</th>
