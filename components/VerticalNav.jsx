@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import close from '/images/close.svg'
+import open from '/images/open.svg'
 import Image from 'next/image'
 
 const CustomNav = () => {
   // Use singular naming for state variables
   const [state, setState] = useState([]);
   const [providers, setProviders] = useState([]);
+  const [sidebar, setSidebar] = useState(true);
 
   // Use async functions inside useEffect for better code organization
   useEffect(() => {
@@ -26,16 +28,17 @@ const CustomNav = () => {
     fetchProviders();
   }, []); // Empty dependency array to ensure it runs only once
 
+  if(sidebar){
   return (
-    <div>
+    <div className = 'navbar-menu'>
       
-      <div style = {{marginLeft: '155px'}}>
-    <Image src={close} width={35} height={35} alt="not found" />
+      <div style = {{marginLeft: '155px', marginTop: '15px'}}>
+    <Image src={close} width={35} height={35} alt="not found" onClick = { () => setSidebar(false)} />
     </div>
 
-      <section className="mt-64 flex flex-col items-center space-y-4">
+      <section className="mt-32 flex flex-col items-center space-y-4">
         {/* State Dropdown */}
-        <select className="mb-12 w-36 flex items-center rounded-2xl">
+        <select className="mb-12 w-36 flex items-center rounded-xl">
           <option value="">State</option>
           {state.map((item) => (
             <option key={item.state}>{item.state}</option>
@@ -44,14 +47,14 @@ const CustomNav = () => {
   
       <div>
         {/* Document Type Dropdown */}
-        <select className="mb-12 w-36 flex items-center rounded-2xl">
+        <select className="mb-12 w-36 flex items-center rounded-xl">
           <option value="">Doc Type</option>
         </select>
         </div>
 
   
         {/* Provider Dropdown */}
-        <select className="rounded-2xl w-36">
+        <select className="rounded-xl w-36">
           <option value="">Provider</option>
           {providers.map((item) => (
             <option key={item.provider}>{item.provider}</option>
@@ -61,15 +64,33 @@ const CustomNav = () => {
   
       {/* Submit Button */}
       <div className="flex justify-center items-center mt-36">
-        <input
-          type="submit"
-          value="Submit"
-          style={{ backgroundColor: "#40929B" }}
-          className="w-2/5 h-10 text-white rounded-lg"
-        />
+        
       </div>
     </div>
   );
+          } else {
+            return (
+              <div className = "navbar-menu-closed">
+                <div style = {{marginLeft: '15px', marginTop: '15px'}} >
+                    <Image src={open} width={35} height={35} alt="not found" onClick = { () => setSidebar(true)} />
+                  </div>
+
+              </div>
+            )
+
+
+
+
           }
+        
+        
+        
+        
+        
+      
+          }
+
+
+      
 
 export default CustomNav;
