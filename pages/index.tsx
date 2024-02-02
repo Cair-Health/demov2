@@ -75,139 +75,40 @@ const Home = () => {
 </div>
 
 
-<div className="overflow-x-auto transition-height duration-3000 ease-in-out" style={{ height: tableHeight}}>
-  <table className="min-w-full bg-white border-collapse shadow-lg">
+<div className="overflow-x-auto transition-height duration-3000 ease-in-out bg-gradient-to-b from-neutral-100 via-cyan-50 to-teal-50 rounded-xl" style={{ height: tableHeight }}>
+  <table className="min-w-full border-collapse shadow-lg rounded-xl border-2 border-gray-300">
     <tr>
-      <th className="bg-indigo-300 border-b-2 text-left px-8 py-4 text-black font-bold">Document</th>
-      <th className="bg-indigo-200 border-b-2 text-left px-8 py-4 text-black font-bold">Provider</th>
-      <th className="bg-indigo-100 border-b-2 text-left px-8 py-4 text-black font-bold">State</th>
-      <th className="bg-indigo-50 border-b-2 text-left px-8 py-4 text-black font-bold">Etc</th>
+      <th className="border-b-2 text-left px-8 py-4 text-black font-bold border-gray-300">Document</th>
+      <th className="border-b-2 text-left px-8 py-4 text-black font-bold border-gray-300">Provider</th>
+      <th className="border-b-2 text-left px-8 py-4 text-black font-bold border-gray-300">State</th>
+      <th className="border-b-2 text-left px-8 py-4 text-black font-bold border-gray-300">Etc</th>
     </tr>
     <tr>
-      <td className="border px-8 py-4">DocType1</td>
-      <td className="border px-8 py-4">Medicare</td>
-      <td className="border px-8 py-4">Ohio</td>
-      <td className="border px-8 py-4">Etc</td>
-    
+      <td className="border px-8 py-4 border-2 border-gray-300">DocType1</td>
+      <td className="border px-8 py-4 border-2 border-gray-300">Medicare</td>
+      <td className="border px-8 py-4 border-2 border-gray-300">Ohio</td>
+      <td className="border px-8 py-4 border-2 border-gray-300">Etc</td>
     </tr>
-  <tr>
-  <td className="border px-8 py-4">DocType1</td>
-    <td className="border px-8 py-4">Medicare</td>
-    <td className="border px-8 py-4">Ohio</td>
-    <td className="border px-8 py-4">Etc</td>
-  </tr>
-  <tr>
-  <td className="border px-8 py-4">DocType1</td>
-    <td className="border px-8 py-4">Medicare</td>
-    <td className="border px-8 py-4">Ohio</td>
-    <td className="border px-8 py-4">Etc</td>
-   
-  </tr>
-  <tr>
-    <td className="border px-8 py-4">DocType1</td>
-    <td className="border px-8 py-4">Medicare</td>
-    <td className="border px-8 py-4">Ohio</td>
-    <td className="border px-8 py-4">Etc</td>
-   
-
-  </tr>
-  <tr>
-  <td className="border px-8 py-4">DocType1</td>
-    <td className="border px-8 py-4">Medicare</td>
-    <td className="border px-8 py-4">Ohio</td>
-    <td className="border px-8 py-4">Etc</td>
-
-  </tr>
-  <tr>
-  <td className="border px-8 py-4">DocType1</td>
-    <td className="border px-8 py-4">Medicare</td>
-    <td className="border px-8 py-4">Ohio</td>
-    <td className="border px-8 py-4">Etc</td>
-
-  </tr>
-  <tr>
-    <td className="border px-8 py-4">DocType1</td>
-    <td className="border px-8 py-4">Medicare</td>
-    <td className="border px-8 py-4">Ohio</td>
-    <td className="border px-8 py-4">Etc</td>
-  
-
-  </tr>
-  <tr>
-  <td className="border px-8 py-4">DocType1</td>
-    <td className="border px-8 py-4">Medicare</td>
-    <td className="border px-8 py-4">Ohio</td>
-    <td className="border px-8 py-4">Etc</td>
- 
-  </tr>
-  <tr>
-  <td className="border px-8 py-4">DocType1</td>
-    <td className="border px-8 py-4">Medicare</td>
-    <td className="border px-8 py-4">Ohio</td>
-    <td className="border px-8 py-4">Etc</td>
-    
-  </tr>
-  <tr>
-  <td className="border px-8 py-4">DocType1</td>
-    <td className="border px-8 py-4">Medicare</td>
-    <td className="border px-8 py-4">Ohio</td>
-    <td className="border px-8 py-4">Etc</td>
-  
-  </tr>
-  <tr>
-  <td className="border px-8 py-4">DocType1</td>
-    <td className="border px-8 py-4">Medicare</td>
-    <td className="border px-8 py-4">Ohio</td>
-    <td className="border px-8 py-4">Etc</td>
-
-  </tr>
-  <tr>
-    <td className="border px-8 py-4">DocType1</td>
-    <td className="border px-8 py-4">Medicare</td>
-    <td className="border px-8 py-4">Ohio</td>
-    <td className="border px-8 py-4">Etc</td>
-
-
-  </tr>
-  <tr>
-  <td className="border px-8 py-4">DocType1</td>
-    <td className="border px-8 py-4">Medicare</td>
-    <td className="border px-8 py-4">Ohio</td>
-    <td className="border px-8 py-4">Etc</td>
-
-  </tr>
-  <tr>
-  <td className="border px-8 py-4">DocType1</td>
-    <td className="border px-8 py-4">Medicare</td>
-    <td className="border px-8 py-4">Ohio</td>
-    <td className="border px-8 py-4">Etc</td>
-
-  </tr>
-  <tr>
-    <td className="border px-8 py-4">DocType1</td>
-    <td className="border px-8 py-4">Medicare</td>
-    <td className="border px-8 py-4">Ohio</td>
-    <td className="border px-8 py-4">Etc</td>
-
-
-  </tr>
-  <tr>
-  <td className="border px-8 py-4">DocType1</td>
-    <td className="border px-8 py-4">Medicare</td>
-    <td className="border px-8 py-4">Ohio</td>
-    <td className="border px-8 py-4">Etc</td>
-   
-  </tr>
-  <tr>
-  <td className="border px-8 py-4">DocType1</td>
-    <td className="border px-8 py-4">Medicare</td>
-    <td className="border px-8 py-4">Ohio</td>
-    <td className="border px-8 py-4">Etc</td>
-
-  </tr>
-  
-  
-</table>
+    {/* ... Rest of your table content */}
+    <tr>
+    <td className="border px-8 py-4 border-2 border-gray-300">DocType1</td>
+      <td className="border px-8 py-4 border-2 border-gray-300">Medicare</td>
+      <td className="border px-8 py-4 border-2 border-gray-300">Ohio</td>
+      <td className="border px-8 py-4 border-2 border-gray-300">Etc</td>
+    </tr>
+    <tr>
+    <td className="border px-8 py-4 border-2 border-gray-300">DocType1</td>
+      <td className="border px-8 py-4 border-2 border-gray-300">Medicare</td>
+      <td className="border px-8 py-4 border-2 border-gray-300">Ohio</td>
+      <td className="border px-8 py-4 border-2 border-gray-300">Etc</td>
+    </tr>
+    <tr>
+    <td className="border px-8 py-4 border-2 border-gray-300">DocType1</td>
+      <td className="border px-8 py-4 border-2 border-gray-300">Medicare</td>
+      <td className="border px-8 py-4 border-2 border-gray-300">Ohio</td>
+      <td className="border px-8 py-4 border-2 border-gray-300">Etc</td>
+    </tr>
+  </table>
 </div>
 
  {hasAnswered && <div className='flex flex-col bg-white text-black'>
