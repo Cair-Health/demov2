@@ -1,0 +1,22 @@
+[
+    { "provider": "Blue Cross Blue Shield" },
+    { "provider": "UnitedHealth Group" },
+    { "provider": "Aetna" },
+    { "provider": "Cigna" },
+    { "provider": "Humana" },
+    { "provider": "Anthem" },
+    { "provider": "Kaiser Permanente" },
+    { "provider": "Molina Healthcare" },
+    { "provider": "Centene Corporation" },
+    { "provider": "Health Care Service Corporation (HCSC)" },
+    { "provider": "CVS Health" },
+    { "provider": "Optum" },
+    { "provider": "WellCare" },
+    { "provider": "Amerigroup" },
+    { "provider": "Molina Healthcare" },
+    { "provider": "Highmark" },
+    { "provider": "Medicare" },
+    { "provider": "Medicaid" },
+    { "provider": "Tricare" }
+  ]
+  

@@ -2,13 +2,20 @@ import React, { useState } from 'react'
 import { BoltIcon, ChatBubbleLeftIcon, ExclamationTriangleIcon, HandThumbDownIcon, HandThumbUpIcon, LinkIcon, MoonIcon, PaperAirplaneIcon, PencilSquareIcon, PlusIcon, SignalIcon, SunIcon, TrashIcon, UserIcon } from "@heroicons/react/24/outline"
 import Link from 'next/link'
 import Image from 'next/image'
+import VerticalNav from "../components/VerticalNav";
+
+import PersonIcon from "/images/person.svg"
+import HomeIcon from "/images/home.svg"
+
+import CairLogo from "/images/CairHealthLogo.png"
+
 const Home = () => {
     const [hasAnswered, setHasAnswered] = useState(false)
     const [isDropdownVisible, setDropdownVisibility] = useState(false);
     const [tableHeight, setTableHeight] = useState('auto');
 
     const handleInputChange = (e) => {
-      setTableHeight(e.target.value.trim() !== '' ? '5%' : 'auto');
+      setTableHeight(e.target.value.trim() !== '' ? '1%' : 'auto');
 
       if (e.target.value.trim() === '') {
         setHasAnswered(false);
@@ -31,38 +38,9 @@ const Home = () => {
 
 
 
-
-      
-  <div className='mt-10 w-42 overflow-y-auto bg-black pt-5 rounded-br-3xl' style={{ backgroundColor: '#C7E2E5', clipPath: 'polygon(100% 7%, 0% 0%, 0% 100%, 100% 93%)' }}>
-  <h1 className="text-2xl font-bold pl-8"></h1>
-    {/* Dropdown Menu */}
-
-    <button style={{ backgroundColor: '#22A9B2', width: '100%', padding: '8px' }} className='mt-56 flex items-center text-white rounded onClick={toggleDropdown}'>
-        State
-        <svg className="w-4 h-4 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-          <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-        </svg>
-      </button>
-
-      <button style = {{backgroundColor: '#22A9B2'}}  className= 'flex items-center text-white p-2 rounded mt-44 onClick = {toggleDropdown}'>
-        Document Type
-        <svg className="w-4 h-4 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-          <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-        </svg>
-      </button>
-
-      <button style = {{ backgroundColor: '#22A9B2', width: '100%', padding: '8px' }}  className= 'flex items-center text-white p-2 rounded mt-44 onClick = {toggleDropdown}'>
-        Payer
-        <svg className="w-4 h-4 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-          <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-        </svg>
-      </button>
-
-      <div className='mt-16 w-42 overflow-y-auto bg-black pt-5 rounded-br-3xl' style={{ backgroundColor: '#C7E5'}}>
-
-      <button style = {{ backgroundColor: '#FFA338', width: '100%', padding: '8px' }}  className= 'flex items-center text-white p-2 rounded mt-44 onClick = {toggleDropdown}'>
-        Conversation 1
-      </button>
+      <div className="navbar-menu">
+        <VerticalNav/>
+        </div>
 
       
 
@@ -73,10 +51,6 @@ const Home = () => {
 
 
     {/* End of Sidebar content */}
-    </div>
-  </div>
-
-
   
 
             
@@ -87,10 +61,10 @@ const Home = () => {
 
 
 
-
-                <div className="flex- bg-white border-gray-200 rounded-br-3xl" style={{ backgroundColor: '#40929B'}}>
+      {/* Cair Banner */}
+  <div className="relative flex- bg-white border-gray-200 rounded-br-3xl" style={{ backgroundColor: '#40929B', zIndex:1}}>
   <div className="w-full flex flex-wrap items-center justify-between mx-auto p-5">
-  <h1 className="text-4xl font-bold font-serif text-white" style = {{fontStyle:'italic'}}>C{'{ai}'}r</h1>
+  <Image src = {CairLogo} width = {300} height = {300} alt="Not found"></Image>
     <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>
     <div className="hidden w-full md:block md:w-auto" id="navbar-default">
       <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
@@ -271,7 +245,7 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-</div>
+  </div>
 
     )
 }
