@@ -109,8 +109,44 @@ const Home = () => {
       <td className="border px-8 py-4 border-2 border-gray-300">Ohio</td>
       <td className="border px-8 py-4 border-2 border-gray-300">Etc</td>
     </tr>
+    <tr>
+    <td className="border px-8 py-4 border-2 border-gray-300">DocType1</td>
+      <td className="border px-8 py-4 border-2 border-gray-300">Medicare</td>
+      <td className="border px-8 py-4 border-2 border-gray-300">Ohio</td>
+      <td className="border px-8 py-4 border-2 border-gray-300">Etc</td>
+    </tr>
+    
+
   </table>
 </div>
+
+
+                {!hasAnswered && <div className='flex flex-col space-y-4 justify-center items-center absolute inset-x-0 top-0 bottom-0'>
+                    <h1 className='text-3xl font-bold pb-12'>CairBot</h1>
+                    <div className='space-y-2'>
+                        <div className='grid grid-cols-3 gap-4 text-center text-lg'>
+                            <div className='p-2 font-semibold flex flex-col justify-center items-center'><SunIcon className='h-5 w-5' />Examples</div>
+                            <div className='p-2 font-semibold flex flex-col justify-center items-center'><BoltIcon className='h-5 w-5' />Capabilities</div>
+                            <div className='p-2 font-semibold flex flex-col justify-center items-center'><ExclamationTriangleIcon className='h-5 w-5' />Limitations</div>
+                        </div>
+                        <div className='grid grid-cols-3 gap-4 text-center text-black'>
+                            <div className='p-2 bg-gray-300 hover:bg-gray-400 rounded-md  text-sm shadow-sm w-60'>Explain quantum computing in simple terms</div>
+                            <div className='p-2 bg-gray-300 hover:bg-gray-400 rounded-md  text-sm shadow-sm w-60'>Remembers what user said earlier in the conversation</div>
+                            <div className='p-2 bg-gray-300 hover:bg-gray-400 rounded-md  text-sm shadow-sm w-60'>May occasionally generate incorrect information</div>
+                        </div>
+                        <div className='grid grid-cols-3 gap-4 text-center'>
+                            <div className='p-2 bg-gray-300 hover:bg-gray-400 rounded-md  text-sm shadow-sm w-60'>Explain quantum computing in simple terms</div>
+                            <div className='p-2 bg-gray-300 hover:bg-gray-400 rounded-md  text-sm shadow-sm w-60'>Remembers what user said earlier in the conversation</div>
+                            <div className='p-2 bg-gray-300 hover:bg-gray-400 rounded-md  text-sm shadow-sm w-60'>May occasionally generate incorrect information</div>
+                        </div>
+                        <div className='grid grid-cols-3 gap-4 text-center'>
+                            <div className='p-2 bg-gray-300 hover:bg-gray-400 rounded-md  text-sm shadow-sm w-60'>Explain quantum computing in simple terms</div>
+                            <div className='p-2 bg-gray-300 hover:bg-gray-400 rounded-md  text-sm shadow-sm w-60'>Remembers what user said earlier in the conversation</div>
+                            <div className='p-2 bg-gray-300 hover:bg-gray-400 rounded-md  text-sm shadow-sm w-60'>May occasionally generate incorrect information</div>
+                        </div>
+                    </div>
+                </div>}
+
 
  {hasAnswered && <div className='flex flex-col bg-white text-black'>
                     <div className='w-full flex items-center justify-center'>
