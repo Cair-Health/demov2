@@ -191,8 +191,8 @@ const Home = () => {
                     <div className='w-full flex items-center justify-center'>
                         <div className='flex space-x-4 items-center justify-between px-6 py-6 w-4/5'>
                             <div className='flex space-x-4 items-center'>
-                                <div className='h-8 w-6 bg-indigo-500 text-center p-1 px-2 rounded text-white'>P</div>
-                                <p style={{ fontSize: '20px', fontFamily: 'Quicksand, sans-serif' }}>How does this work</p>
+                                <div className='h-8 w-30 bg-indigo-500 text-center p-1 px-2 rounded text-white'>PR</div>
+                                <p style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}>How does this work</p>
                             </div>
                             <PencilSquareIcon className='h-6 w-6' />
                         </div>
@@ -203,7 +203,7 @@ const Home = () => {
                                 <div className='h- w-30 bg-teal-600 text-center p-2 rounded text-white relative'>
                                     <h1>{'{ai}'}</h1>
                                 </div>
-                                <p style={{ fontSize: '20px', fontFamily: 'Quicksand, sans-serif' }}>I'm assuming you're referring to how I work as a language model. As an AI language model, I was trained using vast amounts of data from the internet, books, and other sources. My training involved analyzing this data to identify patterns and relationships between words and phrases, as well as understanding the structure of language itself.
+                                <p style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}>I'm assuming you're referring to how I work as a language model. As an AI language model, I was trained using vast amounts of data from the internet, books, and other sources. My training involved analyzing this data to identify patterns and relationships between words and phrases, as well as understanding the structure of language itself.
 
                                     When you ask me a question or provide me with a prompt, I use my knowledge of language to generate a response that is relevant and meaningful. I do this by using a complex algorithm</p>
                             </div>

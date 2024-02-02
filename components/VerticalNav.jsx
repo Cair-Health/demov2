@@ -36,9 +36,9 @@ const CustomNav = () => {
     <Image src={close} width={35} height={35} alt="not found" onClick = { () => setSidebar(false)} />
     </div>
 
-      <section className="mt-32 flex flex-col items-center space-y-4">
+      <section className="mt-32 flex flex-col items-center space-y-4 ">
         {/* State Dropdown */}
-        <select className="mb-12 w-36 flex items-center rounded-xl">
+        <select className="mb-12 w-36 flex items-center rounded-xl " style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}>
           <option value="">State</option>
           {state.map((item) => (
             <option key={item.state}>{item.state}</option>
@@ -47,14 +47,14 @@ const CustomNav = () => {
   
       <div>
         {/* Document Type Dropdown */}
-        <select className="mb-12 w-36 flex items-center rounded-xl">
+        <select className="mb-12 w-36 flex items-center rounded-xl" style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}>
           <option value="">Doc Type</option>
         </select>
         </div>
 
   
         {/* Provider Dropdown */}
-        <select className="rounded-xl w-36">
+        <select className="rounded-xl w-36" style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}>
           <option value="">Provider</option>
           {providers.map((item) => (
             <option key={item.provider}>{item.provider}</option>
