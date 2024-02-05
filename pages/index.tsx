@@ -3,6 +3,7 @@ import { BoltIcon, ChatBubbleLeftIcon, ExclamationTriangleIcon, HandThumbDownIco
 import Link from 'next/link'
 import Image from 'next/image'
 import VerticalNav from "../components/VerticalNav";
+import Table from "../components/Table"
 
 import PersonIcon from "/images/person.svg"
 import HomeIcon from "/images/home.svg"
@@ -16,25 +17,27 @@ const Home = () => {
     const [tableHeight, setTableHeight] = useState('auto');
     const [tutorial, setTutorial] = useState(true);
 
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedDocType, setSelectedDocType] = useState("");
+  const [selectedProvider, setSelectedProvider] = useState("");
+
+  const handleStateChange = (value) => {
+    setSelectedState(value);
+  };
+
+  const handleDocTypeChange = (value) => {
+    setSelectedDocType(value);
+  };
+
+  const handleProviderChange = (value) => {
+    setSelectedProvider(value);
+  };
+
+
     const inputRef = useRef(null);
 
-    useEffect(() => {
-      // Add a click event listener to the document body
-      document.body.addEventListener('click', handleClickOutside);
   
-      // Cleanup the event listener on component unmount
-      return () => {
-        document.body.removeEventListener('click', handleClickOutside);
-      };
-    }, []);
-  
-    const handleClickOutside = (event) => {
-      // Check if the click target is not within the input and not within the dropdown
-      if (inputRef.current && !inputRef.current.contains(event.target) && !event.target.closest('.navbar-menu')) {
-        setTableHeight('100%');
-      }
-    };
-
+ 
     const handleInputChange = (e) => {
       setTableHeight(e.target.value.trim() !== '' ? '1%' : 'auto');
 
@@ -59,8 +62,12 @@ const Home = () => {
 
 
 
-     
-        <VerticalNav/>
+
+        <VerticalNav
+                onStateChange={handleStateChange}
+                onDocTypeChange={handleDocTypeChange}
+                onProviderChange={handleProviderChange} />
+  
       
 
       <ul className={`absolute left-0 mt-2 p-2 bg-white border rounded ${isDropdownVisible ? '' : 'hidden'}`}>
@@ -68,7 +75,7 @@ const Home = () => {
         <li><a href="#">Dropdown Item 2</a></li>
       </ul>
 
-
+   
     {/* End of Sidebar content */}
   
 
@@ -78,7 +85,7 @@ const Home = () => {
 
                 </div>}
 
-
+               
 
       {/* Cair Banner */}
   <div className="relative flex- bg-white border-gray-200 rounded" style={{ backgroundColor: '#40929B', zIndex:1}}>
@@ -95,46 +102,17 @@ const Home = () => {
 
 
 
-<div className="overflow-x-auto transition-height duration-3000 ease-in-out bg-gradient-to-r from-gray-100 to-gray-200 rounded-xl" style={{ height: tableHeight }}>
-  <table className="min-w-full border-collapse shadow-lg rounded-xl border-2 border-gray-300 font-">
-    <tr>
-      <th className="border-b-2 text-left px-8 py-4 text-black font-bold border-gray-300">Payer</th>
-      <th className="border-b-2 text-left px-8 py-4 text-black font-bold border-gray-300">Policy</th>
-      <th className="border-b-2 text-left px-8 py-4 text-black font-bold border-gray-300">URL</th>
-    </tr>
-    <tr>
-      <td className="border px-8 py-4 border-2 border-gray-300">Aetna</td>
-      <td className="border px-8 py-4 border-2 border-gray-300">Home Behavior Services (Commercial) - Medical Policy</td>
-      <td className="border px-8 py-4 border-2 border-gray-300">
-      <a href="http://www.aetna.com/cpb/medical/data/700_799/0730.html" target="_blank" rel="noopener noreferrer">
-      http://www.aetna.com/cpb/medical/data/700_799/0730.html
-    </a>
-  </td>
-    </tr>
-    {/* ... Rest of your table content */}
-    <tr>
-    <td className="border px-8 py-4 border-2 border-gray-300">Alameda Alliance for Health</td>
-      <td className="border px-8 py-4 border-2 border-gray-300">Grievances & Appeals - Reimbursement & Billing Document</td>
-      <td className="border px-8 py-4 border-2 border-gray-300">https://www.alamedaalliance.org/members/grievances-appeals</td>
-    </tr>
-    <tr>
-    <td className="border px-8 py-4 border-2 border-gray-300">American Postal Workers Union Health Plan</td>
-      <td className="border px-8 py-4 border-2 border-gray-300">Plan Brochure - Member Handbook</td>
-      <td className="border px-8 py-4 border-2 border-gray-300">https://www.apwuhp.com/resources/cptdownload/5011/2020_APWU_Federal_Brochure.pdf</td>
-    </tr>
-    <tr>
-    <td className="border px-8 py-4 border-2 border-gray-300">AmeriHealth Caritas VIP Care Plus</td>
-      <td className="border px-8 py-4 border-2 border-gray-300">Ambulatory Surgery Center Optimization - Reimbursement & Billing Document</td>
-      <td className="border px-8 py-4 border-2 border-gray-300">https://www.amerihealthcaritasvipcareplus.com/assets/pdf/provider/resources/clinical/policies-20221111/ccp1517-ambulatory-surgery-center-optimization.pdf</td>
-    </tr>
-
-    
-
-  </table>
+<div className="max-w-screen-lg w-full mx-auto flex-grow">
+  <Table 
+    selectedState={selectedState}
+    selectedDocType={selectedDocType}
+    selectedProvider={selectedProvider}
+  />
 </div>
 
 
-{!hasAnswered && tutorial && (
+
+{/*{!hasAnswered && tutorial && (
   <div className='flex flex-col space-y-4 justify-center items-center absolute inset-x-0 top-0 bottom-0'>
     <div className='mt-32 space-y-2'>
       <div className='grid grid-cols-3 gap-4 text-center text-lg'>
@@ -183,7 +161,7 @@ const Home = () => {
       </div>
     </div>
   </div>
-)}
+)} */}
 
 
 
@@ -217,7 +195,7 @@ const Home = () => {
 
                 <div className='absolute bottom-0 inset-x-0 mx-auto px-4 py-6 max-w-3xl'>
                     <div className='text-black border border-gray-300 flex justify-center items-center space-x-2 shadow-md rounded px-2'>
-                        <input className='flex-1 bg-white p-2 border-0 focus:outline-none rounded-2xl;' onChange = {handleInputChange} onClick = {() => {setTutorial(false)}} style = {{background: ''}} />
+                        <input className='flex-1 bg-white p-4 border-0 focus:outline-none rounded-2xl;' onChange = {handleInputChange} onClick = {() => {setTutorial(false)}} style = {{background: ''}} />
                         <PaperAirplaneIcon className='h-4 w-4 text-right -rotate-45' onClick={() => setHasAnswered(true)} />
                     </div>
                 </div>
