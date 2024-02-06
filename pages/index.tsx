@@ -1,21 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { BoltIcon, ChatBubbleLeftIcon, ExclamationTriangleIcon, HandThumbDownIcon, HandThumbUpIcon, LinkIcon, MoonIcon, PaperAirplaneIcon, PencilSquareIcon, PlusIcon, SignalIcon, SunIcon, TrashIcon, UserIcon } from "@heroicons/react/24/outline"
-import Link from 'next/link'
-import Image from 'next/image'
+import React, { useState, useEffect, useRef } from 'react';
+import { BoltIcon, ChatBubbleLeftIcon, ExclamationTriangleIcon, HandThumbDownIcon, HandThumbUpIcon, LinkIcon, MoonIcon, PaperAirplaneIcon, PencilSquareIcon, PlusIcon, SignalIcon, SunIcon, TrashIcon, UserIcon } from "@heroicons/react/24/outline";
+import Image from 'next/image';
 import VerticalNav from "../components/VerticalNav";
-import Table from "../components/Table"
+import Table from "../components/Table";
+import CairLogo from "/images/CairHealthLogo.png";
 
-import PersonIcon from "/images/person.svg"
-import HomeIcon from "/images/home.svg"
-
-import CairLogo from "/images/CairHealthLogo.png"
-import logo from "/images/logo.png"
 
 const Home = () => {
-    const [hasAnswered, setHasAnswered] = useState(false)
-    const [isDropdownVisible, setDropdownVisibility] = useState(false);
-    const [tableHeight, setTableHeight] = useState('auto');
-    const [tutorial, setTutorial] = useState(true);
+  const [hasAnswered, setHasAnswered] = useState(false);
+  const [tableVisible, setTableVisible] = useState(true);
+  const [tutorial, setTutorial] = useState(true);
 
   const [selectedState, setSelectedState] = useState("");
   const [selectedDocType, setSelectedDocType] = useState("");
@@ -34,22 +28,15 @@ const Home = () => {
   };
 
 
-    const inputRef = useRef(null);
+  const handleInputChange = (e) => {
+    const inputValue = e.target.value.trim();
 
-  
- 
-    const handleInputChange = (e) => {
-      setTableHeight(e.target.value.trim() !== '' ? '1%' : 'auto');
+    // If the input box has content, hide the table
+    setTableVisible(inputValue === '');
 
-      if (e.target.value.trim() === '') {
-        setHasAnswered(false);
-      }
-    };
-    
-    const toggleDropdown = () => {
-        setDropdownVisibility(!isDropdownVisible);
-    }
-    
+    setHasAnswered(!tableVisible && inputValue !== '');
+  };
+
 
     return (
 
@@ -96,18 +83,18 @@ const Home = () => {
 </div>
 
 
-
-<div className = "h-1/2 overflow-y-auto">
+{tableVisible && (
+<div className = "h-1/3 overflow-y-auto">
   <Table 
     selectedState={selectedState}
     selectedDocType={selectedDocType}
     selectedProvider={selectedProvider}
   />
 </div>
+)}
 
 
-
-{/*{!hasAnswered && tutorial && (
+{!hasAnswered && tutorial && (
   <div className='flex flex-col space-y-4 justify-center items-center absolute inset-x-0 top-0 bottom-0'>
     <div className='mt-32 space-y-2'>
       <div className='grid grid-cols-3 gap-4 text-center text-lg'>
@@ -156,7 +143,7 @@ const Home = () => {
       </div>
     </div>
   </div>
-)} */}
+)} 
 
 
 
@@ -199,5 +186,6 @@ const Home = () => {
 
     )
 }
+
 
 export default Home

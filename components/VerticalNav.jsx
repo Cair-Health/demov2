@@ -10,7 +10,7 @@ const CustomNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
   const [selectedState, setSelectedState] = useState("");
   const [selectedDocType, setSelectedDocType] = useState("");
   const [selectedProvider, setSelectedProvider] = useState("");
-  const [sidebar, setSidebar] = useState(true);
+  const [sidebar, setSidebar] = useState(false);
 
   // Using async functions inside useEffect for better cod
   useEffect(() => {
@@ -109,7 +109,7 @@ const CustomNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
       </div>
     </div>
   );
-          } else {
+    } else {
             return (
               <div className = "navbar-menu-closed">
                 <div style = {{marginLeft: '15px', marginTop: '15px'}} >
