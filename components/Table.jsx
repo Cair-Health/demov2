@@ -11,9 +11,7 @@ const Table = ({ selectedState, selectedDocType, selectedProvider }) => {
 
     // Filter data based on selectedState, selectedDocType, and selectedProvider
     const filteredData = rawData.filter((row) => {
-      return (
-        (!selectedProvider || row.Payer === selectedProvider)
-      );
+      return !selectedProvider || row.Payer === selectedProvider;
     });
 
     setTableData(filteredData);
@@ -25,32 +23,32 @@ const Table = ({ selectedState, selectedDocType, selectedProvider }) => {
   }, [selectedState, selectedDocType, selectedProvider]);
 
   return (
-    <div className="max-h-96 overflow-x-auto transition-height duration-3000 ease-in-out bg-gradient-to-r from-gray-100 to-gray-200 rounded-xl">
-    <div className = "flex">
-    <table className="min-w-full border-collapse shadow-lg rounded-xl border-2 border-gray-300 font-">
-      {/* Table header */}
-      <thead>
-        <tr>
-          <th className="border-b-2 text-left px-8 py-4 text-black font-bold border-gray-300">Payer</th>
-          <th className="border-b-2 text-left px-8 py-4 text-black font-bold border-gray-300">Policy</th>
-          <th className="border-b-2 text-left px-8 py-4 text-black font-bold border-gray-300">URL</th>
-        </tr>
-      </thead>
+    <div className="bg-gradient-to-r from-gray-100 to-gray-200 rounded-xl">
+      <table className="min-w-full border-collapse shadow-lg rounded-xl border-2 border-gray-300 font-inter">
+        {/* Table header */}
+        <thead>
+          <tr>
+            <th className="border-b-2 text-left px-8 py-4 text-black font-bold border-gray-300">Payer</th>
+            <th className="border-b-2 text-left px-8 py-4 text-black font-bold border-gray-300">Policy</th>
+            <th className="border-b-2 text-left px-8 py-4 text-black font-bold border-gray-300">URL</th>
+          </tr>
+        </thead>
 
         {/* Table body */}
-        {tableData.map((row, index) => (
-          <tr key={index}>
-            <td className="border px-8 py-4 border-2 border-gray-300">{row.Payer}</td>
-            <td className="border px-8 py-4 border-2 border-gray-300">{row.Policy}</td>
-            <td className="border px-8 py-4 border-2 border-gray-300">
-              <a href={row.URL} target="_blank" rel="noopener noreferrer">
-                {row.URL}
-              </a>
-            </td>
-          </tr>
-        ))}
+        <tbody>
+          {tableData.map((row, index) => (
+            <tr key={index}>
+              <td className="border px-8 py-4 border-2 border-gray-300">{row.Payer}</td>
+              <td className="border px-8 py-4 border-2 border-gray-300">{row.Policy}</td>
+              <td className="border px-8 py-4 border-2 border-gray-300">
+                <a href={row.URL} target="_blank" rel="noopener noreferrer">
+                  {row.URL}
+                </a>
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
-    </div>
     </div>
   );
 };

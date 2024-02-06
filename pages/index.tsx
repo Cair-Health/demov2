@@ -68,12 +68,7 @@ const Home = () => {
                 onDocTypeChange={handleDocTypeChange}
                 onProviderChange={handleProviderChange} />
   
-      
-
-      <ul className={`absolute left-0 mt-2 p-2 bg-white border rounded ${isDropdownVisible ? '' : 'hidden'}`}>
-        <li><a href="#">Dropdown Item 1</a></li>
-        <li><a href="#">Dropdown Item 2</a></li>
-      </ul>
+    
 
    
     {/* End of Sidebar content */}
@@ -102,7 +97,7 @@ const Home = () => {
 
 
 
-<div className="max-w-screen-lg w-full mx-auto flex-grow">
+<div className = "h-1/2 overflow-y-auto">
   <Table 
     selectedState={selectedState}
     selectedDocType={selectedDocType}
