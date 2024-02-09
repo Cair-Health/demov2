@@ -70,7 +70,7 @@ const VerticalNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
   return (
     <div className = 'navbar-menu'>
       
-      <div style = {{marginLeft: '150px', marginTop: '15px'}}>
+      <div style = {{marginLeft: '165px', marginTop: '20px'}}>
       <Image src= {close} width={35} height={35} alt="close" onClick={() => setSidebar(false)}/>
     </div>
 
