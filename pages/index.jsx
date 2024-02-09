@@ -63,7 +63,7 @@ const Home = () => {
     startChat();
   }, [])
 
-  
+
   
   const handlePaperPlaneClick = async () => {
     setHasAnswered(true)
@@ -79,9 +79,9 @@ const Home = () => {
         body: JSON.stringify({
           "payer": "Anthem",
     "state": "California",
-    "query": {returnQuery},
+    "query": returnQuery,
     "customer_id": "customer1",
-    "session_id": {sessionID}
+    "session_id": sessionID,
         }),
         redirect: 'follow',
       };
