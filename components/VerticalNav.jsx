@@ -1,26 +1,30 @@
 import React, { useState, useEffect } from "react";
-import close from '/images/close.svg'
-import open from '/images/open.svg'
-import Image from 'next/image'
+import Image from 'next/image';
 
-const CustomNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
-  const [state, setState] = useState([]);
+
+const VerticalNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
+  const [states, setStates] = useState([]);
   const [providers, setProviders] = useState([]);
   const [doctypes, setDoctypes] = useState([]);
   const [selectedState, setSelectedState] = useState("");
   const [selectedDocType, setSelectedDocType] = useState("");
   const [selectedProvider, setSelectedProvider] = useState("");
-  const [sidebar, setSidebar] = useState(false);
+  const [sidebar, setSidebar] = useState(true);
 
   // Using async functions inside useEffect for better cod
   useEffect(() => {
     const fetchStates = async () => {
-      const statedata = require('./StateData.json');
-      setState(statedata);
+      try {
+        const statedata = await import('./StateData.json');
+        setStates(statedata.default);
+      } catch (error) {
+        console.error('Error fetching states:', error);
+      }
     };
-
+  
     fetchStates();
-  }, []); // Empty dependency array so it runs only once
+  }, []);
+   // Empty dependency array so it runs only once
 
   useEffect(() => {
     const fetchDocTypes = async () => {
@@ -65,7 +69,7 @@ const CustomNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
     <div className = 'navbar-menu'>
       
       <div style = {{marginLeft: '150px', marginTop: '15px'}}>
-    <Image src={close} width={35} height={35} alt="not found" onClick = { () => setSidebar(false)} />
+      {/*<Image src="/public/next.png" width={35} height={35} alt="close" onClick={() => setSidebar(false)} />*/}
     </div>
 
       <section className="mt-32 flex flex-col items-center space-y-4 ">
@@ -74,7 +78,7 @@ const CustomNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
         value={selectedState}
         onChange={handleStateChange}>
           <option value="">State</option>
-          {state.map((item) => (
+          {states.map((item) => (
             <option key={item.state}>{item.state}</option>
           ))}
         </select>
@@ -104,16 +108,14 @@ const CustomNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
       </section>
   
       {/* Submit Button */}
-      <div className="flex justify-center items-center mt-36">
-        
-      </div>
+
     </div>
   );
     } else {
             return (
               <div className = "navbar-menu-closed">
                 <div style = {{marginLeft: '15px', marginTop: '15px'}} >
-                    <Image src={open} width={35} height={35} alt="not found" onClick = { () => setSidebar(true)} />
+                    <Image src='/public/open.svg' width={300} height={300} alt="open" onClick = { () => setSidebar(true)} />
                   </div>
 
               </div>
@@ -134,4 +136,4 @@ const CustomNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
 
       
 
-export default CustomNav
+export default VerticalNav

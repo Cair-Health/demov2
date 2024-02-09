@@ -3,13 +3,18 @@ import { BoltIcon, ChatBubbleLeftIcon, ExclamationTriangleIcon, HandThumbDownIco
 import Image from 'next/image';
 import VerticalNav from "../components/VerticalNav";
 import Table from "../components/Table";
-import CairLogo from "/images/CairHealthLogo.png";
+import CairLogo from "/public/CairHealthLogo.png";
 
 
 const Home = () => {
+
   const [hasAnswered, setHasAnswered] = useState(false);
   const [tableVisible, setTableVisible] = useState(true);
   const [tutorial, setTutorial] = useState(true);
+  const [inputValue, setInputValue] = useState("");
+  const [responseText, setResponseText] = useState("");
+  const [returnQuery, setReturnQuery] = useState("");
+  const [sessionID, setSessionID] = useState("");
 
   const [selectedState, setSelectedState] = useState("");
   const [selectedDocType, setSelectedDocType] = useState("");
@@ -28,17 +33,57 @@ const Home = () => {
   };
 
 
-  const handleInputChange = (e) => {
-    const inputValue = e.target.value.trim();
+  const handlePaperPlaneClick = () => {
+    setReturnQuery(inputValue)
+    
+    // Store inputValue in responseText when Paper Airplane is pressed
+    // Additional logic or actions related to Paper Airplane click can be added here
 
-    // If the input box has content, hide the table
-    setTableVisible(inputValue === '');
-
-    setHasAnswered(!tableVisible && inputValue !== '');
+    // For example, if you want to reset inputValue and show the answered section
+    setHasAnswered(true);
+    setInputValue("");
   };
 
+  // index.js
 
-    return (
+const startChat = async () => {
+  try {
+    const requestOptions = {
+      method: 'PUT',
+      redirect: 'follow',
+    };
+
+    const response = await fetch("http://18.232.184.16:5000/start_chat/", requestOptions);
+
+    if (!response.ok) {
+      throw new Error('Failed to start chat');
+    }
+
+    const result = await response.text();
+    setSessionID(result)
+   
+
+    // Now you can use the sessionID in your application
+    console.log('Session ID:', result);
+
+    // Other logic related to starting a new chat
+  } catch (error) {
+    console.error('Error starting chat:', error);
+  }
+};
+
+
+
+
+// Call the startChat function when your application needs to start a new chat
+startChat();
+
+
+
+
+
+
+return (
 
 <div style={{ backgroundColor: '#FAF9F6' }} className='h-screen text-black flex'>
 
@@ -46,26 +91,22 @@ const Home = () => {
       {/*sidebar extends full height of screen and is using rounded property because I'm trying to overlap it with the top nav*/}
 
 
-
-
-
-
-        <VerticalNav
-                onStateChange={handleStateChange}
-                onDocTypeChange={handleDocTypeChange}
-                onProviderChange={handleProviderChange} />
+ <VerticalNav
+    onStateChange={handleStateChange}
+    onDocTypeChange={handleDocTypeChange}
+    onProviderChange={handleProviderChange} 
+  />
   
     
-
    
     {/* End of Sidebar content */}
   
 
             
-               <div className='relative flex flex-1 flex-col h-full'>
-                {!hasAnswered && <div className='flex flex-col space-y-4 justify-center items-center absolute inset-x-0 top-0 bottom-0'>
+    <div className='relative flex flex-1 flex-col h-full'>
+    {!hasAnswered && <div className='flex flex-col space-y-4 justify-center items-center absolute inset-x-0 top-0 bottom-0'>
 
-                </div>}
+    </div>}
 
                
 
@@ -151,8 +192,10 @@ const Home = () => {
                     <div className='w-full flex items-center justify-center'>
                         <div className='flex space-x-4 items-center justify-between px-6 py-6 w-4/5'>
                             <div className='flex space-x-4 items-center'>
+
+                              {/*User Query */}
                                 <div className='h-8 w-30 bg-indigo-500 text-center p-1 px-2 rounded text-white'>PR</div>
-                                <p style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}>How does this work</p>
+                                <p style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}> {returnQuery} </p>
                             </div>
                             <PencilSquareIcon className='h-6 w-6' />
                         </div>
@@ -163,9 +206,7 @@ const Home = () => {
                                 <div className='h- w-30 bg-teal-600 text-center p-2 rounded text-white relative'>
                                     <h1>{'{ai}'}</h1>
                                 </div>
-                                <p style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}>I'm assuming you're referring to how I work as a language model. As an AI language model, I was trained using vast amounts of data from the internet, books, and other sources. My training involved analyzing this data to identify patterns and relationships between words and phrases, as well as understanding the structure of language itself.
-
-                                    When you ask me a question or provide me with a prompt, I use my knowledge of language to generate a response that is relevant and meaningful. I do this by using a complex algorithm</p>
+                                <p style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}>{responseText}</p>
                             </div>
                             <div className='flex space-x-1'>
                                 <HandThumbUpIcon className='h-6 w-6' />
@@ -177,8 +218,14 @@ const Home = () => {
 
                 <div className='absolute bottom-0 inset-x-0 mx-auto px-4 py-6 max-w-3xl'>
                     <div className='text-black border border-gray-300 flex justify-center items-center space-x-2 shadow-md rounded px-2'>
-                        <input className='flex-1 bg-white p-4 border-0 focus:outline-none rounded-2xl;' onChange = {handleInputChange} onClick = {() => {setTutorial(false)}} style = {{background: ''}} />
-                        <PaperAirplaneIcon className='h-4 w-4 text-right -rotate-45' onClick={() => setHasAnswered(true)} />
+                    <input
+            className='flex-1 bg-white p-4 border-0 focus:outline-none rounded-2xl;'
+            onChange={(e) => setInputValue(e.target.value)}
+          />
+          <PaperAirplaneIcon
+            className='h-4 w-4 text-right -rotate-45 cursor-pointer'
+            onClick={handlePaperPlaneClick}
+          />
                     </div>
                 </div>
             </div>

@@ -13,7 +13,6 @@
     { "provider": "Optum" },
     { "provider": "WellCare" },
     { "provider": "Amerigroup" },
-    { "provider": "Molina Healthcare" },
     { "provider": "Highmark" },
     { "provider": "Medicare" },
     { "provider": "Medicaid" },
