@@ -17,7 +17,7 @@ const Home = () => {
   const [returnQuery, setReturnQuery] = useState("");
   const [sessionID, setSessionID] = useState("");
 
-  const [selectedState, setSelectedState] = useState("");
+  const [selectedState, setSelectedState] = useState("California");
   const [selectedDocType, setSelectedDocType] = useState("");
   const [selectedProvider, setSelectedProvider] = useState("");
 
@@ -67,6 +67,7 @@ const Home = () => {
   
   const handlePaperPlaneClick = async () => {
     setHasAnswered(true)
+    setResponseText("...generating response")
     try {
       setReturnQuery(inputValue);
   
@@ -77,7 +78,7 @@ const Home = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          "payer": "Anthem",
+          "payer": selectedProvider,
     "state": "California",
     "query": returnQuery,
     "customer_id": "customer1",

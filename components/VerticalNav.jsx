@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Image from 'next/image';
 import close from '/public/close.svg'
+import open from '/public/open.svg'
 
 
 const VerticalNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
@@ -70,7 +71,7 @@ const VerticalNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
     <div className = 'navbar-menu'>
       
       <div style = {{marginLeft: '150px', marginTop: '15px'}}>
-      {/*<Image src= {close} width={35} height={35} alt="close" onClick={() => setSidebar(false)} />*/}
+      <Image src= {close} width={35} height={35} alt="close" onClick={() => setSidebar(false)}/>
     </div>
 
       <section className="mt-32 flex flex-col items-center space-y-4 ">
@@ -78,7 +79,7 @@ const VerticalNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
         <select className="mb-12 w-36 flex items-center rounded-xl " style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}
         value={selectedState}
         onChange={handleStateChange}>
-          <option value="">State</option>
+          <option value="">Calfornia</option>
           {states.map((item) => (
             <option key={item.state}>{item.state}</option>
           ))}
@@ -116,7 +117,7 @@ const VerticalNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
             return (
               <div className = "navbar-menu-closed">
                 <div style = {{marginLeft: '15px', marginTop: '15px'}} >
-                    <Image src='/public/open.svg' width={300} height={300} alt="open" onClick = { () => setSidebar(true)} />
+                    <Image src={open} width={35} height={35} alt="open" onClick = { () => setSidebar(true)} />
                   </div>
 
               </div>
