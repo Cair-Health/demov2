@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Image from 'next/image';
+import close from '/public/close.svg'
 
 
 const VerticalNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
@@ -69,7 +70,7 @@ const VerticalNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
     <div className = 'navbar-menu'>
       
       <div style = {{marginLeft: '150px', marginTop: '15px'}}>
-      {/*<Image src="/public/next.png" width={35} height={35} alt="close" onClick={() => setSidebar(false)} />*/}
+      {/*<Image src= {close} width={35} height={35} alt="close" onClick={() => setSidebar(false)} />*/}
     </div>
 
       <section className="mt-32 flex flex-col items-center space-y-4 ">

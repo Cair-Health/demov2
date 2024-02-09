@@ -4,6 +4,7 @@ import Image from 'next/image';
 import VerticalNav from "../components/VerticalNav";
 import Table from "../components/Table";
 import CairLogo from "/public/CairHealthLogo.png";
+import { auto } from 'openai/_shims/registry.mjs';
 
 
 const Home = () => {
@@ -12,7 +13,7 @@ const Home = () => {
   const [tableVisible, setTableVisible] = useState(true);
   const [tutorial, setTutorial] = useState(true);
   const [inputValue, setInputValue] = useState("");
-  const [responseText, setResponseText] = useState("");
+  const [responseText, setResponseText] = useState("...generating response");
   const [returnQuery, setReturnQuery] = useState("");
   const [sessionID, setSessionID] = useState("");
 
@@ -33,50 +34,84 @@ const Home = () => {
   };
 
 
-  const handlePaperPlaneClick = () => {
-    setReturnQuery(inputValue)
-    
-    // Store inputValue in responseText when Paper Airplane is pressed
-    // Additional logic or actions related to Paper Airplane click can be added here
-
-    // For example, if you want to reset inputValue and show the answered section
-    setHasAnswered(true);
-    setInputValue("");
+  const startChat = async () => {
+    try {
+      const requestOptions = {
+        method: 'PUT',
+        redirect: 'follow',
+      };
+  
+      const response = await fetch("http://18.232.184.16:5000/start_chat/", requestOptions);
+  
+      if (!response.ok) {
+        throw new Error('Failed to start chat');
+      }
+  
+      const result = await response.text();
+      setSessionID(result);
+  
+      // Now you can use the sessionID in your application
+      console.log('Session ID:', result);
+  
+      // Other logic related to getting a response
+    } catch (error) {
+      console.error('Error starting chat:', error);
+    }
   };
 
-  // index.js
+  useEffect(() => {
+    startChat();
+  }, [])
 
-const startChat = async () => {
-  try {
-    const requestOptions = {
-      method: 'PUT',
-      redirect: 'follow',
-    };
-
-    const response = await fetch("http://18.232.184.16:5000/start_chat/", requestOptions);
-
-    if (!response.ok) {
-      throw new Error('Failed to start chat');
+  
+  
+  const handlePaperPlaneClick = async () => {
+    setHasAnswered(true)
+    try {
+      setReturnQuery(inputValue);
+  
+      // Make a request to the get_response API using the current session ID and query
+      const getResponseOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          "payer": "Anthem",
+    "state": "California",
+    "query": {returnQuery},
+    "customer_id": "customer1",
+    "session_id": {sessionID}
+        }),
+        redirect: 'follow',
+      };
+  
+      const getResponseResponse = await fetch("http://18.232.184.16:5000/get_response/", getResponseOptions);
+      console.log(getResponseResponse)
+  
+      if (!getResponseResponse.ok) {
+        throw new Error('Failed to get response');
+      }
+  
+      const getResponseResult = await getResponseResponse.text();
+      console.log(getResponseResult)
+      setResponseText(getResponseResult);
+  
+      // Other logic related to getting a response
+  
+      // For example, if you want to reset inputValue and show the answered section
+      setInputValue("");
+    } catch (error) {
+      console.error('Error getting response:', error);
     }
+  };
 
-    const result = await response.text();
-    setSessionID(result)
-   
-
-    // Now you can use the sessionID in your application
-    console.log('Session ID:', result);
-
-    // Other logic related to starting a new chat
-  } catch (error) {
-    console.error('Error starting chat:', error);
-  }
-};
 
 
 
 
 // Call the startChat function when your application needs to start a new chat
-startChat();
+
 
 
 
@@ -113,7 +148,7 @@ return (
       {/* Cair Banner */}
   <div className="relative flex- bg-white border-gray-200 rounded" style={{ backgroundColor: '#40929B', zIndex:1}}>
   <div className="w-full flex flex-wrap items-center justify-between mx-auto p-5">
-  <Image src = {CairLogo} width = {300} height = {300} alt="Not found"></Image>
+  <Image src = {CairLogo} width = {300} height = 'auto' alt="Not found"></Image>
     <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>
     <div className="hidden w-full md:block md:w-auto" id="navbar-default">
       <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
