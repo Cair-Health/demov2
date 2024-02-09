@@ -19,7 +19,7 @@ const Home = () => {
 
   const [selectedState, setSelectedState] = useState("California");
   const [selectedDocType, setSelectedDocType] = useState("");
-  const [selectedProvider, setSelectedProvider] = useState("");
+  const [selectedProvider, setSelectedProvider] = useState("Anthem");
 
   const handleStateChange = (value) => {
     setSelectedState(value);
@@ -41,7 +41,7 @@ const Home = () => {
         redirect: 'follow',
       };
   
-      const response = await fetch("http://18.232.184.16:5000/start_chat/", requestOptions);
+      const response = await fetch("http://3.239.78.64:5000/start_chat/", requestOptions);
   
       if (!response.ok) {
         throw new Error('Failed to start chat');
@@ -66,10 +66,12 @@ const Home = () => {
 
   
   const handlePaperPlaneClick = async () => {
+    setReturnQuery(inputValue)
     setHasAnswered(true)
     setResponseText("...generating response")
+    console.log(selectedProvider)
+    console.log(inputValue)
     try {
-      setReturnQuery(inputValue);
   
       // Make a request to the get_response API using the current session ID and query
       const getResponseOptions = {
@@ -80,14 +82,14 @@ const Home = () => {
         body: JSON.stringify({
           "payer": selectedProvider,
     "state": "California",
-    "query": returnQuery,
+    "query": inputValue,
     "customer_id": "customer1",
     "session_id": sessionID,
         }),
         redirect: 'follow',
       };
   
-      const getResponseResponse = await fetch("http://18.232.184.16:5000/get_response/", getResponseOptions);
+      const getResponseResponse = await fetch("http://3.239.78.64:5000/get_response/", getResponseOptions);
       console.log(getResponseResponse)
   
       if (!getResponseResponse.ok) {

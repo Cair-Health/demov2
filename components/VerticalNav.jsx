@@ -79,7 +79,7 @@ const VerticalNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
         <select className="mb-12 w-36 flex items-center rounded-xl " style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}
         value={selectedState}
         onChange={handleStateChange}>
-          <option value="">Calfornia</option>
+          <option value="">California</option>
           {states.map((item) => (
             <option key={item.state}>{item.state}</option>
           ))}
@@ -90,7 +90,7 @@ const VerticalNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
         <select className="mb-12 w-36 flex items-center rounded-xl" style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}
                 value={selectedDocType}
                 onChange={handleDoctypeChange}>
-          <option value="">Doc Type</option>
+          <option value="">Medical Policies</option>
           {doctypes.map((item) => (
             <option key={item.doctype}>{item.doctype}</option>
           ))}
@@ -102,7 +102,7 @@ const VerticalNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
         <select className="rounded-xl w-36" style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}
           value={selectedProvider}
           onChange={handleProviderChange}>
-          <option value="">Provider</option>
+          <option value="">Anthem</option>
           {providers.map((item) => (
             <option key={item.provider}>{item.provider}</option>
           ))}
