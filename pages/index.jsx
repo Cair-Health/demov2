@@ -5,9 +5,12 @@ import VerticalNav from "../components/VerticalNav";
 import Table from "../components/Table";
 import CairLogo from "/public/CairHealthLogo.png";
 import { auto } from 'openai/_shims/registry.mjs';
+import ClipLoader from 'react-spinners/BeatLoader'
 
 
 const Home = () => {
+
+  
 
   const [hasAnswered, setHasAnswered] = useState(false);
   const [tableVisible, setTableVisible] = useState(true);
@@ -16,6 +19,7 @@ const Home = () => {
   const [responseText, setResponseText] = useState("...generating response");
   const [returnQuery, setReturnQuery] = useState("");
   const [sessionID, setSessionID] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [selectedState, setSelectedState] = useState("California");
   const [selectedDocType, setSelectedDocType] = useState("");
@@ -66,14 +70,13 @@ const Home = () => {
 
   
   const handlePaperPlaneClick = async () => {
-    setReturnQuery(inputValue)
-    setHasAnswered(true)
-    setResponseText("...generating response")
-    console.log(selectedProvider)
-    console.log(inputValue)
+    setLoading(true); // Set loading state to true when making the request
+    setReturnQuery(inputValue);
+    setHasAnswered(true);
+    setResponseText("...generating response");
+    console.log(selectedProvider);
+    console.log(inputValue);
     try {
-  
-      // Make a request to the get_response API using the current session ID and query
       const getResponseOptions = {
         method: 'POST',
         headers: {
@@ -81,31 +84,33 @@ const Home = () => {
         },
         body: JSON.stringify({
           "payer": selectedProvider,
-    "state": "California",
-    "query": inputValue,
-    "customer_id": "customer1",
-    "session_id": sessionID,
+          "state": "California",
+          "query": inputValue,
+          "customer_id": "customer1",
+          "session_id": sessionID,
         }),
         redirect: 'follow',
       };
-  
+
       const getResponseResponse = await fetch("http://3.239.78.64:5000/get_response/", getResponseOptions);
-      console.log(getResponseResponse)
-  
+      console.log(getResponseResponse);
+
       if (!getResponseResponse.ok) {
         throw new Error('Failed to get response');
       }
-  
+
       const getResponseResult = await getResponseResponse.text();
-      console.log(getResponseResult)
+      console.log(getResponseResult);
       setResponseText(getResponseResult);
-  
+
       // Other logic related to getting a response
-  
+
       // For example, if you want to reset inputValue and show the answered section
       setInputValue("");
     } catch (error) {
       console.error('Error getting response:', error);
+    } finally {
+      setLoading(false); // Set loading state to false when the request is complete
     }
   };
 
@@ -244,7 +249,21 @@ return (
                                 <div className='h- w-30 bg-teal-600 text-center p-2 rounded text-white relative'>
                                     <h1>{'{ai}'}</h1>
                                 </div>
-                                <p style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}>{responseText}</p>
+                                <p style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}>{loading ? (
+                                  <ClipLoader
+                                  css={{
+                                    display: "block",
+                                    margin: "0 auto",
+                                    borderColor: "red",
+                                  }}
+                                  size={15}
+                                  color={"#123abc"}
+                                  loading={loading}
+                                  speedMultiplier={1.5}
+                                  aria-label="Loading Spinner"
+                                  data-testid="loader"
+                                />
+                                ): (responseText)}</p>
                             </div>
                             <div className='flex space-x-1'>
                                 <HandThumbUpIcon className='h-6 w-6' />
