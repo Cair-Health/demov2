@@ -215,7 +215,7 @@ return (
       </div>
       <div className='grid grid-cols-3 gap-4 text-center'>
         <div className='p-2 bg-gray-300 hover:bg-gray-400 rounded-md  text-sm shadow-sm w-60'>
-          Explaining insurance terms in simple language
+          Explain insurance terms in simple language
         </div>
         <div className='p-2 bg-gray-300 hover:bg-gray-400 rounded-md  text-sm shadow-sm w-60'>
           Tips for maximizing policy benefits
@@ -247,7 +247,7 @@ return (
                             <div className='flex space-x-4 items-center'>
                                 <div className='h- w-30 bg-teal-600 text-center p-2 rounded text-white relative'>
                                     <h1>{'{ai}'}</h1>
-                                </div>
+                                </div> 
                                 <p style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}>{loading ? (
                                   <ClipLoader
                                   css={{
