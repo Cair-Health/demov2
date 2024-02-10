@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { BoltIcon, ChatBubbleLeftIcon, ExclamationTriangleIcon, HandThumbDownIcon, HandThumbUpIcon, LinkIcon, MoonIcon, PaperAirplaneIcon, PencilSquareIcon, PlusIcon, SignalIcon, SunIcon, TrashIcon, UserIcon } from "@heroicons/react/24/outline";
+import { BoltIcon, ExclamationTriangleIcon, HandThumbDownIcon, HandThumbUpIcon, PaperAirplaneIcon, PencilSquareIcon, SunIcon} from "@heroicons/react/24/outline";
 import Image from 'next/image';
 import VerticalNav from "../components/VerticalNav";
 import Table from "../components/Table";
 import CairLogo from "/public/CairHealthLogo.png";
-import { auto } from 'openai/_shims/registry.mjs';
 import ClipLoader from 'react-spinners/BeatLoader'
 
 

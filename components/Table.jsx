@@ -7,7 +7,7 @@ const Table = ({ selectedState, selectedDocType, selectedProvider }) => {
   const fetchData = () => {
     // Assuming your data is fetched from a JSON file named tabledata.json
     // You may need to adjust this based on your data structure
-    const rawData = require('./tabledata.json');
+    const rawData = require('./TableData.json');
 
     // Filter data based on selectedState, selectedDocType, and selectedProvider
     const filteredData = rawData.filter((row) => {
