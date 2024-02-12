@@ -15,10 +15,12 @@ const Home = () => {
   const [tableVisible, setTableVisible] = useState(true);
   const [tutorial, setTutorial] = useState(true);
   const [inputValue, setInputValue] = useState("");
-  const [responseText, setResponseText] = useState("...generating response");
+  const [responseText, setResponseText] = useState("...try again");
   const [returnQuery, setReturnQuery] = useState("");
   const [sessionID, setSessionID] = useState("");
   const [loading, setLoading] = useState(false);
+  const [chatHistory, setChatHistory] = useState([]);
+
 
   const [selectedState, setSelectedState] = useState("California");
   const [selectedDocType, setSelectedDocType] = useState("");
@@ -72,7 +74,7 @@ const Home = () => {
     setLoading(true); // Set loading state to true when making the request
     setReturnQuery(inputValue);
     setHasAnswered(true);
-    setResponseText("...generating response");
+
     console.log(selectedProvider);
     console.log(inputValue);
     try {
@@ -90,6 +92,8 @@ const Home = () => {
         }),
         redirect: 'follow',
       };
+
+
 
       const getResponseResponse = await fetch("http://3.239.78.64:5000/get_response/", getResponseOptions);
       console.log(getResponseResponse);
@@ -276,7 +280,10 @@ return (
                     <div className='text-black border border-gray-300 flex justify-center items-center space-x-2 shadow-md rounded px-2'>
                     <input
             className='flex-1 bg-white p-4 border-0 focus:outline-none rounded-2xl;'
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={(e) => {setInputValue(e.target.value);
+            setTableVisible(!e.target.value)
+            setTutorial(!e.target.value);
+          }}
           />
           <PaperAirplaneIcon
             className='h-4 w-4 text-right -rotate-45 cursor-pointer'
