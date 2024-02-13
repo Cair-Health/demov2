@@ -262,7 +262,7 @@ const Home = () => {
                       components={{
                           a: props => {
                               return props.href.startsWith('https://') ? (
-                                <a href={props.href} className="text-teal-600 underline">{props.children}</a>// Render Twitter links with custom component
+                                <a href={props.href} className="text-teal-600 underline" target = "_blank">{props.children}</a>// Render Twitter links with custom component
                               ) : (
                                   <a href={props.href} className="text-teal-600 underline">{props.children}</a> // All other links
                               )

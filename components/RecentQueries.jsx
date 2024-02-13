@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown'; 
+import remarkGfm from 'remark-gfm'
 
 const RecentQueriesTable = ({ history, currentQuery }) => {
   // Filter queries to exclude the current query
@@ -18,7 +19,20 @@ const RecentQueriesTable = ({ history, currentQuery }) => {
             </div>
             <div className='flex space-x-4 items-center pb-8'>
               <div className='h-8 w-30 bg-teal-600 text-center p-0.5 px-0.5 rounded text-white'>{'{ai}'}</div>
-              <p><ReactMarkdown>{response}</ReactMarkdown></p>
+              <p><ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                          a: props => {
+                              return props.href.startsWith('https://') ? (
+                                <a href={props.href} className="text-teal-900 underline" target = "_blank">{props.children}</a>// Render Twitter links with custom component
+                              ) : (
+                                  <a href={props.href} className="text-teal-900 underline">{props.children}</a> // All other links
+                              )
+                          }
+                      }}
+                  >
+                      {response}
+                  </ReactMarkdown></p>
             </div>
           </div>
         ))}
