@@ -12,6 +12,7 @@ const VerticalNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
   const [selectedDocType, setSelectedDocType] = useState("");
   const [selectedProvider, setSelectedProvider] = useState("");
   const [sidebar, setSidebar] = useState(true);
+ 
 
   // Using async functions inside useEffect for better cod
   useEffect(() => {

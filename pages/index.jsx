@@ -27,6 +27,7 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [history, setHistory] = useState([]);
   const [currentQuery, setCurrentQuery] = useState("");
+  
 
   
 
@@ -77,6 +78,7 @@ const Home = () => {
     setHasAnswered(true);
     setCurrentQuery(inputValue);
     setInputValue("");
+  
 
     console.log(selectedProvider);
     console.log(inputValue);
@@ -209,7 +211,7 @@ const Home = () => {
         
 
         {hasAnswered && (
-          <div className='flex flex-col text-black'>
+          <div className='flex flex-col text-black overflow-auto'>
             <div className='w-full flex items-center justify-center'>
               <div className='flex space-x-4 items-center justify-between px-6 py-6 w-4/5'>
                 <div className='flex space-x-4 items-center'>
@@ -261,10 +263,15 @@ const Home = () => {
                 </div>
               </div>
             </div>
-            {inputValue.trim() !== "" && (
-  <div className='pt-12'>
+
+
+            {history.length >= 2 && (
+  <div className='p-5 mx-auto overflow-auto'>
     <RecentQueries history={history} currentQuery={currentQuery} />
   </div>)}
+
+
+  
           </div>
         )}
 
