@@ -26,6 +26,9 @@ const Home = () => {
   const [sessionID, setSessionID] = useState("");
   const [loading, setLoading] = useState(false);
   const [history, setHistory] = useState([]);
+  const [currentQuery, setCurrentQuery] = useState("");
+
+  
 
   const [selectedState, setSelectedState] = useState("California");
   const [selectedDocType, setSelectedDocType] = useState("");
@@ -58,6 +61,8 @@ const Home = () => {
       // Now you can use the sessionID in your application
       console.log('Session ID:', result);
       // Other logic related to getting a response
+      setChatStartTime(new Date());
+
     } catch (error) {
       console.error('Error starting chat:', error);
     }
@@ -71,6 +76,7 @@ const Home = () => {
     setLoading(true); // Set loading state to true when making the request
     setReturnQuery(inputValue);
     setHasAnswered(true);
+    setCurrentQuery(inputValue);
 
     console.log(selectedProvider);
     console.log(inputValue);
@@ -200,7 +206,7 @@ const Home = () => {
         )}
 
 
-        <RecentQueries history={history}/>
+        
 
         {hasAnswered && (
           <div className='flex flex-col text-black'>
@@ -255,6 +261,10 @@ const Home = () => {
                 </div>
               </div>
             </div>
+            {inputValue.trim() !== "" && (
+  <div className='pt-12'>
+    <RecentQueries history={history} currentQuery={currentQuery} />
+  </div>)}
           </div>
         )}
 
