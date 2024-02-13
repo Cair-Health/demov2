@@ -15,6 +15,7 @@ import CairLogo from "/public/CairHealthLogo.png";
 import ClipLoader from 'react-spinners/BeatLoader';
 import ReactMarkdown from 'react-markdown';
 import RecentQueries from '../components/RecentQueries'
+import remarkGfm from 'remark-gfm'
 
 const Home = () => {
   const [hasAnswered, setHasAnswered] = useState(false);
@@ -27,6 +28,15 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [history, setHistory] = useState([]);
   const [currentQuery, setCurrentQuery] = useState("");
+  const CustomLink = ({ href, children }) => (
+    <a href={href} style={{ color: 'blue', textDecoration: 'underline' }}>
+      {children}
+    </a>
+  );
+
+  const renderers = {
+    link: CustomLink,
+  };
   
 
   
@@ -248,12 +258,20 @@ const Home = () => {
                       />
                     ) : (
                       <ReactMarkdown
-  components={{
-    a: ({ node, ...props }) => <a style={{ color: 'blue', textDecoration: 'underline' }} {...props} />
-  }}
->
-  {responseText}
-</ReactMarkdown>
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                          a: props => {
+                              return props.href.startsWith('https://') ? (
+                                <a href={props.href} className="text-teal-600 underline">{props.children}</a>// Render Twitter links with custom component
+                              ) : (
+                                  <a href={props.href} className="text-teal-600 underline">{props.children}</a> // All other links
+                              )
+                          }
+                      }}
+                  >
+                      {responseText}
+                  </ReactMarkdown>
+
                     )}
                   </p>
                 </div>
