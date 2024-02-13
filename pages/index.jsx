@@ -246,12 +246,12 @@ const Home = () => {
                       />
                     ) : (
                       <ReactMarkdown
-                        components={{
-                          a: ({ node, ...props }) => <a style={{ color: 'blue' }} {...props} />
-                        }}
-                      >
-                        {responseText}
-                      </ReactMarkdown>
+  components={{
+    a: ({ node, ...props }) => <a style={{ color: 'blue', textDecoration: 'underline' }} {...props} />
+  }}
+>
+  {responseText}
+</ReactMarkdown>
                     )}
                   </p>
                 </div>
