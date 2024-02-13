@@ -61,8 +61,7 @@ const Home = () => {
       // Now you can use the sessionID in your application
       console.log('Session ID:', result);
       // Other logic related to getting a response
-      setChatStartTime(new Date());
-
+    
     } catch (error) {
       console.error('Error starting chat:', error);
     }
@@ -77,6 +76,7 @@ const Home = () => {
     setReturnQuery(inputValue);
     setHasAnswered(true);
     setCurrentQuery(inputValue);
+    setInputValue("");
 
     console.log(selectedProvider);
     console.log(inputValue);
@@ -107,7 +107,7 @@ const Home = () => {
       // Store the current query and response in the history
       setHistory([...history, { query: inputValue, response: getResponseResult }]);
       
-      setInputValue("");
+    
     } catch (error) {
       console.error('Error getting response:', error);
     } finally {
@@ -272,6 +272,7 @@ const Home = () => {
           <div className='text-black border border-gray-300 flex justify-center items-center space-x-2 shadow-md rounded px-2'>
             <input
               className='flex-1 bg-white p-4 border-0 focus:outline-none rounded-2xl;'
+              value = {inputValue}
               onChange={(e) => {
                 setInputValue(e.target.value);
                 setTableVisible(!e.target.value);
