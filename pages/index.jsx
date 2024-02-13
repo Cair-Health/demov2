@@ -28,6 +28,15 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [history, setHistory] = useState([]);
   const [currentQuery, setCurrentQuery] = useState("");
+  const scrollRef = useRef(null);
+
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+    }
+  }, [inputValue]);
+
   const CustomLink = ({ href, children }) => (
     <a href={href} style={{ color: 'blue', textDecoration: 'underline' }}>
       {children}
@@ -221,13 +230,17 @@ const Home = () => {
         
 
         {hasAnswered && (
-          <div className='flex flex-col text-black overflow-auto'>
-            <div className='w-full flex items-center justify-center'>
+          <div className='flex pb-40 flex-col text-black overflow-auto' ref = {scrollRef}>
+                       {history.length >= 2 && (
+  <div className='p-5 mx-auto '>
+    <RecentQueries history={history} currentQuery={currentQuery} />
+  </div>)}
+            <div className='w-full flex items-center justify-center pb-1'>
               <div className='flex space-x-4 items-center justify-between px-6 py-6 w-4/5'>
                 <div className='flex space-x-4 items-center'>
 
                   {/* User Query */}
-                  <div className='h-8 w-30 bg-indigo-500 text-center p-1 px-2 rounded text-white'>PR</div>
+                  <div className='h-8 w-30 bg-indigo-500 text-center p-1 px-2 rounded text-white'>A</div>
                   <p style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}>
                     {returnQuery}
                   </p>
@@ -262,7 +275,7 @@ const Home = () => {
                       components={{
                           a: props => {
                               return props.href.startsWith('https://') ? (
-                                <a href={props.href} className="text-teal-600 underline" target = "_blank">{props.children}</a>// Render Twitter links with custom component
+                                <a href={props.href} className="text-teal-800 underline" target = "_blank">source</a>// Render Twitter links with custom component
                               ) : (
                                   <a href={props.href} className="text-teal-600 underline">{props.children}</a> // All other links
                               )
@@ -283,10 +296,7 @@ const Home = () => {
             </div>
 
 
-            {history.length >= 2 && (
-  <div className='p-5 mx-auto overflow-auto'>
-    <RecentQueries history={history} currentQuery={currentQuery} />
-  </div>)}
+ 
 
 
   
@@ -294,9 +304,9 @@ const Home = () => {
         )}
 
         <div className='absolute bottom-0 inset-x-0 mx-auto px-4 py-6 max-w-3xl'>
-          <div className='text-black border border-gray-300 flex justify-center items-center space-x-2 shadow-md rounded px-2'>
+          <div className='text-black border border-gray-400 flex justify-center items-center space-x-2 shadow-md rounded px-2'>
             <input
-              className='flex-1 bg-white p-4 border-0 focus:outline-none rounded-2xl;'
+              className='flex-1 bg-white p-4 border-0 text-xl focus:outline-none rounded-2xl;'
               value = {inputValue}
               onChange={(e) => {
                 setInputValue(e.target.value);
