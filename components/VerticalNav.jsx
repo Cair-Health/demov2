@@ -112,7 +112,7 @@ const VerticalNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
       </section>
 
       <div className = "p-20">
-      <Image src= {home} width={35} height={35} alt="close" onClick={() => setSidebar(false)}/>
+      <Image src= {home} width={35} height={35} alt="close" onClick={() => window.location.reload()}/>
 
       </div>
   

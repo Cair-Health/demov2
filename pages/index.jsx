@@ -228,7 +228,7 @@ const Home = () => {
         
 
         {hasAnswered && (
-          <div className='flex-col text-black overflow-auto'>
+          <div className='flex-col text-black overflow-auto pb-40'>
                        {history.length >= 0 && (
   <div className='pl-56 mx-auto '>
     <RecentQueries history={history} currentQuery={currentQuery} />
