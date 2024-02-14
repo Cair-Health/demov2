@@ -23,7 +23,7 @@ const Table = ({ selectedState, selectedDocType, selectedProvider }) => {
   }, [selectedState, selectedDocType, selectedProvider]);
 
   return (
-    <div className="bg-gradient-to-r from-gray-100 to-gray-200 rounded-xl ">
+    <div className="bg-gradient-to-r from-gray-100 to-gray-200 rounded-xl overflow-auto">
       <table className="w-full min-w-full border-collapse shadow-lg rounded-xl border-2 border-gray-300 font-inter">
         {/* Table header */}
         <thead>

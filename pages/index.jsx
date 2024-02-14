@@ -64,6 +64,7 @@ const Home = () => {
 
   const handleProviderChange = (value) => {
     setSelectedProvider(value);
+    startChat();
   };
 
   const startChat = async () => {
@@ -133,7 +134,6 @@ const Home = () => {
       console.error('Error getting response:', error);
     } finally {
       setLoading(false);
-      startChat();
     }
   };
 
@@ -162,18 +162,15 @@ const Home = () => {
             </div>
           </div>
         </div>
-        {tableVisible && (
-    
-        
-          <div className="h-1/3 overflow-y-auto">
-            <Table
-              selectedState={selectedState}
-              selectedDocType={selectedDocType}
-              selectedProvider={selectedProvider}
-            />
-          </div>
-      
-        )}
+  
+  <div className='flex-col text-black overflow-auto pb-40' style={{ maxHeight: '400px' }}>
+    <Table
+      selectedState={selectedState}
+      selectedDocType={selectedDocType}
+      selectedProvider={selectedProvider}
+    />
+  </div>
+  
         {!hasAnswered && tutorial && (
           <div className='flex flex-col space-y-4 justify-center items-center absolute inset-x-0 top-0 bottom-0'>
             <div className='mt-32 space-y-2'>
@@ -239,7 +236,7 @@ const Home = () => {
                 <div className='flex space-x-4 items-center'>
 
                   {/* User Query */}
-                  <div className='h-8 w-30 bg-indigo-500 text-center p-1 px-2 rounded text-white'>A</div>
+                  <div className='h-8 w-30 bg-indigo-500 text-center p-1 px-2 rounded text-white text-lg'>A</div>
                   <p style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}>
                     {returnQuery}
                   </p>

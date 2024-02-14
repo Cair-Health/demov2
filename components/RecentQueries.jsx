@@ -13,7 +13,7 @@ const RecentQueriesTable = ({ history, currentQuery }) => {
       <div className="rounded-2xl p-6">
         {displayQueries.map(({ query, response }, index) => ( 
           <div key={index} className="mb-4 text-xl">
-            <div className='flex space-x-4 items-center pb-12'>
+            <div className='flex space-x-4 items-center pb-12 '>
               <div className='h-8 w-30 bg-indigo-500 text-center p-1 px-2 rounded text-white'>A</div>
               <p className="font-semibold">{query}</p>
             </div>
