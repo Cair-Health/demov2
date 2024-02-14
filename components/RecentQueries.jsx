@@ -8,7 +8,7 @@ const RecentQueriesTable = ({ history, currentQuery }) => {
   const displayQueries = filteredQueries
 
   return (
-    <div className = "pl-52 pr-52 mx-auto">
+    <div className = "mr-4 ml-2 mx-auto">
       <h2 className="text-2xl font-semibold mb-2"></h2>
       <div className="rounded-2xl p-6">
         {displayQueries.map(({ query, response }, index) => ( 

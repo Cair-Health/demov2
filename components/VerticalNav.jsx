@@ -103,7 +103,7 @@ const VerticalNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
         <select className="rounded-xl w-36" style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}
           value={selectedProvider}
           onChange={handleProviderChange}>
-          <option value="">Anthem</option>
+          <option value="">Payer</option>
           {providers.map((item) => (
             <option key={item.provider}>{item.provider}</option>
           ))}
