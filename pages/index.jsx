@@ -72,7 +72,7 @@ const Home = () => {
         method: 'PUT',
         redirect: 'follow',
       };
-      const response = await fetch("http://3.239.78.64:5000/start_chat/", requestOptions);
+      const response = await fetch("http://34.204.45.209:5000/start_chat/", requestOptions);
       if (!response.ok) {
         throw new Error('Failed to start chat');
       }
@@ -111,13 +111,13 @@ const Home = () => {
           "payer": selectedProvider,
           "state": "California",
           "query": inputValue,
-          "customer_id": "customer1",
+          "customer_id": "customer2",
           "session_id": sessionID,
         }),
         redirect: 'follow',
       };
 
-      const getResponseResponse = await fetch("http://3.239.78.64:5000/get_response/", getResponseOptions);
+      const getResponseResponse = await fetch("http://34.204.45.209:5000/get_response/", getResponseOptions);
       if (!getResponseResponse.ok) {
         throw new Error('Failed to get response');
       }
@@ -133,6 +133,7 @@ const Home = () => {
       console.error('Error getting response:', error);
     } finally {
       setLoading(false);
+      startChat();
     }
   };
 
