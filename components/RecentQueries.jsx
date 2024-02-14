@@ -19,7 +19,7 @@ const RecentQueriesTable = ({ history, currentQuery }) => {
             </div>
             <div className='flex space-x-4 items-center pb-8'>
               <div className='h-8 w-30 bg-teal-600 text-center p-2 px-2 rounded text-white text-sm'>{'{ai}'}</div>
-              <p><ReactMarkdown
+              <div><ReactMarkdown
                       remarkPlugins={[remarkGfm]}
                       components={{
                           a: props => {
@@ -32,7 +32,7 @@ const RecentQueriesTable = ({ history, currentQuery }) => {
                       }}
                   >
                       {response}
-                  </ReactMarkdown></p>
+                  </ReactMarkdown></div>
             </div>
           </div>
         ))}

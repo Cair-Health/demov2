@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Image from 'next/image';
 import close from '/public/close.svg'
 import open from '/public/open.svg'
+import home from '/public/home.svg'
 
 
 const VerticalNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
@@ -109,6 +110,11 @@ const VerticalNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
           ))}
         </select>
       </section>
+
+      <div className = "p-20">
+      <Image src= {home} width={35} height={35} alt="close" onClick={() => setSidebar(false)}/>
+
+      </div>
   
       {/* Submit Button */}
 

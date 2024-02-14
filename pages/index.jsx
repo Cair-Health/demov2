@@ -158,14 +158,12 @@ const Home = () => {
             <Image src={CairLogo} width={300} height='auto' alt="Not found"></Image>
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>
             <div className="hidden w-full md:block md:w-auto" id="navbar-default">
-              <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                {/* Add  list items here */}
-              </ul>
             </div>
           </div>
         </div>
-
         {tableVisible && (
+    
+        
           <div className="h-1/3 overflow-y-auto">
             <Table
               selectedState={selectedState}
@@ -173,8 +171,8 @@ const Home = () => {
               selectedProvider={selectedProvider}
             />
           </div>
+      
         )}
-
         {!hasAnswered && tutorial && (
           <div className='flex flex-col space-y-4 justify-center items-center absolute inset-x-0 top-0 bottom-0'>
             <div className='mt-32 space-y-2'>
@@ -230,7 +228,7 @@ const Home = () => {
         
 
         {hasAnswered && (
-          <div className='flex-col text-black overflow-auto' ref = {scrollRef}>
+          <div className='flex-col text-black overflow-auto'>
                        {history.length >= 0 && (
   <div className='pl-56 mx-auto '>
     <RecentQueries history={history} currentQuery={currentQuery} />
@@ -254,7 +252,7 @@ const Home = () => {
                   <div className='h- w-30 bg-teal-600 text-center p-2 rounded text-white relative'>
                     <h1>{'{ai}'}</h1>
                   </div>
-                  <p style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}>
+                  <div style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}>
                     {loading ? (
                       <ClipLoader
                         css={{
@@ -270,6 +268,7 @@ const Home = () => {
                         data-testid="loader"
                       />
                     ) : (
+                      <div>
                       <ReactMarkdown
                       remarkPlugins={[remarkGfm]}
                       components={{
@@ -284,9 +283,10 @@ const Home = () => {
                   >
                       {responseText}
                   </ReactMarkdown>
+                  </div>
 
                     )}
-                  </p>
+                  </div>
                 </div>
                 <div className='flex space-x-1'>
                   <HandThumbUpIcon className='h-6 w-6' />
@@ -310,13 +310,15 @@ const Home = () => {
               value = {inputValue}
               onChange={(e) => {
                 setInputValue(e.target.value);
-                setTableVisible(!e.target.value);
                 setTutorial(!e.target.value);
               }}
             />
             <PaperAirplaneIcon
               className='h-4 w-4 text-right -rotate-45 cursor-pointer'
-              onClick={handlePaperPlaneClick}
+              onClick={() => {
+                handlePaperPlaneClick();
+              setTableVisible(false);
+            }}
             />
           </div>
         </div>
