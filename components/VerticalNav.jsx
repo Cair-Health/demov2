@@ -76,7 +76,12 @@ const VerticalNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
       <Image src= {close} width={35} height={35} alt="close" onClick={() => setSidebar(false)}/>
     </div>
 
-      <section className="mt-32 flex flex-col items-center space-y-4 ">
+    <div className = "p-20">
+      <Image src= {home} width={35} height={35} alt="close" onClick={() => window.location.reload()}/>
+
+      </div>
+
+      <section className="mt-1 flex flex-col items-center space-y-4 ">
         {/* State Dropdown */}
         <select className="mb-12 w-36 flex items-center rounded-xl " style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}
         value={selectedState}
@@ -111,10 +116,7 @@ const VerticalNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
         </select>
       </section>
 
-      <div className = "p-20">
-      <Image src= {home} width={35} height={35} alt="close" onClick={() => window.location.reload()}/>
-
-      </div>
+      
   
       {/* Submit Button */}
 

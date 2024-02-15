@@ -12,6 +12,7 @@ import Image from 'next/image';
 import VerticalNav from "../components/VerticalNav";
 import Table from "../components/Table";
 import CairLogo from "/public/CairHealthLogo.png";
+import Bot from '/public/carbonbot.svg'
 import ClipLoader from 'react-spinners/BeatLoader';
 import ReactMarkdown from 'react-markdown';
 import RecentQueries from '../components/RecentQueries'
@@ -144,7 +145,7 @@ const Home = () => {
 
       const getResponseResponse = await fetch("http://34.204.45.209:5000/get_response/", getResponseOptions);
       if (!getResponseResponse.ok) {
-        throw new Error('Failed to get response');
+        throw new Error('Failed to get response')
       }
 
       const getResponseResult = await getResponseResponse.text();
@@ -156,6 +157,7 @@ const Home = () => {
     
     } catch (error) {
       console.error('Error getting response:', error);
+      setResponseText("Failed to get response due to server error: 500")
     } finally {
       setLoading(false);
       startChat();
@@ -202,7 +204,7 @@ const Home = () => {
 
         {/* Table body */}
         <tbody>
-          {tableData.slice(0, 3).map((row, index) => (
+          {tableData.slice(0, 6).map((row, index) => (
             <tr key={index}>
               <td className="border px-8 py-4 border-2 border-gray-300">{row.Payer}</td>
               <td className="border px-8 py-4 border-2 border-gray-300">{row.Policy}</td>
@@ -283,7 +285,7 @@ const Home = () => {
                 <div className='flex space-x-4 items-center'>
 
                   {/* User Query */}
-                  <div className='h-8 w-30 bg-indigo-500 text-center p-1 px-2 rounded text-white text-lg'>A</div>
+                  <div className='h-10 w-10 bg-indigo-500 text-center p-1 px-2 rounded text-white text-lg'>Pr</div>
                   <p style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}>
                     {returnQuery}
                   </p>
@@ -294,8 +296,8 @@ const Home = () => {
             <div className='w-full flex items-center justify-center border-t border-b' style={{ background: '#FAF9F6' }}>
               <div className='flex space-x-4 items-center justify-between px-6 py-6 w-4/5'>
                 <div className='flex space-x-4 items-center'>
-                  <div className='h- w-30 bg-teal-600 text-center p-2 rounded text-white relative'>
-                    <h1>{'{ai}'}</h1>
+                  <div className='h-10 w-15 bg-teal-600 text-center p-2 rounded text-white relative'>
+                    <Image src = {Bot} height = "auto" width = {30} />
                   </div>
                   <div style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}>
                     {loading ? (
