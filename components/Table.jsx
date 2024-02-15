@@ -36,7 +36,7 @@ const Table = ({ selectedState, selectedDocType, selectedProvider }) => {
 
         {/* Table body */}
         <tbody>
-          {tableData.map((row, index) => (
+          {tableData.slice(0, 3).map((row, index) => (
             <tr key={index}>
               <td className="border px-8 py-4 border-2 border-gray-300">{row.Payer}</td>
               <td className="border px-8 py-4 border-2 border-gray-300">{row.Policy}</td>

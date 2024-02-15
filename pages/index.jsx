@@ -16,6 +16,7 @@ import ClipLoader from 'react-spinners/BeatLoader';
 import ReactMarkdown from 'react-markdown';
 import RecentQueries from '../components/RecentQueries'
 import remarkGfm from 'remark-gfm'
+import Linkify from 'linkify-react';
 
 const Home = () => {
   const [hasAnswered, setHasAnswered] = useState(false);
@@ -29,6 +30,8 @@ const Home = () => {
   const [history, setHistory] = useState([]);
   const [currentQuery, setCurrentQuery] = useState("");
   const scrollRef = useRef(null);
+
+
 
 
   useEffect(() => {
@@ -52,7 +55,7 @@ const Home = () => {
 
   const [selectedState, setSelectedState] = useState("California");
   const [selectedDocType, setSelectedDocType] = useState("");
-  const [selectedProvider, setSelectedProvider] = useState("Anthem");
+  const [selectedProvider, setSelectedProvider] = useState("");
 
   const handleStateChange = (value) => {
     setSelectedState(value);
@@ -64,8 +67,29 @@ const Home = () => {
 
   const handleProviderChange = (value) => {
     setSelectedProvider(value);
-    startChat();
   };
+
+
+
+  const [tableData, setTableData] = useState([]);
+  
+  useEffect(() => {
+    // Fetch and update tableData when selectedProvider changes
+    const fetchData = async () => {
+      // Fetch data from tabledata.json
+      const rawData = require('/components/TableData.json');
+  
+      // Filter data based on selectedProvider
+      const filteredData = rawData.filter((row) => {
+        return !selectedProvider || row.Payer === selectedProvider;
+      });
+  
+      // Update tableData state
+      setTableData(filteredData);
+    };
+  
+    fetchData(); // Call the fetchData function when component mounts or when selectedProvider changes
+  }, [selectedProvider]);
 
   const startChat = async () => {
     try {
@@ -134,6 +158,7 @@ const Home = () => {
       console.error('Error getting response:', error);
     } finally {
       setLoading(false);
+      startChat();
     }
   };
 
@@ -162,14 +187,36 @@ const Home = () => {
             </div>
           </div>
         </div>
-  
-  <div className='flex-col text-black overflow-auto pb-40' style={{ maxHeight: '400px' }}>
-    <Table
-      selectedState={selectedState}
-      selectedDocType={selectedDocType}
-      selectedProvider={selectedProvider}
-    />
-  </div>
+  {tableVisible && (
+
+<div className="bg-gradient-to-r from-gray-100 to-gray-200 rounded-xl overflow-auto">
+      <table className="w-full min-w-full border-collapse shadow-lg rounded-xl border-2 border-gray-300 font-inter">
+        {/* Table header */}
+        <thead>
+          <tr>
+            <th className="border-b-2 text-left px-8 py-4 text-black font-bold border-gray-300">Payer</th>
+            <th className="border-b-2 text-left px-8 py-4 text-black font-bold border-gray-300">Policy</th>
+            <th className="border-b-2 text-left px-8 py-4 text-black font-bold border-gray-300">URL</th>
+          </tr>
+        </thead>
+
+        {/* Table body */}
+        <tbody>
+          {tableData.slice(0, 3).map((row, index) => (
+            <tr key={index}>
+              <td className="border px-8 py-4 border-2 border-gray-300">{row.Payer}</td>
+              <td className="border px-8 py-4 border-2 border-gray-300">{row.Policy}</td>
+              <td className="border px-8 py-4 border-2 border-gray-300">
+                <a href={row.URL} target="_blank" rel="noopener noreferrer">
+                  {row.URL}
+                </a>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    )}
   
         {!hasAnswered && tutorial && (
           <div className='flex flex-col space-y-4 justify-center items-center absolute inset-x-0 top-0 bottom-0'>
