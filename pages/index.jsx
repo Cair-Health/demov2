@@ -19,6 +19,9 @@ import RecentQueries from '../components/RecentQueries'
 import remarkGfm from 'remark-gfm'
 import Linkify from 'linkify-react';
 
+// Define your password here
+const PASSWORD = "reesespieces";
+
 const Home = () => {
   const [hasAnswered, setHasAnswered] = useState(false);
   const [tableVisible, setTableVisible] = useState(true);
@@ -31,15 +34,21 @@ const Home = () => {
   const [history, setHistory] = useState([]);
   const [currentQuery, setCurrentQuery] = useState("");
   const scrollRef = useRef(null);
-
-
-
+  const [password, setPassword] = useState("");
+  const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
     }
   }, [inputValue]);
+
+  useEffect(() => {
+    if (password === PASSWORD) {
+      setAuthenticated(true);
+    }
+  }, [password]);
+
 
   const CustomLink = ({ href, children }) => (
     <a href={href} style={{ color: 'blue', textDecoration: 'underline' }}>
@@ -167,7 +176,18 @@ const Home = () => {
   // Call the startChat function when your application needs to start a new chat
 
   return (
-    <div style={{ backgroundColor: '#FAF9F6' }} className='h-screen text-black flex'>
+    <>
+    {!authenticated ? (
+        <div>
+          <h1>Please Enter Password:</h1>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+      ) : (
+<div style={{ backgroundColor: '#FAF9F6' }} className='h-screen text-black flex'>
       {/* sidebar div*/}
       {/* sidebar extends full height of screen and is using rounded property because I'm trying to overlap it with the top nav */}
       <VerticalNav
@@ -367,7 +387,10 @@ const Home = () => {
         </div>
       </div>
     </div>
+  )}
+  </>
   );
 };
+
 
 export default Home;
