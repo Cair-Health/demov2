@@ -72,18 +72,18 @@ const VerticalNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
   return (
     <div className = 'navbar-menu'>
       
-      <div style = {{marginLeft: '165px', marginTop: '20px'}}>
-      <Image src= {close} width={35} height={35} alt="close" onClick={() => setSidebar(false)}/>
+      <div className = "ml-[75%] mt-[7%]" >
+      <Image src= {close} width={45} height={35} alt="close" onClick={() => setSidebar(false)}/>
     </div>
 
-    <div className = "p-20">
+    <div className = "relative top-[20%] flex justify-center items-center">
       <Image src= {home} width={35} height={35} alt="close" onClick={() => window.location.reload()}/>
 
       </div>
 
-      <section className="mt-1 flex flex-col items-center space-y-4 ">
+      <section className="flex items-center flex-col relative top-1/4 ">
         {/* State Dropdown */}
-        <select className="mb-12 w-36 flex items-center rounded-xl " style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}
+        <select className="w-[95%] mb-12 flex items-center rounded-xl " style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}
         value={selectedState}
         onChange={handleStateChange}>
           <option value="">California</option>
@@ -92,9 +92,9 @@ const VerticalNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
           ))}
         </select>
   
-      <div>
+      
         {/* Document Type Dropdown */}
-        <select className="mb-12 w-36 flex items-center rounded-xl" style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}
+        <select className="w-[95%] mb-12 flex items-center rounded-xl" style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}
                 value={selectedDocType}
                 onChange={handleDoctypeChange}>
           <option value="">Medical Policies</option>
@@ -102,11 +102,11 @@ const VerticalNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
             <option key={item.doctype}>{item.doctype}</option>
           ))}
         </select>
-        </div>
+        
 
   
         {/* Provider Dropdown */}
-        <select className="rounded-xl w-36" style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}
+        <select className="w-[95%] rounded-xl" style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}
           value={selectedProvider}
           onChange={handleProviderChange}>
           <option value="">Payer</option>
@@ -125,8 +125,8 @@ const VerticalNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
     } else {
             return (
               <div className = "navbar-menu-closed">
-                <div style = {{marginLeft: '15px', marginTop: '15px'}} >
-                    <Image src={open} width={35} height={35} alt="open" onClick = { () => setSidebar(true)} />
+                <div className = "ml-[25%] mt-[7%]" >
+                    <Image src={open} width={45} height={35} alt="open" onClick = { () => setSidebar(true)} />
                   </div>
 
               </div>

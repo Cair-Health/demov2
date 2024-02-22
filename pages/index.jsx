@@ -204,7 +204,7 @@ const Home = () => {
 
         {/* Table body */}
         <tbody>
-          {tableData.slice(0, 3).map((row, index) => (
+          {tableData.slice(0, 2).map((row, index) => (
             <tr key={index}>
               <td className="border px-8 py-4 border-2 border-gray-300">{row.Payer}</td>
               <td className="border px-8 py-4 border-2 border-gray-300">{row.Policy}</td>
@@ -274,82 +274,78 @@ const Home = () => {
 
         
 
-        {hasAnswered && (
-          <div className='flex-col text-black overflow-auto pb-40'>
-                       {history.length >= 0 && (
-  <div className='pl-56 mx-auto '>
-    <RecentQueries history={history} currentQuery={currentQuery} />
-  </div>)}
-            <div className='w-full flex items-center justify-center pb-1'>
-              <div className='flex space-x-4 items-center justify-between px-6 py-6 w-4/5'>
-                <div className='flex space-x-4 items-center'>
+{hasAnswered && (
+  <div className='flex flex-col  text-black overflow-auto pb-40'>
+  {/* Recent Queries Component */}
+  {history.length >= 0 && (
+    <div className='ml-[8%] mx-auto'>
+      <RecentQueries history={history} currentQuery={currentQuery} />
+    </div>
+  )}
 
-                  {/* User Query */}
-                  <div className='h-10 w-10 bg-indigo-500 text-center p-1 px-2 rounded text-white text-lg'>Pr</div>
-                  <p style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}>
-                    {returnQuery}
-                  </p>
-                </div>
-                <PencilSquareIcon className='h-6 w-6' />
-              </div>
-            </div>
-            <div className='w-full flex items-center justify-center border-t border-b' style={{ background: '#FAF9F6' }}>
-              <div className='flex space-x-4 items-center justify-between px-6 py-6 w-4/5'>
-                <div className='flex space-x-4 items-center'>
-                  <div className='h-10 w-15 bg-teal-600 text-center p-2 rounded text-white relative'>
-                    <Image src = {Bot} height = "auto" width = {30} />
-                  </div>
-                  <div style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}>
-                    {loading ? (
-                      <ClipLoader
-                        css={{
-                          display: "block",
-                          margin: "0 auto",
-                          borderColor: "red",
-                        }}
-                        size={15}
-                        color={"#40929B"}
-                        loading={loading}
-                        speedMultiplier={1.5}
-                        aria-label="Loading Spinner"
-                        data-testid="loader"
-                      />
+  {/* New Query and Response Section */}
+  <div className='ml-[8%] w-full flex items-center  pb-1'>
+    <div className='h-10 w-10 bg-indigo-500 text-center p-1 px-2 rounded text-white text-lg'>Pr</div>
+    <div className='flex space-x-4 items-center justify-between px-6 py-6 w-4/5'>
+      <div className='flex space-x-4 items-center'>
+        {/* User Query */}
+        <p style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}>
+          {returnQuery}
+        </p>
+      </div>
+      <PencilSquareIcon className='h-6 w-6' />
+    </div>
+  </div>
+
+  <div className='ml-[8%] w-full flex items-center border-t border-b' style={{ background: '#FAF9F6' }}>
+    <div className='flex items-center justify-center h-10 w-10 bg-teal-600 rounded text-white relative'>
+      <Image src={Bot} height="30" width="30" alt="bot" />
+    </div>
+    <div className='flex space-x-4 items-center justify-between px-6 py-6 w-4/5'>
+      <div className='flex space-x-4 items-center'>
+        <div style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}>
+          {loading ? (
+            <ClipLoader
+              css={{
+                display: "block",
+                margin: "0 auto",
+                borderColor: "red",
+              }}
+              size={15}
+              color={"#40929B"}
+              loading={loading}
+              speedMultiplier={1.5}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+          ) : (
+            <div>
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  a: props => {
+                    return props.href.startsWith('https://') ? (
+                      <a href={props.href} className="text-teal-800 underline" target="_blank">source</a>// Render Twitter links with custom component
                     ) : (
-                      <div>
-                      <ReactMarkdown
-                      remarkPlugins={[remarkGfm]}
-                      components={{
-                          a: props => {
-                              return props.href.startsWith('https://') ? (
-                                <a href={props.href} className="text-teal-800 underline" target = "_blank">source</a>// Render Twitter links with custom component
-                              ) : (
-                                  <a href={props.href} className="text-teal-600 underline">{props.children}</a> // All other links
-                              )
-                          }
-                      }}
-                  >
-                      {responseText}
-                  </ReactMarkdown>
-                  </div>
-
-                    )}
-                  </div>
-                </div>
-                <div className='flex space-x-1'>
-                  <HandThumbUpIcon className='h-6 w-6' />
-                  <HandThumbDownIcon className='h-6 w-6' />
-                </div>
-              </div>
+                      <a href={props.href} className="text-teal-600 underline">{props.children}</a> // All other links
+                    )
+                  }
+                }}
+              >
+                {responseText}
+              </ReactMarkdown>
             </div>
-
-
- 
-
-
-  
-          </div>
-        )}
-
+          )}
+        </div>
+      </div>
+      <div className='flex space-x-1'>
+        <HandThumbUpIcon className='h-6 w-6' />
+        <HandThumbDownIcon className='h-6 w-6' />
+      </div>
+    </div>
+  </div>
+</div>
+)}
         <div className='absolute bottom-0 inset-x-0 mx-auto px-4 py-6 max-w-3xl'>
           <div className='text-black border border-gray-400 flex justify-center items-center space-x-2 shadow-md rounded px-2'>
             <input
