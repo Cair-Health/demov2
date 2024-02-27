@@ -201,8 +201,8 @@ const Home = () => {
         {!hasAnswered && <div className='flex flex-col space-y-4 justify-center items-center absolute inset-x-0 top-0 bottom-0'></div>}
 
         {/* Cair Banner */}
-        <div className="relative flex- bg-white border-gray-200 rounded" style={{ backgroundColor: '#40929B', zIndex:1 }}>
-          <div className="w-full flex flex-wrap items-center justify-between mx-auto p-5">
+        <div className="relative flex bg-white border-gray-200 rounded" style={{ backgroundColor: '#40929B', zIndex:1, height: '7vh' }}>
+          <div className="w-full flex  items-center justify-between mx-auto p-5">
             <Image src={CairLogo} width={300} height='auto' alt="Not found"></Image>
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>
             <div className="hidden w-full md:block md:w-auto" id="navbar-default">
@@ -211,7 +211,7 @@ const Home = () => {
         </div>
   {tableVisible && (
 
-<div className="bg-gradient-to-r from-gray-100 to-gray-200 rounded-xl overflow-auto">
+<div className="bg-gradient-to-r from-gray-100 to-gray-200 rounded-xl overflow-auto md:max-h-[30%]">
       <table className="w-full min-w-full border-collapse shadow-lg rounded-xl border-2 border-gray-300 font-inter">
         {/* Table header */}
         <thead>
@@ -224,11 +224,11 @@ const Home = () => {
 
         {/* Table body */}
         <tbody>
-          {tableData.slice(0, 2).map((row, index) => (
+          {tableData.slice(0, 5).map((row, index) => (
             <tr key={index}>
-              <td className="border px-8 py-4 border-2 border-gray-300">{row.Payer}</td>
-              <td className="border px-8 py-4 border-2 border-gray-300">{row.Policy}</td>
-              <td className="border px-8 py-4 border-2 border-gray-300">
+              <td className="border px-8 py-4 border-2 border-gray-300 text-sm">{row.Payer}</td>
+              <td className="border px-8 py-4 border-2 border-gray-300 text-sm">{row.Policy}</td>
+              <td className="border px-8 py-4 border-2 border-gray-300 text-sm">
                 <a href={row.URL} target="_blank" rel="noopener noreferrer">
                   {row.URL}
                 </a>
@@ -241,8 +241,8 @@ const Home = () => {
     )}
   
         {!hasAnswered && tutorial && (
-          <div className='flex flex-col space-y-4 justify-center items-center absolute inset-x-0 top-0 bottom-0'>
-            <div className='mt-32 space-y-2'>
+          <div className='flex flex-col space-y-4 justify-center items-center  '>
+            <div className='mt-[5%] space-y-2'>
               <div className='grid grid-cols-3 gap-4 text-center text-lg'>
                 <div className='p-2 font-semibold flex flex-col justify-center items-center'>
                   <SunIcon className='h-5 w-5' />Coverage Examples
@@ -369,7 +369,7 @@ const Home = () => {
         <div className='absolute bottom-0 inset-x-0 mx-auto px-4 py-6 max-w-3xl'>
           <div className='text-black border border-gray-400 flex justify-center items-center space-x-2 shadow-md rounded px-2'>
             <input
-              className='flex-1 bg-white p-4 border-0 text-xl focus:outline-none rounded-2xl;'
+              className='flex-1 bg-white p-2 border-0 text-xl focus:outline-none rounded-2xl;'
               value = {inputValue}
               onChange={(e) => {
                 setInputValue(e.target.value);
