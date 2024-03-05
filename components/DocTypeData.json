@@ -1,7 +1,7 @@
 [
-    { "doctype": "Payment Policies" },
-    { "doctype": "Medical Policies" },
-    { "doctype": "Coding Policies" }
+    { "doctype":  "Policies" },
+    { "doctype": "Contracts" },
+    { "doctype": "Financial Reports" }
 
   ]
   
