@@ -72,11 +72,11 @@ const VerticalNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
   return (
     <div className = 'navbar-menu'>
       
-      <div className = "ml-[75%] mt-[7%]" >
+      <div className = "ml-[7rem] mt-[1rem]" >
       <Image src= {close} width="auto" height="35" alt="close" onClick={() => setSidebar(false)}/>
     </div>
 
-    <div className = "relative top-[20%] flex justify-center items-center">
+    <div className = "relative top-[10rem] flex justify-center items-center">
       <Image src= {home} width= "auto" height= {35} alt="close" onClick={() => window.location.reload()}/>
 
       </div>
@@ -125,7 +125,7 @@ const VerticalNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
     } else {
             return (
               <div className = "navbar-menu-closed">
-                <div className = "ml-[25%] mt-[7%]" >
+                <div className = "ml-[1rem] mt-[1rem]" >
                     <Image src={open} width="auto" height={35} alt="open" onClick = { () => setSidebar(true)} />
                   </div>
 

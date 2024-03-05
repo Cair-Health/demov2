@@ -10,7 +10,6 @@ import {
 } from "@heroicons/react/24/outline";
 import Image from 'next/image';
 import VerticalNav from "../components/VerticalNav";
-import Table from "../components/Table";
 import CairLogo from "/public/CairHealthLogo.png";
 import Bot from '/public/carbonbot.svg'
 import ClipLoader from 'react-spinners/BeatLoader';
@@ -24,7 +23,6 @@ const PASSWORD = "reesespieces";
 
 const Home = () => {
   const [hasAnswered, setHasAnswered] = useState(false);
-  const [tableVisible, setTableVisible] = useState(true);
   const [tutorial, setTutorial] = useState(true);
   const [inputValue, setInputValue] = useState("");
   const [responseText, setResponseText] = useState("...try again");
@@ -80,26 +78,6 @@ const Home = () => {
   };
 
 
-
-  const [tableData, setTableData] = useState([]);
-  
-  useEffect(() => {
-    // Fetch and update tableData when selectedProvider changes
-    const fetchData = async () => {
-      // Fetch data from tabledata.json
-      const rawData = require('/components/TableData.json');
-  
-      // Filter data based on selectedProvider
-      const filteredData = rawData.filter((row) => {
-        return !selectedProvider || row.Payer === selectedProvider;
-      });
-  
-      // Update tableData state
-      setTableData(filteredData);
-    };
-  
-    fetchData(); // Call the fetchData function when component mounts or when selectedProvider changes
-  }, [selectedProvider]);
 
   const startChat = async () => {
     try {
@@ -209,39 +187,10 @@ const Home = () => {
             </div>
           </div>
         </div>
-  {tableVisible && (
-
-<div className="bg-gradient-to-r from-gray-100 to-gray-200 rounded-xl overflow-auto md:max-h-[30%]">
-      <table className="w-full min-w-full border-collapse shadow-lg rounded-xl border-2 border-gray-300 font-inter">
-        {/* Table header */}
-        <thead>
-          <tr>
-            <th className="border-b-2 text-left px-8 py-4 text-black font-bold border-gray-300">Payer</th>
-            <th className="border-b-2 text-left px-8 py-4 text-black font-bold border-gray-300">Policy</th>
-            <th className="border-b-2 text-left px-8 py-4 text-black font-bold border-gray-300">URL</th>
-          </tr>
-        </thead>
-
-        {/* Table body */}
-        <tbody>
-          {tableData.slice(0, 5).map((row, index) => (
-            <tr key={index}>
-              <td className="border px-8 py-4 border-2 border-gray-300 text-sm">{row.Payer}</td>
-              <td className="border px-8 py-4 border-2 border-gray-300 text-sm">{row.Policy}</td>
-              <td className="border px-8 py-4 border-2 border-gray-300 text-sm">
-                <a href={row.URL} target="_blank" rel="noopener noreferrer">
-                  {row.URL}
-                </a>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-    )}
+  
   
         {!hasAnswered && tutorial && (
-          <div className='flex flex-col space-y-4 justify-center items-center  '>
+          <div className='flex flex-col space-y-4 justify-center items-center h-full '>
             <div className='mt-[5%] space-y-2'>
               <div className='grid grid-cols-3 gap-4 text-center text-lg'>
                 <div className='p-2 font-semibold flex flex-col justify-center items-center'>
@@ -380,7 +329,6 @@ const Home = () => {
               className='h-4 w-4 text-right -rotate-45 cursor-pointer'
               onClick={() => {
                 handlePaperPlaneClick();
-              setTableVisible(false);
             }}
             />
           </div>
