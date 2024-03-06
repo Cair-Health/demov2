@@ -432,7 +432,9 @@ const Home = () => {
             <Linkify>{responseText}</Linkify>
                
            </div>
+           <p className = "mt-[1.5rem] font-semibold">Related Questions:</p>
            <div class="pt-[1rem] flex gap-10">
+            
   <div class="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-200 hover:bg-gray-300 cursor-pointer border-2 border-teal-700" onClick={() => setInputValue(question1)}>
     <div class="px-6 py-4">
       <div class="font-bold text-xl mb-2 ">.</div>
