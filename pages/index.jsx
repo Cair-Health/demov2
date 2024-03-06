@@ -19,6 +19,7 @@ import RecentQueries_contracts from '../components/RecentQueries_contracts'
 import RecentQueries_financial_reports from '../components/RecentQueries_financial_reports'
 import RecentQueries_rates from '../components/RecentQueries_rates'
 import remarkGfm from 'remark-gfm'
+import Linkify from 'react-linkify'
 
 
 
@@ -428,11 +429,11 @@ const Home = () => {
            />
          ) : (<div>
            <div>
-               {responseText}
-  
+            <Linkify>{responseText}</Linkify>
+               
            </div>
            <div class="pt-[1rem] flex gap-10">
-  <div class="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-100 hover:bg-gray-200 cursor-pointer" onClick={() => setInputValue(question1)}>
+  <div class="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-200 hover:bg-gray-300 cursor-pointer" onClick={() => setInputValue(question1)}>
     <div class="px-6 py-4">
       <div class="font-bold text-xl mb-2">.</div>
       <p class="text-gray-700 text-base">
@@ -441,7 +442,7 @@ const Home = () => {
     </div>
   </div>
 
-  <div class="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-100 hover:bg-gray-200 cursor-pointer" onClick={() => setInputValue(question2)}>
+  <div class="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-200 hover:bg-gray-300 cursor-pointer" onClick={() => setInputValue(question2)}>
     <div class="px-6 py-4">
       <div class="font-bold text-xl mb-2">..</div>
       <p class="text-gray-700 text-base">
@@ -450,7 +451,7 @@ const Home = () => {
     </div>
   </div>
 
-  <div class="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-100 hover:bg-gray-200 cursor-pointer" onClick={() => setInputValue(question3)}>
+  <div class="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-200 hover:bg-gray-300 cursor-pointer" onClick={() => setInputValue(question3)}>
     <div class="px-6 py-4">
       <div class="font-bold text-xl mb-2">...</div>
       <p class="text-gray-700 text-base">
