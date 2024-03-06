@@ -4,7 +4,7 @@ import remarkGfm from 'remark-gfm';
 import Bot from '/public/carbonbot.svg';
 import Image from 'next/image';
 
-const RecentQueriesTable = ({ history, currentQuery }) => {
+const RecentQueriesTable_contracts = ({ history, currentQuery }) => {
   // Filter queries to exclude the current query
   const filteredQueries = history.filter(({ query }) => query !== currentQuery);
   const displayQueries = filteredQueries;
@@ -21,7 +21,7 @@ const RecentQueriesTable = ({ history, currentQuery }) => {
             </div>
             <div className="flex items-center">
               {/* Bot Image */}
-              <div className="h-10 w-10 bg-teal-600 justify-center items-center flex rounded mr-5 mb-[1rem]">
+              <div className="h-10 w-10 bg-teal-600 justify-center items-center flex rounded mr-5">
                 <Image src={Bot} height="30" width="30" alt="bot" />
               </div>
               {/* Recent Query */}
@@ -49,4 +49,4 @@ const RecentQueriesTable = ({ history, currentQuery }) => {
   );
 };
 
-export default RecentQueriesTable;
+export default RecentQueriesTable_contracts;

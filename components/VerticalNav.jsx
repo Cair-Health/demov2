@@ -41,7 +41,6 @@ const VerticalNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
    onDocTypeChange(value);
  };
 
-
  // Empty dependency array again
 
 
@@ -54,7 +53,7 @@ const VerticalNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
    </div>
 
 
-   <div className = "relative top-[10rem] flex justify-center items-center">
+   <div className = "relative top-[10rem] flex justify-center items-center cursor-pointer">
      <Image src= {home} width= "auto" height= {35} alt="close" onClick={() => window.location.reload()}/>
 
 
@@ -66,7 +65,7 @@ const VerticalNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
 
 
      
-       {/* Document Type Dropdown */}
+       {/* Document Type Dropdown 
        <select className="w-[95%] mb-12 flex items-center rounded-xl" style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}
                value={selectedDocType}
                onChange={handleDoctypeChange}>
@@ -79,6 +78,24 @@ const VerticalNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
 
 
         {/* Provider Dropdown */}
+
+
+        <div className={`ml-[3rem] hover:bg-teal-600  font-bold text-2xl w-full items-center justify-center mb-[3rem] rounded cursor-pointer ${selectedDocType === "Policies" ? 'bg-teal-600' : ''}`} onClick={() => { setSelectedDocType("Policies"); onDocTypeChange("Policies"); }}>
+          Policies
+        </div>
+
+        <div className = {`ml-[3rem] hover:bg-teal-600  font-bold text-2xl w-full items-center justify-center mb-[3rem] rounded cursor-pointer ${selectedDocType === "Contracts" ? 'bg-teal-600' : ''}`} onClick={() => { setSelectedDocType("Contracts"); onDocTypeChange("Contracts"); }}>
+          Contracts
+        </div>
+
+        <div className = {`ml-[3rem] hover:bg-teal-600  font-bold text-2xl w-full items-center justify-center mb-[3rem] rounded cursor-pointer ${selectedDocType === "Financial Reports" ? 'bg-teal-600' : ''}`} onClick={() => { setSelectedDocType("Financial Reports"); onDocTypeChange("Financial Reports"); }}>
+          <span>Financial </span> 
+          <span>Reports</span>
+        </div>
+
+        <div className = {`ml-[3rem] hover:bg-teal-600  font-bold text-2xl w-full items-center justify-center mb-[3rem] rounded cursor-pointer ${selectedDocType === "Rates" ? 'bg-teal-600' : ''}`} onClick={() => { setSelectedDocType("Rates"); onDocTypeChange("Rates"); }}>
+          Rates
+        </div>
       
      </section>
 

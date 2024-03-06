@@ -14,7 +14,10 @@ import CairLogo from "/public/CairHealthLogo.png";
 import Bot from '/public/carbonbot.svg'
 import ClipLoader from 'react-spinners/BeatLoader';
 import ReactMarkdown from 'react-markdown';
-import RecentQueries from '../components/RecentQueries'
+import RecentQueries_policies from '../components/RecentQueries_policies'
+import RecentQueries_contracts from '../components/RecentQueries_contracts'
+import RecentQueries_financial_reports from '../components/RecentQueries_financial_reports'
+import RecentQueries_rates from '../components/RecentQueries_rates'
 import remarkGfm from 'remark-gfm'
 
 
@@ -34,11 +37,19 @@ const Home = () => {
  const [sessionID_contracts, setSessionID_contracts] = useState("");
  const [sessionID_financial_reports, setSessionID_financial_reports] = useState("");
  const [loading, setLoading] = useState(false);
+ const [history_policies, setHistory_policies] = useState([]);
+ const [history_contracts, setHistory_contracts] = useState([]);
+ const [history_financial_reports, setHistory_financial_reports] = useState([]);
+ const [history_rates, setHistory_rates] = useState([]);
  const [history, setHistory] = useState([]);
+
  const [currentQuery, setCurrentQuery] = useState("");
  const scrollRef = useRef(null);
  const [password, setPassword] = useState("");
  const [authenticated, setAuthenticated] = useState(false);
+ const [question1, setQuestion1] = useState("")
+ const [question2, setQuestion2] = useState("")
+ const [question3, setQuestion3] = useState("")
 
 
  useEffect(() => {
@@ -211,13 +222,39 @@ const Home = () => {
 
 
      const getResponseResult = await getResponseResponse.text();
-     setResponseText(getResponseResult);
+     console.log(getResponseResult)
+     const jsonAnswer = JSON.parse(getResponseResult)
+     const answer = jsonAnswer.answer
+     const question1 = jsonAnswer.questions[0]
+     const question2 = jsonAnswer.questions[1]
+     const question3 = jsonAnswer.questions[2]
+     console.log(question1)
+     console.log(question2)
+     console.log(question3)
+     setQuestion1(question1)
+     setQuestion2(question2)
+     setQuestion3(question3)
+     console.log(answer)
+     setResponseText(answer);
 
 
      // Store the current query and response in the history
 
-     
-     setHistory([...history, { query: inputValue, response: getResponseResult }]);
+     if(selectedDocType === "Financial Reports"){
+     setHistory_financial_reports([...history_financial_reports, { query: inputValue, response: answer }]);
+     }
+
+     if(selectedDocType === "Policies"){
+      setHistory_policies([...history_policies, { query: inputValue, response: answer }]);
+      }
+
+      if(selectedDocType === "Contracts"){
+        setHistory_contracts([...history_contracts, { query: inputValue, response: answer }]);
+      }
+
+        if(selectedDocType === "Rates"){
+          setHistory_rates([...history_rates, { query: inputValue, response: answer }]);
+      }
     
   
    } catch (error) {
@@ -328,9 +365,27 @@ const Home = () => {
 {hasAnswered && (
  <div className='flex flex-col  text-black overflow-auto pb-40'>
  {/* Recent Queries Component */}
- {history.length >= 0 && (
+ {(history.length >= 0 && selectedDocType === "Policies") && (
    <div className='ml-[8%] mx-auto'>
-     <RecentQueries history={history} currentQuery={currentQuery} />
+     <RecentQueries_policies history={history_policies} currentQuery={currentQuery} />
+   </div>
+ )}
+
+{(history.length >= 0 && selectedDocType === "Contracts") && (
+   <div className='ml-[8%] mx-auto'>
+     <RecentQueries_contracts history={history_contracts} currentQuery={currentQuery} />
+   </div>
+ )}
+
+{(history.length >= 0 && selectedDocType === "Financial Reports") && (
+   <div className='ml-[8%] mx-auto'>
+     <RecentQueries_financial_reports history={history_financial_reports} currentQuery={currentQuery} />
+   </div>
+ )}
+
+{(history.length >= 0 && selectedDocType === "Rates") && (
+   <div className='ml-[8%] mx-auto'>
+     <RecentQueries_rates history={history_rates} currentQuery={currentQuery} />
    </div>
  )}
 
@@ -371,22 +426,43 @@ const Home = () => {
              aria-label="Loading Spinner"
              data-testid="loader"
            />
-         ) : (
+         ) : (<div>
            <div>
-             <ReactMarkdown
-               remarkPlugins={[remarkGfm]}
-               components={{
-                 a: props => {
-                   return props.href.startsWith('https://') ? (
-                     <a href={props.href} className="text-teal-800 underline" target="_blank">source</a>// Render Twitter links with custom component
-                   ) : (
-                     <a href={props.href} className="text-teal-600 underline">{props.children}</a> // All other links
-                   )
-                 }
-               }}
-             >
                {responseText}
-             </ReactMarkdown>
+  
+           </div>
+           <div class="pt-[1rem] flex gap-10">
+  <div class="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-100 hover:bg-gray-200 cursor-pointer" onClick={() => setInputValue(question1)}>
+    <div class="px-6 py-4">
+      <div class="font-bold text-xl mb-2">.</div>
+      <p class="text-gray-700 text-base">
+        {question1}
+      </p>
+    </div>
+  </div>
+
+  <div class="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-100 hover:bg-gray-200 cursor-pointer" onClick={() => setInputValue(question2)}>
+    <div class="px-6 py-4">
+      <div class="font-bold text-xl mb-2">..</div>
+      <p class="text-gray-700 text-base">
+        {question2}
+      </p>
+    </div>
+  </div>
+
+  <div class="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-100 hover:bg-gray-200 cursor-pointer" onClick={() => setInputValue(question3)}>
+    <div class="px-6 py-4">
+      <div class="font-bold text-xl mb-2">...</div>
+      <p class="text-gray-700 text-base">
+        {question3}
+      </p>
+    </div>
+  </div>
+</div>
+
+
+                
+    
            </div>
          )}
        </div>
