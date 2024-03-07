@@ -1,3 +1,4 @@
+'use client'
 import React, { useState, useEffect, useRef } from 'react';
 import {
  BoltIcon,
@@ -435,7 +436,7 @@ const Home = () => {
            <p className = "mt-[1.5rem] font-semibold">Related Questions:</p>
            <div class="pt-[1rem] flex gap-10">
             
-  <div class="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-200 hover:bg-gray-300 cursor-pointer border-2 border-teal-700" onClick={() => setInputValue(question1)}>
+  <div class="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-100 hover:bg-gray-300 cursor-pointer border-2 border-teal-700" onClick={() => setInputValue(question1)}>
     <div class="px-6 py-4">
       <div class="font-bold text-xl mb-2 ">.</div>
       <p class="text-gray-700 text-base  ">
@@ -444,7 +445,7 @@ const Home = () => {
     </div>
   </div>
 
-  <div class="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-200 hover:bg-gray-300 cursor-pointer border-2 border-teal-700" onClick={() => setInputValue(question2)}>
+  <div class="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-100 hover:bg-gray-300 cursor-pointer border-2 border-teal-700" onClick={() => setInputValue(question2)}>
     <div class="px-6 py-4">
       <div class="font-bold text-xl mb-2">..</div>
       <p class="text-gray-700 text-base">
@@ -453,7 +454,7 @@ const Home = () => {
     </div>
   </div>
 
-  <div class="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-200 hover:bg-gray-300 cursor-pointer border-2 border-teal-700" onClick={() => setInputValue(question3)}>
+  <div class="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-100 hover:bg-gray-300 cursor-pointer border-2 border-teal-700" onClick={() => setInputValue(question3)}>
     <div class="px-6 py-4">
       <div class="font-bold text-xl mb-2">...</div>
       <p class="text-gray-700 text-base">
@@ -481,12 +482,20 @@ const Home = () => {
        <div className='absolute bottom-0 inset-x-0 mx-auto px-4 py-6 max-w-3xl'>
          <div className='text-black border border-gray-400 flex justify-center items-center space-x-2 shadow-md rounded px-2'>
            <input
-             className='flex-1 bg-white p-2 border-0 text-xl focus:outline-none rounded-2xl;'
+             className='flex-1 bg-white p-2 border-0 text-xl focus:outline-none rounded-2xl'
+             style={{ minHeight: '50px', resize: 'none' }}
              value = {inputValue}
              onChange={(e) => {
                setInputValue(e.target.value);
                setTutorial(!e.target.value);
              }}
+
+             onKeyPress={(e) => {
+              if (e.key === 'Enter') {
+                handlePaperPlaneClick(); // Assuming this function handles submission
+              }
+            }}
+            
            />
            <PaperAirplaneIcon
              className='h-4 w-4 text-right -rotate-45 cursor-pointer'
