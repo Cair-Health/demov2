@@ -52,6 +52,7 @@ const Home = () => {
  const [question1, setQuestion1] = useState("")
  const [question2, setQuestion2] = useState("")
  const [question3, setQuestion3] = useState("")
+ const [guidebot, setGuidebot] = useState(false)
 
 
  useEffect(() => {
@@ -61,11 +62,11 @@ const Home = () => {
 
 
 
- useEffect(() => {
+ {/*useEffect(() => {
    if (password === PASSWORD) {
      setAuthenticated(true);
    }
- }, [password]);
+ }, [password]);*/}
 
 
 
@@ -146,6 +147,7 @@ const Home = () => {
    }
  };
 
+ 
 
 
 
@@ -237,9 +239,21 @@ const Home = () => {
      setQuestion2(question2)
      setQuestion3(question3)
      console.log(answer)
-     setResponseText(answer);
+     setResponseText(answer)
+    {/*
+     const responseStreaming = (answer) => {
+      let index = 0;
+      const interval = setInterval(() => {
+          if (index < answer.length) {
+              setResponseText(prevResponseText => prevResponseText + answer[index]);
+              index++;
+          } else {
+              clearInterval(interval);
+          }
+      }, 100);
+  }; */}
 
-
+      responseStreaming(answer);
      // Store the current query and response in the history
 
      if(selectedDocType === "Financial Reports"){
@@ -274,7 +288,7 @@ const Home = () => {
 
  return (
    <>
-   {!authenticated ? (
+   {/*!authenticated ? (
        <div>
          <h1>Please Enter Password:</h1>
          <input
@@ -283,7 +297,7 @@ const Home = () => {
            onChange={(e) => setPassword(e.target.value)}
          />
        </div>
-     ) : (
+   ) : */} 
 <div style={{ backgroundColor: '#FAF9F6' }} className='h-screen text-black flex'>
      {/* sidebar div*/}
      {/* sidebar extends full height of screen and is using rounded property because I'm trying to overlap it with the top nav */}
@@ -297,15 +311,20 @@ const Home = () => {
        {!hasAnswered && <div className='flex flex-col space-y-4 justify-center items-center absolute inset-x-0 top-0 bottom-0'></div>}
 
 
+
        {/* Cair Banner */}
-       <div className="relative flex bg-white border-gray-200 rounded" style={{ backgroundColor: '#40929B', zIndex:1, height: '7vh' }}>
-         <div className="w-full flex  items-center justify-between mx-auto p-5">
-           <Image src={CairLogo} width={300} height='auto' alt="Not found"></Image>
-           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>
-           <div className="hidden w-full md:block md:w-auto" id="navbar-default">
-           </div>
-         </div>
-       </div>
+
+       <div>
+        <div className="relative flex bg-white border-gray-200 rounded" style={{ backgroundColor: '#40929B', zIndex:1, height: '7vh' }}>
+          <div className="w-full flex items-center justify-between mx-auto p-5">
+            <Image src={CairLogo} width={300} height='auto' alt="Not found"></Image>
+            <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>
+            <div className="hidden w-full md:block md:w-auto" id="navbar-default">
+            </div>
+          </div>
+        </div>
+      </div>
+       
  
        {!hasAnswered && tutorial && (
          <div className='flex flex-col space-y-4 justify-center items-center h-full '>
@@ -332,7 +351,7 @@ const Home = () => {
                  Potential limitations in policy coverage
                </div>
              </div>
-             <div className='grid grid-cols-3 gap-4 text-center text-center'>
+             <div className='grid grid-cols-3 gap-4 text-center'>
                <div className='p-2 bg-gray-300 hover:bg-gray-400 rounded-md text-sm shadow-sm w-60'>
                  Clarifying coverage terms and conditions
                </div>
@@ -398,7 +417,7 @@ const Home = () => {
    <div className='flex space-x-4 items-center justify-between px-6 py-6 w-4/5'>
      <div className='flex space-x-4 items-center'>
        {/* User Query */}
-       <p style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}>
+       <p className = "font-semibold" style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}>
          {returnQuery}
        </p>
      </div>
@@ -436,18 +455,18 @@ const Home = () => {
            <p className = "mt-[1.5rem] font-semibold">Related Questions:</p>
            <div class="pt-[1rem] flex gap-10">
             
-  <div class="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-100 hover:bg-gray-300 cursor-pointer border-2 border-teal-700" onClick={() => setInputValue(question1)}>
-    <div class="px-6 py-4">
-      <div class="font-bold text-xl mb-2 ">.</div>
+  <div class="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-100 hover:bg-gray-300 cursor-pointer border-2 border-teal-700 items-center justify-center" onClick={() => setInputValue(question1)}>
+    <div class="px-6 ">
+      <div class="font-bold text-xl mb-2 "></div>
       <p class="text-gray-700 text-base  ">
         {question1}
       </p>
     </div>
   </div>
 
-  <div class="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-100 hover:bg-gray-300 cursor-pointer border-2 border-teal-700" onClick={() => setInputValue(question2)}>
-    <div class="px-6 py-4">
-      <div class="font-bold text-xl mb-2">..</div>
+  <div class="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-100 hover:bg-gray-300 cursor-pointer border-2 border-teal-700 items-center justify-center" onClick={() => setInputValue(question2)}>
+    <div class="px-6">
+      <div class="font-bold text-xl mb-2"></div>
       <p class="text-gray-700 text-base">
         {question2}
       </p>
@@ -455,8 +474,8 @@ const Home = () => {
   </div>
 
   <div class="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-100 hover:bg-gray-300 cursor-pointer border-2 border-teal-700" onClick={() => setInputValue(question3)}>
-    <div class="px-6 py-4">
-      <div class="font-bold text-xl mb-2">...</div>
+    <div class="px-6">
+      <div class="font-bold text-xl mb-2"></div>
       <p class="text-gray-700 text-base">
         {question3}
       </p>
@@ -480,10 +499,12 @@ const Home = () => {
 </div>
 )}
        <div className='absolute bottom-0 inset-x-0 mx-auto px-4 py-6 max-w-3xl'>
+      
          <div className='text-black border border-gray-400 flex justify-center items-center space-x-2 shadow-md rounded px-2'>
-           <input
-             className='flex-1 bg-white p-2 border-0 text-xl focus:outline-none rounded-2xl'
-             style={{ minHeight: '50px', resize: 'none' }}
+        
+           <textarea
+             className='flex-1 bg-white p-2 border-0 text-xl focus:outline-none rounded-2xl resize-y'
+             style={{ minHeight: '20px', resize: 'none' }}
              value = {inputValue}
              onChange={(e) => {
                setInputValue(e.target.value);
@@ -507,7 +528,7 @@ const Home = () => {
        </div>
      </div>
    </div>
- )}
+ )
  </>
  );
 };

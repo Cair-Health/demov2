@@ -3,6 +3,7 @@ import Image from 'next/image';
 import close from '/public/close.svg'
 import open from '/public/open.svg'
 import home from '/public/home.svg'
+import Link from "next/link"
 
 
 
@@ -14,6 +15,10 @@ const VerticalNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
  const [selectedMode, setSelectedMode] = useState("");
  const [selectedDocType, setSelectedDocType] = useState("");
  const [sidebar, setSidebar] = useState(true);
+const [isOpen1, setIsOpen1] = useState(false);
+const [isOpen2, setIsOpen2] = useState(false);
+const [isOpen3, setIsOpen3] = useState(false);
+
 
 
  // Using async functions inside useEffect for better cod
@@ -54,8 +59,9 @@ const VerticalNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
 
 
    <div className = "relative top-[10rem] flex justify-center items-center cursor-pointer">
-     <Image src= {home} width= "auto" height= {35} alt="close" onClick={() => window.location.reload()}/>
-
+    <Link href = "/upload">
+     <Image src= {home} width= "auto" height= {35} alt="close"/>
+     </Link>
 
      </div>
 
@@ -80,22 +86,45 @@ const VerticalNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
         {/* Provider Dropdown */}
 
 
-        <div className={`pl-[2rem] hover:bg-teal-600  font-bold text-2xl w-full items-center justify-center mb-[3rem] rounded cursor-pointer ${selectedDocType === "Policies" ? 'bg-teal-600' : ''}`} onClick={() => { setSelectedDocType("Policies"); onDocTypeChange("Policies"); }}>
-          Policies
+      
+      <button className={`pl-[rem] hover:bg-teal-600 font-bold text-2xl w-full items-center justify-center mb-[3rem] rounded cursor-pointer ${selectedDocType === "Policies" ? 'bg-teal-600' : ''}`} onClick={() => {setIsOpen1(!isOpen1); setIsOpen2(false); setIsOpen3(false)}}>
+        Policies
+      </button>
+      {isOpen1 && (
+        <div className="absolute left-0 mt-[2rem] w-48 bg-white rounded-md shadow-lg z-10">
+          <button className="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left" onClick={() => { setSelectedDocType("Policies"); onDocTypeChange("Polcies"); setIsOpen1(false)}}>Chat</button>
+          <Link href = "/upload-policies">
+          <button className="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left" >Upload</button>
+          </Link>
         </div>
+      )}
 
-        <div className = {`pl-[2rem] hover:bg-teal-600  font-bold text-2xl w-full items-center justify-center mb-[3rem] rounded cursor-pointer ${selectedDocType === "Contracts" ? 'bg-teal-600' : ''}`} onClick={() => { setSelectedDocType("Contracts"); onDocTypeChange("Contracts"); }}>
-          Contracts
+<button className={`pl-[rem] hover:bg-teal-600 font-bold text-2xl w-full items-center justify-center mb-[3rem] rounded cursor-pointer ${selectedDocType === "Contracts" ? 'bg-teal-600' : ''}`} onClick={() => {setIsOpen2(!isOpen2); setIsOpen1(false); setIsOpen3(false)}}>
+        Contracts
+      </button>
+      {isOpen2 && (
+        <div className="absolute left-0 mt-[7rem] w-48 bg-white rounded-md shadow-lg z-10">
+          <button className="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left" onClick={() => { setSelectedDocType("Contracts"); onDocTypeChange("Contracts"); setIsOpen2(false)}}>Chat</button>
+          <Link href = "/upload-contracts">
+          <button className="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left" >Upload</button>
+          </Link>
         </div>
+      )}
 
-        <div className = {`pl-[2rem] hover:bg-teal-600  font-bold text-2xl w-full items-center justify-center mb-[3rem] rounded cursor-pointer ${selectedDocType === "Financial Reports" ? 'bg-teal-600' : ''}`} onClick={() => { setSelectedDocType("Financial Reports"); onDocTypeChange("Financial Reports"); }}>
-          <span>Financial </span> 
-          <span>Reports</span>
-        </div>
+<button className={`pl-[rem] hover:bg-teal-600 font-bold text-2xl w-full items-center justify-center mb-[3rem] rounded cursor-pointer ${selectedDocType === "Rates" ? 'bg-teal-600' : ''}`} onClick={() => {setIsOpen3(!isOpen3); setIsOpen2(false); setIsOpen1(false)}}>
+        Rates
+      </button>
+      {isOpen3 && (
+        <div className="absolute left-0 mt-[12rem] w-48 bg-white rounded-md shadow-lg z-10">
+          <button className="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left" onClick={() => { setSelectedDocType("Rates"); onDocTypeChange("Rates"); setIsOpen3(false)}}>Chat</button>
+          <Link href = "/upload-rates">
+          <button className="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left" >Upload</button>
+          </Link>       
+           </div>
+      )}
 
-        <div className = {`pl-[2rem] hover:bg-teal-600  font-bold text-2xl w-full items-center justify-center mb-[3rem] rounded cursor-pointer ${selectedDocType === "Rates" ? 'bg-teal-600' : ''}`} onClick={() => { setSelectedDocType("Rates"); onDocTypeChange("Rates"); }}>
-          Rates
-        </div>
+
+      
       
      </section>
 
