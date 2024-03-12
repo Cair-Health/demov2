@@ -108,179 +108,168 @@ const Home = () => {
 
 
 
+
  const startChat = async () => {
-   try {
-     const requestOptions = {
-       method: 'PUT',
-       redirect: 'follow',
-     };
-     const response_policies = await fetch("https://chat.cairhealth.com/start_chat_policies/", requestOptions);
-     const response_contracts = await fetch("https://chat.cairhealth.com/start_chat_contracts/", requestOptions);
-     const response_financial_report = await fetch("https://chat.cairhealth.com/start_chat_financial_reports/", requestOptions);
-     if (!response_policies.ok) {
-       throw new Error('Failed to start policies');
-     }
-     if (!response_contracts.ok) {
-       throw new Error('Failed to start contracts');
-     }
-     if (!response_financial_report.ok) {
-       throw new Error('Failed to start financial reports');
-     }
-     const result = await response_policies.text();
-     const result2 = await response_contracts.text();
-     const result3 = await response_financial_report.text();
+  try {
+    const requestOptions = {
+      method: 'PUT',
+      redirect: 'follow',
+    };
+    const response_policies = await fetch("https://chat.cairhealth.com/start_chat_policies/", requestOptions);
+    const response_contracts = await fetch("https://chat.cairhealth.com/start_chat_contracts/", requestOptions);
+    const response_financial_report = await fetch("https://chat.cairhealth.com/start_chat_financial_reports/", requestOptions);
+    if (!response_policies.ok) {
+      throw new Error('Failed to start policies');
+    }
+    if (!response_contracts.ok) {
+      throw new Error('Failed to start contracts');
+    }
+    if (!response_financial_report.ok) {
+      throw new Error('Failed to start financial reports');
+    }
+    const result = await response_policies.text();
+    const result2 = await response_contracts.text();
+    const result3 = await response_financial_report.text();
 
 
-     setSessionID_policies(result);
-     setSessionID_contracts(result2);
-     setSessionID_financial_reports(result3);
-     // Now you can use the sessionID in your application
-     console.log('Session ID - policies:', result);
-     console.log('Session ID - contracts:', result2);
-     console.log('Session ID - financial reports:', result3);
+    setSessionID_policies(result);
+    setSessionID_contracts(result2);
+    setSessionID_financial_reports(result3);
+    // Now you can use the sessionID in your application
+    console.log('Session ID - policies:', result);
+    console.log('Session ID - contracts:', result2);
+    console.log('Session ID - financial reports:', result3);
 
 
-     // Other logic related to getting a response
-  
-   } catch (error) {
-     console.error('Error starting chat:', error);
-   }
- };
-
+    // Other logic related to getting a response
  
+  } catch (error) {
+    console.error('Error starting chat:', error);
+  }
+};
 
 
 
- const handlePaperPlaneClick = async () => {
-   setLoading(true); // Set loading state to true when making the request
-   setReturnQuery(inputValue);
-   setHasAnswered(true);
-   setCurrentQuery(inputValue);
-   setInputValue("");
-   let getResponseResponse;
+
+const handlePaperPlaneClick = async () => {
+  setLoading(true); // Set loading state to true when making the request
+  setReturnQuery(inputValue);
+  setHasAnswered(true);
+  setCurrentQuery(inputValue);
+  setInputValue("");
+  let getResponseResponse;
 
 
-   console.log(selectedDocType);
-   console.log(inputValue);
-   try {
-     const getResponseOptions_policies = {
-       method: 'POST',
-       headers: {
-         'Content-Type': 'application/json',
-       },
-       body: JSON.stringify({
-         "query": inputValue,
-         "customer_id": "customer1",
-         "session_id": sessionID_policies,
-       }),
-       redirect: 'follow',
-     };
+  console.log(selectedDocType);
+  console.log(inputValue);
+  try {
+    const getResponseOptions_policies = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "query": inputValue,
+        "customer_id": "customer1",
+        "session_id": sessionID_policies,
+      }),
+      redirect: 'follow',
+    };
 
 
-     const getResponseOptions_contracts = {
-       method: 'POST',
-       headers: {
-         'Content-Type': 'application/json',
-       },
-       body: JSON.stringify({
-         "query": inputValue,
-         "customer_id": "customer1",
-         "session_id": sessionID_contracts,
-       }),
-       redirect: 'follow',
-     };
+    const getResponseOptions_contracts = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "query": inputValue,
+        "customer_id": "customer1",
+        "session_id": sessionID_contracts,
+      }),
+      redirect: 'follow',
+    };
 
 
-     const getResponseOptions_financial_reports = {
-       method: 'POST',
-       headers: {
-         'Content-Type': 'application/json',
-       },
-       body: JSON.stringify({
-         "query": inputValue,
-         "customer_id": "customer1",
-         "session_id": sessionID_financial_reports,
-       }),
-       redirect: 'follow',
-     };
+    const getResponseOptions_financial_reports = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "query": inputValue,
+        "customer_id": "customer1",
+        "session_id": sessionID_financial_reports,
+      }),
+      redirect: 'follow',
+    };
 
 
-     if(selectedDocType === "Policies"){
-       getResponseResponse = await fetch("https://chat.cairhealth.com/get_response_policies/", getResponseOptions_policies);
+    if(selectedDocType === "Policies"){
+      getResponseResponse = await fetch("https://chat.cairhealth.com/get_response_policies/", getResponseOptions_policies);
+    }
+
+
+     if(selectedDocType === "Contracts"){
+      getResponseResponse = await fetch("https://chat.cairhealth.com/get_response_contracts/", getResponseOptions_contracts);
+    }
+
+
+    if(selectedDocType === "Financial Reports"){
+      getResponseResponse = await fetch("https://chat.cairhealth.com/get_response_financial_reports/", getResponseOptions_financial_reports);
+    }
+
+
+    if (!getResponseResponse.ok) {
+      throw new Error('Failed to get response')
+    }
+
+
+    const getResponseResult = await getResponseResponse.text();
+    console.log(getResponseResult)
+    const jsonAnswer = JSON.parse(getResponseResult)
+    const answer = jsonAnswer.answer
+    const question1 = jsonAnswer.questions[0]
+    const question2 = jsonAnswer.questions[1]
+    const question3 = jsonAnswer.questions[2]
+    console.log(question1)
+    console.log(question2)
+    console.log(question3)
+    setQuestion1(question1)
+    setQuestion2(question2)
+    setQuestion3(question3)
+    console.log(answer)
+    setResponseText(answer);
+
+
+    // Store the current query and response in the history
+
+    if(selectedDocType === "Financial Reports"){
+    setHistory_financial_reports([...history_financial_reports, { query: inputValue, response: answer }]);
+    }
+
+    if(selectedDocType === "Policies"){
+     setHistory_policies([...history_policies, { query: inputValue, response: answer }]);
      }
 
-
-      if(selectedDocType === "Contracts"){
-       getResponseResponse = await fetch("https://chat.cairhealth.com/get_response_contracts/", getResponseOptions_contracts);
+     if(selectedDocType === "Contracts"){
+       setHistory_contracts([...history_contracts, { query: inputValue, response: answer }]);
      }
 
-
-     if(selectedDocType === "Financial Reports"){
-       getResponseResponse = await fetch("https://chat.cairhealth.com/get_response_financial_reports/", getResponseOptions_financial_reports);
+       if(selectedDocType === "Rates"){
+         setHistory_rates([...history_rates, { query: inputValue, response: answer }]);
      }
+   
+ 
+  } catch (error) {
+    console.error('Error getting response:', error);
+    setResponseText("Failed to get response due to server error: 500")
+  } finally {
+    setLoading(false);
+    startChat();
+  }
+};
 
-
-     if (!getResponseResponse.ok) {
-       throw new Error('Failed to get response')
-     }
-
-
-     const getResponseResult = await getResponseResponse.text();
-     console.log(getResponseResult)
-     const jsonAnswer = JSON.parse(getResponseResult)
-     const answer = jsonAnswer.answer
-     const question1 = jsonAnswer.questions[0]
-     const question2 = jsonAnswer.questions[1]
-     const question3 = jsonAnswer.questions[2]
-     console.log(question1)
-     console.log(question2)
-     console.log(question3)
-     setQuestion1(question1)
-     setQuestion2(question2)
-     setQuestion3(question3)
-     console.log(answer)
-     setResponseText(answer)
-    {/*
-     const responseStreaming = (answer) => {
-      let index = 0;
-      const interval = setInterval(() => {
-          if (index < answer.length) {
-              setResponseText(prevResponseText => prevResponseText + answer[index]);
-              index++;
-          } else {
-              clearInterval(interval);
-          }
-      }, 100);
-  }; */}
-
-      responseStreaming(answer);
-     // Store the current query and response in the history
-
-     if(selectedDocType === "Financial Reports"){
-     setHistory_financial_reports([...history_financial_reports, { query: inputValue, response: answer }]);
-     }
-
-     if(selectedDocType === "Policies"){
-      setHistory_policies([...history_policies, { query: inputValue, response: answer }]);
-      }
-
-      if(selectedDocType === "Contracts"){
-        setHistory_contracts([...history_contracts, { query: inputValue, response: answer }]);
-      }
-
-        if(selectedDocType === "Rates"){
-          setHistory_rates([...history_rates, { query: inputValue, response: answer }]);
-      }
-    
-  
-   } catch (error) {
-     console.error('Error getting response:', error);
-     setResponseText("Failed to get response due to server error: 500")
-   } finally {
-     setLoading(false);
-     startChat();
-   }
- };
 
 
  // Call the startChat function when your application needs to start a new chat
