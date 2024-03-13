@@ -442,30 +442,30 @@ const handlePaperPlaneClick = async () => {
                
            </div>
            <p className = "mt-[1.5rem] font-semibold">Related Questions:</p>
-           <div class="pt-[1rem] flex gap-10">
+           <div className="pt-[1rem] flex gap-10">
             
-  <div class="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-100 hover:bg-gray-300 cursor-pointer border-2 border-teal-700 items-center justify-center" onClick={() => setInputValue(question1)}>
-    <div class="px-6 ">
-      <div class="font-bold text-xl mb-2 "></div>
-      <p class="text-gray-700 text-base  ">
+  <div className="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-100 hover:bg-gray-300 cursor-pointer border-2 border-teal-700 items-center justify-center" onClick={() => setInputValue(question1)}>
+    <div className="px-6 ">
+      <div className="font-bold text-xl mb-2 "></div>
+      <p className="text-gray-700 text-base  ">
         {question1}
       </p>
     </div>
   </div>
 
-  <div class="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-100 hover:bg-gray-300 cursor-pointer border-2 border-teal-700 items-center justify-center" onClick={() => setInputValue(question2)}>
-    <div class="px-6">
-      <div class="font-bold text-xl mb-2"></div>
-      <p class="text-gray-700 text-base">
+  <div className="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-100 hover:bg-gray-300 cursor-pointer border-2 border-teal-700 items-center justify-center" onClick={() => setInputValue(question2)}>
+    <div className="px-6">
+      <div className="font-bold text-xl mb-2"></div>
+      <p className="text-gray-700 text-base">
         {question2}
       </p>
     </div>
   </div>
 
-  <div class="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-100 hover:bg-gray-300 cursor-pointer border-2 border-teal-700" onClick={() => setInputValue(question3)}>
-    <div class="px-6">
-      <div class="font-bold text-xl mb-2"></div>
-      <p class="text-gray-700 text-base">
+  <div className="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-100 hover:bg-gray-300 cursor-pointer border-2 border-teal-700" onClick={() => setInputValue(question3)}>
+    <div className="px-6">
+      <div className="font-bold text-xl mb-2"></div>
+      <p className="text-gray-700 text-base">
         {question3}
       </p>
     </div>

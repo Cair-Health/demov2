@@ -92,7 +92,7 @@ const [isOpen3, setIsOpen3] = useState(false);
       </button>
       {isOpen1 && (
         <div className="absolute left-0 mt-[2rem] w-48 bg-white rounded-md shadow-lg z-10">
-          <button className="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left" onClick={() => { setSelectedDocType("Policies"); onDocTypeChange("Polcies"); setIsOpen1(false)}}>Chat</button>
+          <button className="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left" onClick={() => { setSelectedDocType("Policies"); onDocTypeChange("Policies"); setIsOpen1(false)}}>Chat</button>
           <Link href = "/upload-policies">
           <button className="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left" >Upload</button>
           </Link>
