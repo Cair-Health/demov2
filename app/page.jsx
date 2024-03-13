@@ -53,6 +53,7 @@ const Home = () => {
  const [question2, setQuestion2] = useState("")
  const [question3, setQuestion3] = useState("")
  const [guidebot, setGuidebot] = useState(false)
+ const [instructions, setInstructions] = useState(false)
 
 
  useEffect(() => {
@@ -442,7 +443,7 @@ const handlePaperPlaneClick = async () => {
                
            </div>
            <p className = "mt-[1.5rem] font-semibold">Related Questions:</p>
-           <div className="pt-[1rem] flex gap-10">
+           <div className="pt-[1rem] pb-[1rem] flex gap-10">
             
   <div className="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-100 hover:bg-gray-300 cursor-pointer border-2 border-teal-700 items-center justify-center" onClick={() => setInputValue(question1)}>
     <div className="px-6 ">
@@ -487,10 +488,23 @@ const handlePaperPlaneClick = async () => {
  </div>
 </div>
 )}
+{instructions && (
+        <div className='fixed inset-0 flex items-center justify-center'>
+          <div className='bg-black bg-opacity-50 absolute inset-0' onClick={() => setInstructions(false)}></div>
+          <div className='text-black border border-gray-400 bg-white flex justify-center items-center space-x-2 shadow-md rounded px-2'>
+            {/* Popup content */}
+            <div className = "bg-white opacity-100">This is where the instructions would go</div>
+            <button onClick={() => setInstructions(false)}>Close</button>
+          </div>
+        </div>
+      )}
        <div className='absolute bottom-0 inset-x-0 mx-auto px-4 py-6 max-w-3xl'>
       
          <div className='text-black border border-gray-400 flex justify-center items-center space-x-2 shadow-md rounded px-2'>
-        
+
+          <div className = 'px-3 py-1 rounded-full bg-teal-500 font-bold text-white' onClick ={() => {
+            setInstructions(true);
+          }}>?</div>
            <textarea
              className='flex-1 bg-white p-2 border-0 text-xl focus:outline-none rounded-2xl resize-y'
              style={{ minHeight: '20px', resize: 'none' }}
