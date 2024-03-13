@@ -4,8 +4,10 @@ import React, { useCallback, useState, useEffect, useRef } from 'react';
 import CairLogo from '../../public/CairHealthLogo.png'
 import Image from 'next/image'
 import Link from 'next/link'
-import Amplify from '@aws-amplify/core';
+import { Amplify } from 'aws-amplify';
 import { Storage } from 'aws-amplify';
+var AWS = require("aws-sdk");
+
 
 const Upload = () => {
   const ref = useRef(null);
@@ -13,11 +15,13 @@ const Upload = () => {
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState();
 
-  useEffect(() => {
+  
     Amplify.configure({
       Auth: {
-        identityPoolId: "us-east-1:bf777c09-0136-4b43-a935-31727f24f2dc", //REQUIRED - Amazon Cognito Identity Pool ID
-        region: "us-east-1", // REQUIRED - Amazon Cognito Region
+        Cognito: {
+          identityPoolId: "us-east-1:bf777c09-0136-4b43-a935-31727f24f2dc", //REQUIRED - Amazon Cognito Identity Pool ID
+          region: "us-east-1", // REQUIRED - Amazon Cognito Region
+        },
       },
       Storage: {
         AWSS3: {
@@ -27,11 +31,19 @@ const Upload = () => {
         },
       },
     });
-  }, []);
+
+    console.log(Storage)
 
 
-  const handleFileLoad = () => {
-    console.log(ref.current.files);
+
+  const handleFileLoad = async() => {
+    try {
+      const file = ref.current.files[0]; // Get the file from the input element
+      const result = await Storage.put('filename.jpg', file); // Upload the file to S3
+      console.log('Succeeded: ', result);
+    } catch (error) {
+      console.error('Error:', error);
+    }
   }
 
   return (

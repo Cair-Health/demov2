@@ -13,6 +13,7 @@
     "@heroicons/react": "^2.1.1",
     "@tailwindcss/forms": "^0.5.7",
     "aws-amplify": "^6.0.20",
+    "aws-sdk": "^2.1576.0",
     "dropzone": "^6.0.0-beta.2",
     "heroicons": "^2.1.1",
     "infinity-spinners": "^1.0.0",
