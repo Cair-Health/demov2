@@ -1,12 +1,11 @@
 'use client'
 import React, { useCallback, useState, useEffect, useRef } from 'react';
-import { useDropzone } from 'react-dropzone';
 
 import CairLogo from '../../public/CairHealthLogo.png'
 import Image from 'next/image'
 import Link from 'next/link'
-import { FileUploader } from "react-drag-drop-files";
-import { Amplify, Auth, Storage } from 'aws-amplify';
+import Amplify from '@aws-amplify/core';
+import { Storage } from 'aws-amplify';
 
 const Upload = () => {
   const ref = useRef(null);
@@ -17,48 +16,23 @@ const Upload = () => {
   useEffect(() => {
     Amplify.configure({
       Auth: {
-        identityPoolId: 'XX-XXXX-X:XXXXXXXX-XXXX-1234-abcd-1234567890ab', //REQUIRED - Amazon Cognito Identity Pool ID
-        region: 'XX-XXXX-X', // REQUIRED - Amazon Cognito Region
-        userPoolId: 'XX-XXXX-X_abcd1234', //OPTIONAL - Amazon Cognito User Pool ID
-        userPoolWebClientId: 'XX-XXXX-X_abcd1234' //OPTIONAL - Amazon Cognito Web Client ID
+        identityPoolId: "us-east-1:bf777c09-0136-4b43-a935-31727f24f2dc", //REQUIRED - Amazon Cognito Identity Pool ID
+        region: "us-east-1", // REQUIRED - Amazon Cognito Region
       },
       Storage: {
         AWSS3: {
-          bucket: '', //REQUIRED -  Amazon S3 bucket name
-          region: 'XX-XXXX-X', //OPTIONAL -  Amazon service region
-          isObjectLockEnabled: true //OPTIONAl - Object Lock parameter
-        }
-      }
+          bucket: "cair-user-uploads", //REQUIRED -  Amazon S3 bucket name
+          region: "us-east-1", //OPTIONAL -  Amazon service region
+       
+        },
+      },
     });
   }, []);
 
+
   const handleFileLoad = () => {
-    const filename = ref.current.files[0].name;
-    Storage.put(filename, ref.current.files[0], {
-      progressCallback: (progress) => {
-        setProgress(Math.round((progress.loaded / progress.total) * 100) + "%");
-        setTimeout(() => { setProgress() }, 1000);
-      }
-    })
-      .then(resp => {
-      console.log(resp);
-      loadImages();
-    }).catch(err => {console.log(err);});
+    console.log(ref.current.files);
   }
-
-   const [uploadedFiles, setUploadedFiles] = useState([]);
-   const fileTypes = ["PDF", "PNG", "GIF"];
-   const [file, setFile] = useState(null);
-   const handleChange = (file) => {
-     setFile(file);
-   };
-  const onDrop = useCallback((acceptedFiles) => {
-    // Do something with the accepted files, such as uploading to a server
-    console.log('Accepted files:', acceptedFiles);
-    setUploadedFiles(acceptedFiles);
-  }, []);
-
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   return (
     <div style={{ backgroundColor: '#FAF9F6' }} className='h-screen text-black flex flex-col'>
