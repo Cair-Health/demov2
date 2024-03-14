@@ -5,8 +5,8 @@ import CairLogo from '../../public/CairHealthLogo.png'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Amplify } from 'aws-amplify';
-import { Storage } from 'aws-amplify';
-var AWS = require("aws-sdk");
+import amplifyconfig from '../../src/amplifyconfiguration.json'
+import { uploadData } from 'aws-amplify/storage'
 
 
 const Upload = () => {
@@ -15,36 +15,22 @@ const Upload = () => {
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState();
 
-  
-    Amplify.configure({
-      Auth: {
-        Cognito: {
-          identityPoolId: "us-east-1:bf777c09-0136-4b43-a935-31727f24f2dc", //REQUIRED - Amazon Cognito Identity Pool ID
-          region: "us-east-1", // REQUIRED - Amazon Cognito Region
-        },
-      },
-      Storage: {
-        AWSS3: {
-          bucket: "cair-user-uploads", //REQUIRED -  Amazon S3 bucket name
-          region: "us-east-1", //OPTIONAL -  Amazon service region
-       
-        },
-      },
-    });
-
-    console.log(Storage)
+  Amplify.configure(amplifyconfig);
 
 
 
   const handleFileLoad = async() => {
     try {
       const file = ref.current.files[0]; // Get the file from the input element
-      const result = await Storage.put('filename.jpg', file); // Upload the file to S3
-      console.log('Succeeded: ', result);
-    } catch (error) {
-      console.error('Error:', error);
+      const result = await uploadData({
+        key: '1',
+        data: file,
+        }).result;
+        console.log('Succeeded: ', result);
+      } catch (error) {
+        console.log('Error : ', error);
+      }
     }
-  }
 
   return (
     <div style={{ backgroundColor: '#FAF9F6' }} className='h-screen text-black flex flex-col'>
@@ -71,9 +57,9 @@ const Upload = () => {
   
     <div className = "flex flex-col items-center justify-center">
         
-    <input ref={ref} type="file" onChange={handleFileLoad} />
+    <input type="file" onChange={handleFileLoad} />
 
-      <button class="mt-[2rem] bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-full">
+      <button className="mt-[2rem] bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-full">
       <Link href="/">Go to Chat</Link>
         </button>
     </div>

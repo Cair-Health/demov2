@@ -1,0 +1,23 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-cairdemo-dev-163557-authRole",
+      "UnauthRoleArn": "arn:aws:iam::933973357502:role/amplify-cairdemo-dev-163557-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::933973357502:role/amplify-cairdemo-dev-163557-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-cairdemo-dev-163557-deployment",
+      "UnauthRoleName": "amplify-cairdemo-dev-163557-unauthRole",
+      "StackName": "amplify-cairdemo-dev-163557",
+      "StackId": "arn:aws:cloudformation:us-east-1:933973357502:stack/amplify-cairdemo-dev-163557/72250e50-e192-11ee-8df8-1249a7b9a0e9",
+      "AmplifyAppId": "d39dygenf8iv4j"
+    },
+    "categories": {
+      "auth": {
+        "cairdemo7947218c": {}
+      },
+      "storage": {
+        "demos3": {}
+      }
+    }
+  }
+}
