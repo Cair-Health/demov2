@@ -23,7 +23,7 @@ const Upload = () => {
     try {
       const file = ref.current.files[0]; // Get the file from the input element
       const result = await uploadData({
-        key: '1',
+        key: __filename,
         data: file,
         }).result;
         console.log('Succeeded: ', result);
@@ -57,7 +57,7 @@ const Upload = () => {
   
     <div className = "flex flex-col items-center justify-center">
         
-    <input type="file" onChange={handleFileLoad} />
+    <input ref = {ref} type="file" onChange={handleFileLoad} />
 
       <button className="mt-[2rem] bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-full">
       <Link href="/">Go to Chat</Link>

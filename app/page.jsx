@@ -240,7 +240,20 @@ const handlePaperPlaneClick = async () => {
     setQuestion2(question2)
     setQuestion3(question3)
     console.log(answer)
-    setResponseText(answer);
+    const responseStreaming = (answer) => {
+      let index = 0;
+      const interval = setInterval(() => {
+          if (index < answer.length-1) {
+              setResponseText(prevResponseText => prevResponseText + answer[index]);
+              index++;
+          } else {
+              clearInterval(interval);
+          }
+      }, 10);
+  };
+
+  responseStreaming(answer);
+
 
 
     // Store the current query and response in the history
