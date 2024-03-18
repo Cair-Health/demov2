@@ -25,23 +25,26 @@ const Upload = () => {
     const params = new URLSearchParams(window.location.search);
     console.log(params)
     console.log(params)
-    const use = params.get('user')
-    const mo = params.get('mode')
-    setUser(use);
-    setMode(mo);
+    setUser(params.get('user'));
+    setMode(params.get('mode'));
 
     
 
 // Call the async function
   }, []);
 
+  useEffect(() => {
+    fetchData();
+    console.log(user)
+    console.log(mode)
+  }, [user])
 
 
   useEffect(() => {
     fetchData();
     console.log(user)
     console.log(mode)
-  }, [user, mode])
+  }, [files])
 
   const fetchData = async () => {
     console.log(user)
@@ -55,7 +58,8 @@ const Upload = () => {
       });
       console.log(result.items.length);
       setFiles(result.items);
-      console.log(files.length); // This may still log 0 due to closure, check console for actual length
+      console.log(user)
+      console.log(mode)
       // Process the result here
     } catch (error) {
       console.log(error);
@@ -140,19 +144,13 @@ const Upload = () => {
   }
 
   return (
-    <div style={{ backgroundColor: '#FAF9F6' }} className='h-screen text-black flex flex-col'>
+    <div style={{ backgroundColor: '#FAF9F6' }} className='h-screen text-black flex '>
       <div>
-        <div className="relative flex bg-white border-gray-200 rounded" style={{ backgroundColor: '#40929B', zIndex: 1, height: '7vh' }}>
-          <div className="w-full flex items-center justify-between mx-auto p-5">
-            <Image src={CairLogo} width={300} height='auto' alt="Not found" />
-            <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>
-            <div className="hidden w-full md:block md:w-auto" id="navbar-default"></div>
-          </div>
-        </div>
+        
       </div>
-      <div className="p-[5rem] flex flex-col items-center justify-center text-6xl font-semibold">
-        <span>All your Policy Questions</span>
-        <span className="text-teal-500">Answered</span>
+      <div className="flex flex-col items-center p-12 ">
+        <h1 className = "text-3xl font-semibold">File Manager</h1>
+        <button>Upload Files</button>
       </div>
       <div className="flex flex-col items-center justify-center">
         <input ref={ref} type="file" onChange={handleFileLoad} /> 

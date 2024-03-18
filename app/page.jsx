@@ -328,12 +328,13 @@ const handlePaperPlaneClick = async () => {
          />
        </div>
    ) : */} 
-<div style={{ backgroundColor: '#FAF9F6' }} className='h-screen text-black flex'>
+<div style={{ backgroundColor: '#FAF9F6' }} className='h-screen text-black flex z-0'>
      {/* sidebar div*/}
      {/* sidebar extends full height of screen and is using rounded property because I'm trying to overlap it with the top nav */}
      <VerticalNav
        onDocTypeChange={handleDocTypeChange}
        user={user}
+       className = "z-10"
      />
 
 
