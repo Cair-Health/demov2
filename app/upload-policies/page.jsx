@@ -144,13 +144,13 @@ const Upload = () => {
   }
 
   return (
-    <div style={{ backgroundColor: '#FAF9F6' }} className='h-screen text-black flex '>
-      <div>
-        
-      </div>
-      <div className="flex flex-col items-center p-12 ">
+    <div style={{ backgroundColor: '#FAF9F6' }} className='h-screen text-black '>
+      <div className="flex py-12 px-[5rem] ">
         <h1 className = "text-3xl font-semibold">File Manager</h1>
-        <button>Upload Files</button>
+        <div className = "flex-grow"></div>
+        <div>
+        <button className = "text-xl border-8 bg-teal-700">Upload Files</button>
+        </div>
       </div>
       <div className="flex flex-col items-center justify-center">
         <input ref={ref} type="file" onChange={handleFileLoad} /> 
