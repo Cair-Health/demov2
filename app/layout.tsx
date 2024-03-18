@@ -1,3 +1,4 @@
+import VerticalNav from '@/components/VerticalNav'
 import '../styles/globals.css'
 import '../styles/navbar.scss'
 

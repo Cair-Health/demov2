@@ -7,6 +7,11 @@ import { Amplify } from 'aws-amplify';
 import amplifyconfig from '../../src/amplifyconfiguration.json';
 import { uploadData, list } from 'aws-amplify/storage';
 import { remove } from 'aws-amplify/storage';
+import VerticalNav from '@/components/VerticalNav';
+import down from '../../public/chevron-down.svg'
+import upload from '../../public/upload-03.svg'
+import trash from '../../public/trash-03.svg'
+import eye from '../../public/eye-open.svg'
 
 const Upload = () => {
   const ref = useRef(null);
@@ -17,6 +22,7 @@ const Upload = () => {
   const [fileKey, setFileKey] = useState("");
   const [user, setUser] = useState("");
   const [mode, setMode] = useState("")  
+  const [showUploadDropdown, setShowUploadDropdown] = useState(false)
 
 
   Amplify.configure(amplifyconfig);
@@ -51,7 +57,7 @@ const Upload = () => {
     console.log(mode)
     try {
       const result = await list({
-        prefix: `${user}_${mode}`,
+        prefix: `${user}`,
         options: {
           listAll: true
         }
@@ -113,7 +119,8 @@ const Upload = () => {
                 } %`
               );
             }
-        }
+        },
+        metadata: {type: mode  }
       }
       }).result;
       console.log('Succeeded: ', result);
@@ -144,12 +151,16 @@ const Upload = () => {
   }
 
   return (
-    <div style={{ backgroundColor: '#FAF9F6' }} className='h-screen text-black '>
+    <div className = "flex">
+      <VerticalNav />
+    <div style={{ backgroundColor: '#FAF9F6' }} className='h-screen w-full text-black'>
       <div className="flex py-12 px-[5rem] ">
         <h1 className = "text-3xl font-semibold">File Manager</h1>
         <div className = "flex-grow"></div>
-        <div>
-        <button className = "text-xl border-8 bg-teal-700">Upload Files</button>
+        <div className=" flex text-medium font-semibold border-2 px-2 rounded-xl py-1 border-brand-primary-500 bg-brand-primary-600 text-white ">
+        <Image src = {upload} height = "auto" width = "auto" className = "mr-1" style={{ filter: 'brightness(0) invert(1)' }}   />
+        <button className = "" onClick = {() => setShowUploadDropdown(true)}>Upload Files</button>
+        <Image src = {down} height = "auto" width = "auto" className = "ml-1" style={{ filter: 'brightness(0) invert(1)' }}   />
         </div>
       </div>
       <div className="flex flex-col items-center justify-center">
@@ -160,31 +171,42 @@ const Upload = () => {
         </button>
         <h1 className="mt-12 text-5xl">{files.length}</h1>
 
-        <table className="min-w-full divide-y divide-gray-200">
-  <thead className="bg-gray-50">
+    <div className = "w-5/6 rounded-md">
+        <table className="divide-y w-full divide-gray-200 ">
+  <thead className="bg-gray-50 ">
     <tr>
-      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
-      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">File Name</th>
+
       <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+
     </tr>
   </thead>
   <tbody className="bg-white divide-y divide-gray-200">
     {files.map((file, i) => (
       <tr key={file.key}>
         <td className="px-6 py-4 whitespace-nowrap">{i}</td>
+        <td className="px-6 py-4 whitespace-nowrap">{file.metadata}</td>
         <td className="px-6 py-4 whitespace-nowrap">{file.key}</td>
         <td className="px-6 py-4 whitespace-nowrap">
-          <button className="text-indigo-600 hover:text-indigo-900 mr-2" onClick={() => handleShow(file.key)}>Show</button>
-          <button className="text-red-600 hover:text-red-900" onClick={() => handleDelete(file.key)}>Delete</button>
+          <button className="border-2 border-gray-200 rounded-xl bg-gray-100 p-2 mr-4" onClick={() => handleDelete(file.key)}>
+          <Image src = {trash} height = "auto" width = "auto" />
+          </button>
+          <button className="border-2 border-gray-200 rounded-xl bg-gray-100 p-2" onClick={() => handleShow(file.key)}>
+          <Image src = {eye} height = "auto" width = "auto" />
+          </button>
         </td>
       </tr>
     ))}
   </tbody>
 </table>
+</div>
 
 
       </div>
       
+    </div>
     </div>
   );
 };
