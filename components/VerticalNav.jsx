@@ -59,7 +59,7 @@ const [isOpen3, setIsOpen3] = useState(false);
 
 
    <div className = "relative top-[10rem] flex justify-center items-center cursor-pointer">
-    <Link href = "/upload">
+    <Link href = "/">
      <Image src= {home} width= "auto" height= {35} alt="close"/>
      </Link>
 

@@ -9,7 +9,8 @@ const page = () => {
     const router = useRouter();
 
     const handleInputChange = (event) => {
-        setText(event.target.value);
+        const lower = event.target.value.toLowerCase();
+        setText(lower);
       };
     
       const handleSubmit = (event) => {

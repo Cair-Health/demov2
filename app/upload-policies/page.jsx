@@ -18,22 +18,34 @@ const Upload = () => {
   const [user, setUser] = useState("");
   const [mode, setMode] = useState("")  
 
+
   Amplify.configure(amplifyconfig);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     console.log(params)
-    setUser(params.get('user'));
-    setMode(params.get('mode'));
-    console.log(mode)
-    console.log(user)
+    console.log(params)
+    const use = params.get('user')
+    const mo = params.get('mode')
+    setUser(use);
+    setMode(mo);
 
     
 
 // Call the async function
   }, []);
 
+
+
+  useEffect(() => {
+    fetchData();
+    console.log(user)
+    console.log(mode)
+  }, [user, mode])
+
   const fetchData = async () => {
+    console.log(user)
+    console.log(mode)
     try {
       const result = await list({
         prefix: `${user}_${mode}`,
@@ -86,7 +98,7 @@ const Upload = () => {
       const rag_result = await rag_upload();
       const result = await uploadData({
 
-        key: `garv_rates_main_${file.name}`,
+        key: `${user}_${mode}_main_${file.name}`,
         data: file, 
         options: {
           onProgress: ({ transferredBytes, totalBytes }) => {
