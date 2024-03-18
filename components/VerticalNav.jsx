@@ -8,7 +8,7 @@ import Link from "next/link"
 
 
 
-const VerticalNav = ({onStateChange, onDocTypeChange, onProviderChange}) => {
+const VerticalNav = ({onStateChange, onDocTypeChange, onProviderChange, user}) => {
  const [states, setStates] = useState([]);
  const [providers, setProviders] = useState([]);
  const [doctypes, setDoctypes] = useState([]);
@@ -93,7 +93,7 @@ const [isOpen3, setIsOpen3] = useState(false);
       {isOpen1 && (
         <div className="absolute left-0 mt-[2rem] w-48 bg-white rounded-md shadow-lg z-10">
           <button className="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left" onClick={() => { setSelectedDocType("Policies"); onDocTypeChange("Policies"); setIsOpen1(false)}}>Chat</button>
-          <Link href = "/upload-policies">
+          <Link href = {`/upload-policies?user=${user}?mode=policies`}>
           <button className="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left" >Upload</button>
           </Link>
         </div>
@@ -105,7 +105,7 @@ const [isOpen3, setIsOpen3] = useState(false);
       {isOpen2 && (
         <div className="absolute left-0 mt-[7rem] w-48 bg-white rounded-md shadow-lg z-10">
           <button className="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left" onClick={() => { setSelectedDocType("Contracts"); onDocTypeChange("Contracts"); setIsOpen2(false)}}>Chat</button>
-          <Link href = "/upload-contracts">
+          <Link href ={`/upload-policies?user=${user}?mode=contracts`}>
           <button className="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left" >Upload</button>
           </Link>
         </div>
@@ -117,7 +117,7 @@ const [isOpen3, setIsOpen3] = useState(false);
       {isOpen3 && (
         <div className="absolute left-0 mt-[12rem] w-48 bg-white rounded-md shadow-lg z-10">
           <button className="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left" onClick={() => { setSelectedDocType("Rates"); onDocTypeChange("Rates"); setIsOpen3(false)}}>Chat</button>
-          <Link href = "/upload-rates">
+          <Link href = {`/upload-policies?user=${user}?mode=rates`}>
           <button className="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left" >Upload</button>
           </Link>       
            </div>

@@ -21,6 +21,8 @@ import RecentQueries_financial_reports from '../components/RecentQueries_financi
 import RecentQueries_rates from '../components/RecentQueries_rates'
 import remarkGfm from 'remark-gfm'
 import Linkify from 'react-linkify'
+import Link from "next/link"
+
 
 
 
@@ -30,6 +32,8 @@ const PASSWORD = "reesespieces";
 
 
 const Home = () => {
+
+
  const [hasAnswered, setHasAnswered] = useState(false);
  const [tutorial, setTutorial] = useState(true);
  const [inputValue, setInputValue] = useState("");
@@ -45,6 +49,8 @@ const Home = () => {
  const [history_rates, setHistory_rates] = useState([]);
  const [history, setHistory] = useState([]);
 
+
+
  const [currentQuery, setCurrentQuery] = useState("");
  const scrollRef = useRef(null);
  const [password, setPassword] = useState("");
@@ -54,9 +60,13 @@ const Home = () => {
  const [question3, setQuestion3] = useState("")
  const [guidebot, setGuidebot] = useState(false)
  const [instructions, setInstructions] = useState(false)
+ const [user, setUser] = useState("")
+
 
 
  useEffect(() => {
+  const params = new URLSearchParams(window.location.search);
+   setUser(params.get('user'));
    startChat();
  }, []);
 
@@ -149,7 +159,23 @@ const Home = () => {
   }
 };
 
+const handleLoading_policies = async () => {
+  const getLoadingOptions_policies = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      "session_id": sessionID_policies,
+    }),
+    redirect: 'follow',
+  };
+  while (response != "Completed.") {
+      const response = await fetch("https://chat.cairhealth.com/get_status_policies/", requestOptions )
+      console.log(response)
 
+  }
+}
 
 
 const handlePaperPlaneClick = async () => {
@@ -225,7 +251,7 @@ const handlePaperPlaneClick = async () => {
       throw new Error('Failed to get response')
     }
 
-
+    
     const getResponseResult = await getResponseResponse.text();
     console.log(getResponseResult)
     const jsonAnswer = JSON.parse(getResponseResult)
@@ -240,6 +266,7 @@ const handlePaperPlaneClick = async () => {
     setQuestion2(question2)
     setQuestion3(question3)
     console.log(answer)
+    setResponseText(answer[0])
     const responseStreaming = (answer) => {
       let index = 0;
       const interval = setInterval(() => {
@@ -306,6 +333,7 @@ const handlePaperPlaneClick = async () => {
      {/* sidebar extends full height of screen and is using rounded property because I'm trying to overlap it with the top nav */}
      <VerticalNav
        onDocTypeChange={handleDocTypeChange}
+       user={user}
      />
 
 
@@ -323,6 +351,10 @@ const handlePaperPlaneClick = async () => {
             <Image src={CairLogo} width={300} height='auto' alt="Not found"></Image>
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>
             <div className="hidden w-full md:block md:w-auto" id="navbar-default">
+              {!user ? <Link href="/log-in">
+              <button className = "bg-green-50 rounded-3xl px-5 py-2 font-semibold text-xl">Log In</button>
+              </Link>
+              : <h1 className = "bg-green-50 rounded-3xl px-5 py-2 font-semibold text-xl">{user}</h1>}
             </div>
           </div>
         </div>

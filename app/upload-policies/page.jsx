@@ -13,15 +13,22 @@ const Upload = () => {
   const [files, setFiles] = useState([]);
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState();
-  
+  const [ragData, setRagData] = useState("");
+  const [fileKey, setFileKey] = useState("");
+  const [user, setUser] = useState("");
+  const [mode, setMode] = useState("")  
 
   Amplify.configure(amplifyconfig);
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setUser(params.get('user'));
+    setMode(params.get('mode'));
+
     const fetchData = async () => {
       try {
         const result = await list({
-          prefix: 'garv',
+          prefix: `${user}_${mode}_main`,
           options: {
             listAll: true
           }
@@ -38,14 +45,44 @@ const Upload = () => {
     fetchData(); // Call the async function
   }, []);
 
+
+
+  
+
+
+  const rag_upload = async () => {
+    try {
+      const requestOptions = {
+        method: 'POST',
+        headers:{
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+        "customer_id": "demo",
+        "s3_bucket": "cair-user-uploads163557-dev",
+        "s3_key": `public/${fileKey}`,
+        "file_type": "pdf",
+
+        })
+      }
+      const response_policies = await fetch("https://chat.cairhealth.com/upload_document/", requestOptions);
+
+      console.log(response_policies)
+
+      console.log("shits good")
+    } catch(error){
+      console.log("RAG upload error:", error)
+    }
+  }
   
   const handleFileLoad = async () => {
-
-
     try {
       const file = ref.current.files[0]; // Get the file from the input element
+      setFileKey(`${user}_${mode}_main_${file.name}`)
+      const rag_result = await rag_upload();
       const result = await uploadData({
-        key: `garv_${file.name}`,
+
+        key: `garv_rates_main_${file.name}`,
         data: file, 
         options: {
           onProgress: ({ transferredBytes, totalBytes }) => {
@@ -60,28 +97,11 @@ const Upload = () => {
       }
       }).result;
       console.log('Succeeded: ', result);
-      window.location.reload();
+      console.log(rag_result)
+  
     } catch (error) {
       console.log('Error : ', error);
 
-{/*
-    const rag_upload = async () => {
-      try {
-        const requestOptions = {
-          method: 'POST',
-          headers:{
-          'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
-        },
-        const response_policies = await fetch("https://chat.cairhealth.com/upload_document/", requestOptions);
-      } catch(error){
-        console.log("RAG upload error:", error)
-      }
-    }
-
-    rag_upload();
-  */}
 
 
   };
