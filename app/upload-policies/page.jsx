@@ -22,29 +22,33 @@ const Upload = () => {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
+    console.log(params)
     setUser(params.get('user'));
     setMode(params.get('mode'));
+    console.log(mode)
+    console.log(user)
 
-    const fetchData = async () => {
-      try {
-        const result = await list({
-          prefix: `${user}_${mode}_main`,
-          options: {
-            listAll: true
-          }
-        });
-        console.log(result.items.length);
-        setFiles(result.items);
-        console.log(files.length); // This may still log 0 due to closure, check console for actual length
-        // Process the result here
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    
 
-    fetchData(); // Call the async function
+// Call the async function
   }, []);
 
+  const fetchData = async () => {
+    try {
+      const result = await list({
+        prefix: `${user}_${mode}`,
+        options: {
+          listAll: true
+        }
+      });
+      console.log(result.items.length);
+      setFiles(result.items);
+      console.log(files.length); // This may still log 0 due to closure, check console for actual length
+      // Process the result here
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
 
   
@@ -98,6 +102,7 @@ const Upload = () => {
       }).result;
       console.log('Succeeded: ', result);
       console.log(rag_result)
+      window.location.reload();
   
     } catch (error) {
       console.log('Error : ', error);
