@@ -53,8 +53,8 @@ const [isOpen3, setIsOpen3] = useState(false);
  return (
    <div className = 'navbar-menu'>
     
-     <div className = "ml-[7rem] mt-[1rem]" >
-     <Image src= {close} width="auto" height="35" alt="close" onClick={() => setSidebar(false)}/>
+     <div className = "ml-[6rem] mt-[1rem]" >
+     <Image src= {close} width="auto" height={35} alt="close" onClick={() => setSidebar(false)}/>
    </div>
 
 

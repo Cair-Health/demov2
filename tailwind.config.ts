@@ -11,6 +11,7 @@ const config: Config = {
       colors: {
         'brand-primary-600': '#40929B',
         'brand-primary-500': '#257D87',
+        'background-light': '#ECF5F6',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

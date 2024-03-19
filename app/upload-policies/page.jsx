@@ -12,6 +12,9 @@ import down from '../../public/chevron-down.svg'
 import upload from '../../public/upload-03.svg'
 import trash from '../../public/trash-03.svg'
 import eye from '../../public/eye-open.svg'
+import x from '../../public/x-02.svg'
+
+
 
 const Upload = () => {
   const ref = useRef(null);
@@ -23,14 +26,13 @@ const Upload = () => {
   const [user, setUser] = useState("");
   const [mode, setMode] = useState("")  
   const [showUploadDropdown, setShowUploadDropdown] = useState(false)
+  const [isUploadOpen, setIsUploadOpen] = useState(false)
 
 
   Amplify.configure(amplifyconfig);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    console.log(params)
-    console.log(params)
     setUser(params.get('user'));
     setMode(params.get('mode'));
 
@@ -41,20 +43,16 @@ const Upload = () => {
 
   useEffect(() => {
     fetchData();
-    console.log(user)
-    console.log(mode)
-  }, [user])
+
+  }, [])
 
 
   useEffect(() => {
     fetchData();
-    console.log(user)
-    console.log(mode)
   }, [files])
 
   const fetchData = async () => {
-    console.log(user)
-    console.log(mode)
+
     try {
       const result = await list({
         prefix: `${user}`,
@@ -62,10 +60,8 @@ const Upload = () => {
           listAll: true
         }
       });
-      console.log(result.items.length);
       setFiles(result.items);
-      console.log(user)
-      console.log(mode)
+
       // Process the result here
     } catch (error) {
       console.log(error);
@@ -88,14 +84,14 @@ const Upload = () => {
         "s3_bucket": "cair-user-uploads163557-dev",
         "s3_key": `public/${fileKey}`,
         "file_type": "pdf",
+        "mode": "policies"
 
         })
       }
       const response_policies = await fetch("https://chat.cairhealth.com/upload_document/", requestOptions);
 
       console.log(response_policies)
-
-      console.log("shits good")
+      console.log(error)
     } catch(error){
       console.log("RAG upload error:", error)
     }
@@ -120,12 +116,11 @@ const Upload = () => {
               );
             }
         },
-        metadata: {type: mode  }
+        metadata: {type: mode, person: user   }
       }
       }).result;
       console.log('Succeeded: ', result);
       console.log(rag_result)
-      window.location.reload();
   
     } catch (error) {
       console.log('Error : ', error);
@@ -150,36 +145,58 @@ const Upload = () => {
     }
   }
 
+  const handleUploadOpen = (m) => {
+    setMode(m)
+    setIsUploadOpen(true)
+    setShowUploadDropdown(false)
+
+
+  }
+
   return (
-    <div className = "flex">
+    <div className = "">
+    <div className = {`flex ${isUploadOpen ? 'contrast-50' : ''}`}>
       <VerticalNav />
-    <div style={{ backgroundColor: '#FAF9F6' }} className='h-screen w-full text-black'>
-      <div className="flex py-12 px-[5rem] ">
+    <div className='h-screen w-full bg-white text-black'>
+      <div className="flex py-12 px-[9rem] ">
         <h1 className = "text-3xl font-semibold">File Manager</h1>
         <div className = "flex-grow"></div>
+        <div className = "flex-col"> 
         <div className=" flex text-medium font-semibold border-2 px-2 rounded-xl py-1 border-brand-primary-500 bg-brand-primary-600 text-white ">
-        <Image src = {upload} height = "auto" width = "auto" className = "mr-1" style={{ filter: 'brightness(0) invert(1)' }}   />
-        <button className = "" onClick = {() => setShowUploadDropdown(true)}>Upload Files</button>
-        <Image src = {down} height = "auto" width = "auto" className = "ml-1" style={{ filter: 'brightness(0) invert(1)' }}   />
+
+        <Image src = {upload} height = "auto" width = "auto" className = "mr-1" style={{ filter: 'brightness(0) invert(1)' }}  alt = "upload" />
+        <button className = "" onClick = {() => {setShowUploadDropdown(!showUploadDropdown); console.log("showing")}}>Upload Files</button>
+        <Image src = {down} height = "auto" width = "auto" className = "ml-1" style={{ filter: 'brightness(0) invert(1)' }} alt = "delete"  />
+      
+        </div>
+        {showUploadDropdown ? <div className = "flex flex-col w-full shadow-xl items-center py-4 bg-white rounded-xl  text-black"> 
+        <ol className = "w-full items-center justify-center text-center ">
+          <li className = "text-xl w-full hover:bg-gray-200 cursor-pointer" onClick = {() => {
+            handleUploadOpen("policies");
+          }}>Policies</li>
+          <li className = "text-xl hover:bg-gray-200 cursor-pointer">Contracts</li>
+          <li className = "text-xl hover:bg-gray-200 cursor-pointer">Rates</li>
+          </ol> 
+          </div>: 
+          <div> </div>}
         </div>
       </div>
       <div className="flex flex-col items-center justify-center">
-        <input ref={ref} type="file" onChange={handleFileLoad} /> 
+       {/* <input ref={ref} type="file" onChange={handleFileLoad} /> */}
         <h1>{progress}</h1>
-        <button className="mt-[2rem] bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-full">
-          <Link href="/">Go to Chat</Link>
-        </button>
-        <h1 className="mt-12 text-5xl">{files.length}</h1>
+        
+          
+        
 
-    <div className = "w-5/6 rounded-md">
-        <table className="divide-y w-full divide-gray-200 ">
-  <thead className="bg-gray-50 ">
+    
+        <table className="divide-y w-5/6 table-auto rounded-xl overflow-hidden divide-gray-200 ">
+  <thead className="bg-gray-200  ">
     <tr>
       <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
       <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
       <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">File Name</th>
 
-      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+      <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
 
     </tr>
   </thead>
@@ -187,25 +204,60 @@ const Upload = () => {
     {files.map((file, i) => (
       <tr key={file.key}>
         <td className="px-6 py-4 whitespace-nowrap">{i}</td>
-        <td className="px-6 py-4 whitespace-nowrap">{file.metadata}</td>
+        <td className="px-6 py-4 whitespace-nowrap">{file.metadata && file.metadata[person] ? file.metadata[person] : 'N/A'}</td>
         <td className="px-6 py-4 whitespace-nowrap">{file.key}</td>
         <td className="px-6 py-4 whitespace-nowrap">
           <button className="border-2 border-gray-200 rounded-xl bg-gray-100 p-2 mr-4" onClick={() => handleDelete(file.key)}>
-          <Image src = {trash} height = "auto" width = "auto" />
+          <Image src = {trash} height = "auto" width = "auto" alt = "trash"/>
           </button>
           <button className="border-2 border-gray-200 rounded-xl bg-gray-100 p-2" onClick={() => handleShow(file.key)}>
-          <Image src = {eye} height = "auto" width = "auto" />
+          <Image src = {eye} height = "auto" width = "auto" alt = "view" />
           </button>
         </td>
       </tr>
     ))}
   </tbody>
 </table>
-</div>
+
 
 
       </div>
       
+    </div>
+    </div>
+    <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+    {isUploadOpen ? 
+    <div className = "text-xl flex flex-col z-50 px-[4rem] rounded-2xl py-[5rem] bg-white ">
+      <div className = "w-full h-full flex flex-col text-center items-center ">
+        <div className = "bg-background-light rounded-full items-center align-center justify-center px-4 py-4 ">
+      <Image src = {upload} height = "60" width = "auto" alt="upload" className = " contrast-175"/>
+        </div>
+        <h1 className = "text-4xl font-semibold mt-20">
+      Upload a single file or multiple files by uploading them here
+      </h1>
+
+      <div className = "mt-20 flex bg-gray-50 px-4 py-4 border-2 border-gray-200 rounded-xl cursor-pointer">
+      <Image src = {upload} height = "24" width = "auto" alt="upload" className = "mr-2"/>
+      <label className="cursor-pointer">Browse Files
+      <input ref={ref} type="file" className = "hidden" onChange = {() => handleFileLoad()}/>
+      
+      </label>
+      </div>
+      </div>
+
+     
+
+      <div className = "absolute top-0 right-0 mt-4 mr-4">
+
+      <Image src = {x} height = "40" width = "100rem" className = "cursor-pointer" onClick = {() => {
+        setIsUploadOpen(false)
+      }} />
+
+      </div>
+      
+    </div>
+      :
+      <div></div>}
     </div>
     </div>
   );
