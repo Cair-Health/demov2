@@ -51,10 +51,10 @@ const [isOpen3, setIsOpen3] = useState(false);
 
  if(sidebar){
  return (
-   <div className = 'navbar-menu'>
+   <div className = 'navbar-menu text-black'>
     
-     <div className = "ml-[6rem] mt-[1rem]" >
-     <Image src= {close} width="auto" height={35} alt="close" onClick={() => setSidebar(false)}/>
+     <div className = "ml-[6.5rem] mt-[1rem]" >
+     <Image src= {close} width="auto" height="35" alt="close" onClick={() => setSidebar(false)}/>
    </div>
 
 

@@ -13,6 +13,7 @@ import upload from '../../public/upload-03.svg'
 import trash from '../../public/trash-03.svg'
 import eye from '../../public/eye-open.svg'
 import x from '../../public/x-02.svg'
+import { getProperties } from 'aws-amplify/storage';
 
 
 
@@ -27,46 +28,67 @@ const Upload = () => {
   const [mode, setMode] = useState("")  
   const [showUploadDropdown, setShowUploadDropdown] = useState(false)
   const [isUploadOpen, setIsUploadOpen] = useState(false)
+  const [metaData, setMetaData] = useState([]);
+  
+  let start = 0
 
 
   Amplify.configure(amplifyconfig);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    setUser(params.get('user'));
-    setMode(params.get('mode'));
 
-    
+    const fetchInitialData = async () => {
+      const params = new URLSearchParams(window.location.search);
+        setUser(params.get('user'));
+        setMode(params.get('mode'));
+
+      try {
+        const result = await list({
+          prefix: `${params.get('user')}`,
+          options: {
+            listAll: true
+          }
+        });
+        setFiles(result.items);
+  
+        // Process the result here
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchInitialData();
+
+
+   
 
 // Call the async function
   }, []);
 
-  useEffect(() => {
-    fetchData();
 
-  }, [])
-
-
-  useEffect(() => {
-    fetchData();
-  }, [files])
-
-  const fetchData = async () => {
-
+useEffect(() => {
+  console.log(files)
+  const fetchInitialMeta = async() => {
     try {
-      const result = await list({
-        prefix: `${user}`,
-        options: {
-          listAll: true
-        }
-      });
-      setFiles(result.items);
+        const result = await getProperties({
+          key: files[1].key,
+          options: {
+            accessLevel: 'guest', // defaults to `guest` but can be 'private' | 'protected' | 'guest'
+          }
+        });
+      
+        // Wait for all promises to resolve
+      console.log(result)
+      
 
-      // Process the result here
     } catch (error) {
-      console.log(error);
+      console.error('Error fetching file properties:', error);
     }
   };
+
+  fetchInitialMeta();
+
+}, [showUploadDropdown]);
 
 
   
@@ -121,6 +143,7 @@ const Upload = () => {
       }).result;
       console.log('Succeeded: ', result);
       console.log(rag_result)
+
   
     } catch (error) {
       console.log('Error : ', error);
@@ -202,9 +225,12 @@ const Upload = () => {
   </thead>
   <tbody className="bg-white divide-y divide-gray-200">
     {files.map((file, i) => (
+      
+      
+
       <tr key={file.key}>
         <td className="px-6 py-4 whitespace-nowrap">{i}</td>
-        <td className="px-6 py-4 whitespace-nowrap">{file.metadata && file.metadata[person] ? file.metadata[person] : 'N/A'}</td>
+        <td className="px-6 py-4 whitespace-nowrap">{'N/A'}</td>
         <td className="px-6 py-4 whitespace-nowrap">{file.key}</td>
         <td className="px-6 py-4 whitespace-nowrap">
           <button className="border-2 border-gray-200 rounded-xl bg-gray-100 p-2 mr-4" onClick={() => handleDelete(file.key)}>
@@ -227,7 +253,7 @@ const Upload = () => {
     </div>
     <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
     {isUploadOpen ? 
-    <div className = "text-xl flex flex-col z-50 px-[4rem] rounded-2xl py-[5rem] bg-white ">
+    <div className = "text-xl flex flex-col z-50 px-[4rem] text-black rounded-2xl py-[5rem] bg-white ">
       <div className = "w-full h-full flex flex-col text-center items-center ">
         <div className = "bg-background-light rounded-full items-center align-center justify-center px-4 py-4 ">
       <Image src = {upload} height = "60" width = "auto" alt="upload" className = " contrast-175"/>
@@ -237,7 +263,7 @@ const Upload = () => {
       </h1>
 
       <div className = "mt-20 flex bg-gray-50 px-4 py-4 border-2 border-gray-200 rounded-xl cursor-pointer">
-      <Image src = {upload} height = "24" width = "auto" alt="upload" className = "mr-2"/>
+      <Image src = {upload} height = "24" width = "auto" alt="upload" className = "mr-2" />
       <label className="cursor-pointer">Browse Files
       <input ref={ref} type="file" className = "hidden" onChange = {() => handleFileLoad()}/>
       
@@ -249,7 +275,7 @@ const Upload = () => {
 
       <div className = "absolute top-0 right-0 mt-4 mr-4">
 
-      <Image src = {x} height = "40" width = "100rem" className = "cursor-pointer" onClick = {() => {
+      <Image src = {x} height = "40" width = "100rem" className = "cursor-pointer" alt = "close" onClick = {() => {
         setIsUploadOpen(false)
       }} />
 
