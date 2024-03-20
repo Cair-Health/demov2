@@ -4,6 +4,7 @@ import close from '/public/close.svg'
 import open from '/public/open.svg'
 import home from '/public/home.svg'
 import Link from "next/link"
+import attach from "/public/attach.svg"
 
 
 
@@ -51,7 +52,7 @@ const [isOpen3, setIsOpen3] = useState(false);
 
  if(sidebar){
  return (
-   <div className = 'navbar-menu text-black'>
+   <div className = 'navbar-menu text-black -rounded-full'>
     
      <div className = "ml-[6.5rem] mt-[1rem]" >
      <Image src= {close} width="auto" height="35" alt="close" onClick={() => setSidebar(false)}/>
@@ -123,8 +124,11 @@ const [isOpen3, setIsOpen3] = useState(false);
            </div>
       )}
 
-
-      
+<Link href = {`/upload-policies?user=${user}&mode=policies`}>
+        <div className = "px-5 py-5 cursor-pointer rounded-xl">
+        <Image src = {attach} height = "35" width = "auto" alt ="upload" />
+        </div>
+      </Link>
       
      </section>
 

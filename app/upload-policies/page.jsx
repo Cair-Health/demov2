@@ -14,6 +14,7 @@ import trash from '../../public/trash-03.svg'
 import eye from '../../public/eye-open.svg'
 import x from '../../public/x-02.svg'
 import { getProperties } from 'aws-amplify/storage';
+import { downloadData } from 'aws-amplify/storage';
 
 
 
@@ -70,17 +71,22 @@ useEffect(() => {
   console.log(files)
   const fetchInitialMeta = async() => {
     try {
-        const result = await getProperties({
-          key: files[1].key,
+      const resultPromises = files.map(async (file) => {
+        const properties = await getProperties({
+          key: file.key,
           options: {
             accessLevel: 'guest', // defaults to `guest` but can be 'private' | 'protected' | 'guest'
           }
         });
-      
-        // Wait for all promises to resolve
-      console.log(result)
-      
+        return properties;
+      });
 
+      // Wait for all promises to resolve
+      const results = await Promise.all(resultPromises);
+      setMetaData[results]
+      
+      // Process the results here if needed
+      console.log(metaData);
     } catch (error) {
       console.error('Error fetching file properties:', error);
     }
@@ -88,7 +94,7 @@ useEffect(() => {
 
   fetchInitialMeta();
 
-}, [showUploadDropdown]);
+}, [files]);
 
 
   
@@ -142,7 +148,9 @@ useEffect(() => {
       }
       }).result;
       console.log('Succeeded: ', result);
+
       console.log(rag_result)
+      window.location.reload();
 
   
     } catch (error) {
@@ -155,8 +163,21 @@ useEffect(() => {
 
 
 
-  const handleShow = () => {
-    
+  const handleShow = async(file) => {
+    const { body, eTag } = await downloadData({
+      file.key,
+      data: file,
+      options: {
+        accessLevel: 'guest', // access level of the file being downloaded
+        onProgress: (event) => {
+          console.log(event.transferredBytes);
+        }, // optional progress callback
+        bytesRange: {
+          start: 1024,
+          end: 2048
+        } // optional bytes range parameter to download a part of the file, the 2nd MB of the file in this example
+      }
+    }).result;
   }
 
   const handleDelete = async(filename) => {
@@ -206,7 +227,6 @@ useEffect(() => {
       </div>
       <div className="flex flex-col items-center justify-center">
        {/* <input ref={ref} type="file" onChange={handleFileLoad} /> */}
-        <h1>{progress}</h1>
         
           
         
@@ -229,14 +249,14 @@ useEffect(() => {
       
 
       <tr key={file.key}>
-        <td className="px-6 py-4 whitespace-nowrap">{i}</td>
-        <td className="px-6 py-4 whitespace-nowrap">{'N/A'}</td>
+        <td className="px-6 py-4 whitespace-nowrap">{file.lastModified.toDateString()}</td>
+        <td className={`px-6 py-4 text-center rounded-xl whitespace-nowrap ${mode === "policies" ? "bg-green-100": ""}`} >{mode}</td>
         <td className="px-6 py-4 whitespace-nowrap">{file.key}</td>
         <td className="px-6 py-4 whitespace-nowrap">
           <button className="border-2 border-gray-200 rounded-xl bg-gray-100 p-2 mr-4" onClick={() => handleDelete(file.key)}>
           <Image src = {trash} height = "auto" width = "auto" alt = "trash"/>
           </button>
-          <button className="border-2 border-gray-200 rounded-xl bg-gray-100 p-2" onClick={() => handleShow(file.key)}>
+          <button className="border-2 border-gray-200 rounded-xl bg-gray-100 p-2" onClick={() => handleShow(file, file.key)}>
           <Image src = {eye} height = "auto" width = "auto" alt = "view" />
           </button>
         </td>
@@ -266,6 +286,7 @@ useEffect(() => {
       <Image src = {upload} height = "24" width = "auto" alt="upload" className = "mr-2" />
       <label className="cursor-pointer">Browse Files
       <input ref={ref} type="file" className = "hidden" onChange = {() => handleFileLoad()}/>
+      <h1>{progress}</h1>
       
       </label>
       </div>
