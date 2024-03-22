@@ -28,12 +28,13 @@ const Upload = () => {
   const [ragData, setRagData] = useState("");
   const [fileKey, setFileKey] = useState("");
   const [user, setUser] = useState("");
-  const [mode, setMode] = useState("")  
+  const [mode, setMode] = useState("policies")  
   const [showUploadDropdown, setShowUploadDropdown] = useState(false)
   const [isUploadOpen, setIsUploadOpen] = useState(false)
   const [metaData, setMetaData] = useState([]);
   const [pdfContent, setPdfContent] = useState("");
   const [ragUpload, setRagUpload] = useState(false)
+  const [isShowOpen, setIsShowOpen] = useState(false);
   
   let start = 0
 
@@ -164,6 +165,9 @@ useEffect(() => {
 
       rag_upload(`${user}_${mode}_main_${file.name}`);
 
+
+      window.location.reload();
+
       
 
       
@@ -196,7 +200,9 @@ useEffect(() => {
     console.log(body)
     const blobUrl = URL.createObjectURL(body);
     setPdfContent(blobUrl)
+    console.log(blobUrl)
     window.open(blobUrl, '_blank');
+    setIsShowOpen(true)
       
   }
 
@@ -233,15 +239,17 @@ useEffect(() => {
         <Image src = {down} height = "auto" width = "auto" className = "ml-1" style={{ filter: 'brightness(0) invert(1)' }} alt = "delete"  />
       
         </div>
-        {showUploadDropdown ? <div className = "flex flex-col w-full shadow-xl items-center py-4 bg-white rounded-xl  text-black"> 
-        <ol className = "w-full items-center justify-center text-center ">
-          <li className = "text-xl w-full hover:bg-gray-200 cursor-pointer" onClick = {() => {
+        {showUploadDropdown ? <div className = "absolute flex-col  font-semibold shadow-2xl items-center  bg-white rounded-xl  text-black"> 
+        <ol className = "w-full items-center justify-center text-center">
+        <div className = "w-full px-[5rem] "></div>
+          <li className = "text-xl w-full cursor-pointer text-center hover:bg-gray-200 pt-5 pb-5" onClick = {() => {
             handleUploadOpen("policies");
           }}>Policies</li>
-          <li className = "text-xl hover:bg-gray-200 cursor-pointer" onClick = {() => {
+
+          <li className = "text-xl hover:bg-gray-200 cursor-pointer pt-5 pb-5" onClick = {() => {
             handleUploadOpen("contracts");
           }} >Contracts</li>
-          <li className = "text-xl hover:bg-gray-200 cursor-pointer" onClick = {() => {
+          <li className = "text-xl hover:bg-gray-200 cursor-pointer pt-5 pb-5" onClick = {() => {
             handleUploadOpen("rates");
           }}>Rates</li>
           </ol> 
@@ -251,7 +259,7 @@ useEffect(() => {
       </div>
       <div className="flex flex-col items-center justify-center">
        {/* <input ref={ref} type="file" onChange={handleFileLoad} /> */}
-        
+
 
     
         <table className="divide-y w-5/6 table-auto rounded-xl overflow-hidden divide-gray-200 ">
@@ -289,7 +297,8 @@ useEffect(() => {
           <button className="border-2 border-gray-200 rounded-xl bg-gray-100 p-2 mr-4" onClick={() => handleDelete(file.key)}>
           <Image src = {trash} height = "auto" width = "auto" alt = "trash"/>
           </button>
-          <button className="border-2 border-gray-200 rounded-xl bg-gray-100 p-2" onClick={() => handleShow(file, file.key)}>
+          <button className="border-2 border-gray-200 rounded-xl bg-gray-100 p-2" onClick={() => {handleShow(file, file.key);
+        }}>
           <Image src = {eye} height = "auto" width = "auto" alt = "view" />
           </button>
         </td>
@@ -339,6 +348,45 @@ useEffect(() => {
       :
       <div></div>}
     </div>
+
+    {isShowOpen ? 
+    <div className = "text-xl flex flex-col z-50 px-[4rem] text-black rounded-2xl py-[5rem] bg-white ">
+      <div className = "w-full h-full flex flex-col text-center items-center ">
+        <div className = "bg-background-light rounded-full items-center align-center justify-center px-4 py-4 ">
+      <Image src = {upload} height = "60" width = "auto" alt="upload" className = " contrast-175"/>
+        </div>
+        <h1 className = "text-4xl font-semibold mt-20">
+      Upload a single file or multiple files by uploading them here
+      </h1>
+
+      <div className = "mt-20 flex bg-gray-50 px-4 py-4 border-2 border-gray-200 rounded-xl cursor-pointer">
+      <Image src = {upload} height = "24" width = "auto" alt="upload" className = "mr-2" />
+      <label className="cursor-pointer">Browse Files
+      <input ref={ref} type="file" className = "hidden" onChange = {() => handleFileLoad()}/>
+      <h1>{progress}</h1>
+      
+      </label>
+      </div>
+      </div>
+
+
+
+     
+
+      <div className = "absolute top-0 right-0 mt-4 mr-4">
+
+      <Image src = {x} height = "40" width = "100rem" className = "cursor-pointer" alt = "close" onClick = {() => {
+        setIsUploadOpen(false)
+      }} />
+
+      </div>
+      
+    </div>
+      :
+      <div></div>}
+
+
+
     </div>
   );
 };
