@@ -33,7 +33,7 @@ const Upload = () => {
   const [isUploadOpen, setIsUploadOpen] = useState(false)
   const [metaData, setMetaData] = useState([]);
   const [pdfContent, setPdfContent] = useState("");
-
+  const [ragUpload, setRagUpload] = useState(false)
   
   let start = 0
 
@@ -107,7 +107,7 @@ useEffect(() => {
   
 
 
-  const rag_upload = async () => {
+  const rag_upload = async (key) => {
     try {
       const requestOptions = {
         method: 'POST',
@@ -115,11 +115,11 @@ useEffect(() => {
         'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-        "customer_id": "demo",
+        "customer_id": "test",
         "s3_bucket": "cair-user-uploads163557-dev",
-        "s3_key": `public/${fileKey}`,
-        "file_type": "pdf",
-        "mode": "policies"
+        "s3_key": `public/${key}`,
+        "file_type": ".pdf",
+        "mode": `${mode}`
 
         })
       }
@@ -131,14 +131,19 @@ useEffect(() => {
       console.log("RAG upload error:", error)
     }
   }
+
+
+  const fileKeySetter = async (key) => {
+    setFileKey(key)
+  }
   
   const handleFileLoad = async () => {
     try {
       const file = ref.current.files[0]; // Get the file from the input element
-      setFileKey(`${user}_${mode}_main_${file.name}`)
+      const key = `${user}_${mode}_main_${file.name}`
+      await fileKeySetter(key)
       const result = await uploadData({
-
-        key: `${user}_${mode}_main_${file.name}`,
+        key: key,
         data: file, 
         options: {
           onProgress: ({ transferredBytes, totalBytes }) => {
@@ -154,11 +159,14 @@ useEffect(() => {
       }
       }).result;
       console.log('Succeeded: ', result);
-      const rag_result = await rag_upload();
+      console.log(fileKey)
+      console.log(mode)
 
-      console.log(rag_result)
+      rag_upload(`${user}_${mode}_main_${file.name}`);
 
-      window.location.reload()
+      
+
+      
   
     } catch (error) {
       console.log('Error : ', error);
@@ -166,6 +174,7 @@ useEffect(() => {
 
 
   };
+  
 }
 
 

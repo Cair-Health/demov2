@@ -12,7 +12,7 @@ const RecentQueriesTable = ({ history, currentQuery }) => {
   return (
     <div className="mx-auto">
       <h2 className="text-2xl font-semibold mb-2"></h2>
-      <div className="rounded-2xl">
+      <div className="rounded-2xl" >
         {displayQueries.map(({ query, response }, index) => ( 
           <div key={index} className="mb-4 text-xl">
             <div className="flex space-x-4 items-center pb-12">
@@ -21,11 +21,11 @@ const RecentQueriesTable = ({ history, currentQuery }) => {
             </div>
             <div className="flex items-center">
               {/* Bot Image */}
-              <div className="h-10 w-10 bg-teal-600 justify-center items-center flex rounded mr-5 mb-[1rem]">
+              <div className="h-10 w-10 bg-teal-600 justify-center items-center flex rounded mr-5 mb-[1rem]" >
                 <Image src={Bot} height="30" width="30" alt="bot" />
               </div>
               {/* Recent Query */}
-              <div className = "w-[85%]  items-center">
+              <div className = "w-[85%]  items-center" >
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
                   components={{

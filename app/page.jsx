@@ -211,7 +211,7 @@ const handlePaperPlaneClick = async () => {
       },
       body: JSON.stringify({
         "query": inputValue,
-        "customer_id": "customer1",
+        "customer_id": "test",
         "session_id": sessionID_contracts,
       }),
       redirect: 'follow',
@@ -225,7 +225,7 @@ const handlePaperPlaneClick = async () => {
       },
       body: JSON.stringify({
         "query": inputValue,
-        "customer_id": "customer1",
+        "customer_id": "test",
         "session_id": sessionID_financial_reports,
       }),
       redirect: 'follow',
@@ -420,35 +420,35 @@ const handlePaperPlaneClick = async () => {
 
 
 {hasAnswered && (
- <div className='flex flex-col  text-black overflow-auto pb-40'>
+ <div className='flex flex-col pt-5 text-black overflow-auto pb-40 '>
  {/* Recent Queries Component */}
  {(history.length >= 0 && selectedDocType === "Policies") && (
-   <div className='ml-[8%] mx-auto'>
+   <div className='pl-[7.9%] mx-auto w-full ' >
      <RecentQueries_policies history={history_policies} currentQuery={currentQuery} />
    </div>
  )}
 
 {(history.length >= 0 && selectedDocType === "Contracts") && (
-   <div className='ml-[8%] mx-auto'>
+   <div className='pl-[8%] mx-auto'>
      <RecentQueries_contracts history={history_contracts} currentQuery={currentQuery} />
    </div>
  )}
 
 {(history.length >= 0 && selectedDocType === "Financial Reports") && (
-   <div className='ml-[8%] mx-auto'>
+   <div className='pl-[8%] mx-auto'>
      <RecentQueries_financial_reports history={history_financial_reports} currentQuery={currentQuery} />
    </div>
  )}
 
 {(history.length >= 0 && selectedDocType === "Rates") && (
-   <div className='ml-[8%] mx-auto'>
+   <div className='pl-[8%] mx-auto'>
      <RecentQueries_rates history={history_rates} currentQuery={currentQuery} />
    </div>
  )}
 
 
  {/* New Query and Response Section */}
- <div className='ml-[8%] w-full flex items-center  pb-1'>
+ <div className='pl-[8%] w-full flex items-center  pb-1'>
    <div className='h-10 w-10 bg-indigo-500 text-center p-1 px-2 rounded text-white text-lg'>Pr</div>
    <div className='flex space-x-4 items-center justify-between px-6 py-6 w-4/5'>
      <div className='flex space-x-4 items-center'>
@@ -462,7 +462,7 @@ const handlePaperPlaneClick = async () => {
  </div>
 
 
- <div className='ml-[8%] w-full flex items-center border-t border-b' style={{ background: '#FAF9F6' }}>
+ <div className='pl-[8%] w-full flex items-center border-t border-b' style={{ background: '#FAF9F6' }}>
    <div className='flex items-center justify-center h-10 w-10 bg-teal-600 rounded text-white relative'>
      <Image src={Bot} height="30" width="30" alt="bot" />
    </div>

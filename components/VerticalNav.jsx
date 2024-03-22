@@ -60,7 +60,7 @@ const [isOpen3, setIsOpen3] = useState(false);
 
 
    <div className = "relative top-[10rem] flex justify-center items-center cursor-pointer">
-    <Link href = "/">
+    <Link href = {`/?user=garv`}>
      <Image src= {home} width= "auto" height= {35} alt="close"/>
      </Link>
 
@@ -88,41 +88,34 @@ const [isOpen3, setIsOpen3] = useState(false);
 
 
       
-      <button className={`pl-[rem] hover:bg-teal-600 font-bold text-2xl w-full items-center justify-center mb-[3rem] rounded cursor-pointer ${selectedDocType === "Policies" ? 'bg-teal-600' : ''}`} onClick={() => {setIsOpen1(!isOpen1); setIsOpen2(false); setIsOpen3(false)}}>
+      <button className={`pl-[rem] hover:bg-teal-600 font-bold text-2xl w-full items-center justify-center mb-[3rem] rounded cursor-pointer ${selectedDocType === "Policies" ? 'bg-teal-600' : ''}`} onClick={() => {setSelectedDocType("Policies"); onDocTypeChange("Policies");}}>
         Policies
       </button>
-      {isOpen1 && (
+      {/*isOpen1 && (
         <div className="absolute left-0 mt-[2rem] w-48 bg-white rounded-md shadow-lg z-10">
           <button className="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left" onClick={() => { setSelectedDocType("Policies"); onDocTypeChange("Policies"); setIsOpen1(false)}}>Chat</button>
           <Link href = {`/upload-policies?user=${user}&mode=policies`}>
           <button className="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left" >Upload</button>
           </Link>
         </div>
-      )}
+      )*/}
 
-<button className={`pl-[rem] hover:bg-teal-600 font-bold text-2xl w-full items-center justify-center mb-[3rem] rounded cursor-pointer ${selectedDocType === "Contracts" ? 'bg-teal-600' : ''}`} onClick={() => {setIsOpen2(!isOpen2); setIsOpen1(false); setIsOpen3(false)}}>
+<button className={`pl-[rem] hover:bg-teal-600 font-bold text-2xl w-full items-center justify-center mb-[3rem] rounded cursor-pointer ${selectedDocType === "Contracts" ? 'bg-teal-600' : ''}`} onClick={() => { setSelectedDocType("Contracts"); onDocTypeChange("Contracts");}}>
         Contracts
       </button>
-      {isOpen2 && (
+      {/*isOpen2 && (
         <div className="absolute left-0 mt-[7rem] w-48 bg-white rounded-md shadow-lg z-10">
           <button className="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left" onClick={() => { setSelectedDocType("Contracts"); onDocTypeChange("Contracts"); setIsOpen2(false)}}>Chat</button>
           <Link href ={`/upload-policies?user=${user}&mode=contracts`}>
           <button className="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left" >Upload</button>
           </Link>
         </div>
-      )}
+      )*/}
 
-<button className={`pl-[rem] hover:bg-teal-600 font-bold text-2xl w-full items-center justify-center mb-[3rem] rounded cursor-pointer ${selectedDocType === "Rates" ? 'bg-teal-600' : ''}`} onClick={() => {setIsOpen3(!isOpen3); setIsOpen2(false); setIsOpen1(false)}}>
+<button className={`pl-[rem] hover:bg-teal-600 font-bold text-2xl w-full items-center justify-center mb-[3rem] rounded cursor-pointer ${selectedDocType === "Rates" ? 'bg-teal-600' : ''}`} onClick={() => {setSelectedDocType("Rates"); onDocTypeChange("Rates");}}>
         Rates
       </button>
-      {isOpen3 && (
-        <div className="absolute left-0 mt-[12rem] w-48 bg-white rounded-md shadow-lg z-10">
-          <button className="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left" onClick={() => { setSelectedDocType("Rates"); onDocTypeChange("Rates"); setIsOpen3(false)}}>Chat</button>
-          <Link href = {`/upload-policies?user=${user}&mode=rates`}>
-          <button className="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left" >Upload</button>
-          </Link>       
-           </div>
-      )}
+     
 
 <Link href = {`/upload-policies?user=${user}&mode=policies`}>
         <div className = "px-5 py-5 cursor-pointer rounded-xl">
