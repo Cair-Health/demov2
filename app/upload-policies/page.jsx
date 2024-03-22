@@ -15,6 +15,8 @@ import eye from '../../public/eye-open.svg'
 import x from '../../public/x-02.svg'
 import { getProperties } from 'aws-amplify/storage';
 import { downloadData } from 'aws-amplify/storage';
+import { Document, Page } from '@react-pdf/renderer';
+import Iframe from 'react-iframe'
 
 
 
@@ -30,6 +32,8 @@ const Upload = () => {
   const [showUploadDropdown, setShowUploadDropdown] = useState(false)
   const [isUploadOpen, setIsUploadOpen] = useState(false)
   const [metaData, setMetaData] = useState([]);
+  const [pdfContent, setPdfContent] = useState("");
+
   
   let start = 0
 
@@ -59,6 +63,7 @@ const Upload = () => {
     };
 
     fetchInitialData();
+    
 
 
    
@@ -78,15 +83,17 @@ useEffect(() => {
             accessLevel: 'guest', // defaults to `guest` but can be 'private' | 'protected' | 'guest'
           }
         });
-        return properties;
+        console.log(properties)
       });
+
+      
 
       // Wait for all promises to resolve
       const results = await Promise.all(resultPromises);
-      setMetaData[results]
+      setMetaData(results)
       
       // Process the results here if needed
-      console.log(metaData);
+      console.log(results);
     } catch (error) {
       console.error('Error fetching file properties:', error);
     }
@@ -129,7 +136,6 @@ useEffect(() => {
     try {
       const file = ref.current.files[0]; // Get the file from the input element
       setFileKey(`${user}_${mode}_main_${file.name}`)
-      const rag_result = await rag_upload();
       const result = await uploadData({
 
         key: `${user}_${mode}_main_${file.name}`,
@@ -144,14 +150,15 @@ useEffect(() => {
               );
             }
         },
-        metadata: {type: mode, person: user   }
+        metadata: {type: mode, person: user }
       }
       }).result;
       console.log('Succeeded: ', result);
+      const rag_result = await rag_upload();
 
       console.log(rag_result)
-      window.location.reload();
 
+      window.location.reload()
   
     } catch (error) {
       console.log('Error : ', error);
@@ -163,21 +170,25 @@ useEffect(() => {
 
 
 
-  const handleShow = async(file) => {
+  const handleShow = async(file, filekey) => {
+    console.log(filekey)
     const { body, eTag } = await downloadData({
-      file.key,
-      data: file,
+      key: `${filekey}`,
+      file: file,
       options: {
         accessLevel: 'guest', // access level of the file being downloaded
-        onProgress: (event) => {
-          console.log(event.transferredBytes);
+        onProgress: (progress) => {
+          console.log(`Downloaded: ${progress.transferredBytes}/${progress.totalBytes}`);
         }, // optional progress callback
-        bytesRange: {
-          start: 1024,
-          end: 2048
-        } // optional bytes range parameter to download a part of the file, the 2nd MB of the file in this example
       }
-    }).result;
+    }
+    ).result;
+
+    console.log(body)
+    const blobUrl = URL.createObjectURL(body);
+    setPdfContent(blobUrl)
+    window.open(blobUrl, '_blank');
+      
   }
 
   const handleDelete = async(filename) => {
@@ -218,8 +229,12 @@ useEffect(() => {
           <li className = "text-xl w-full hover:bg-gray-200 cursor-pointer" onClick = {() => {
             handleUploadOpen("policies");
           }}>Policies</li>
-          <li className = "text-xl hover:bg-gray-200 cursor-pointer">Contracts</li>
-          <li className = "text-xl hover:bg-gray-200 cursor-pointer">Rates</li>
+          <li className = "text-xl hover:bg-gray-200 cursor-pointer" onClick = {() => {
+            handleUploadOpen("contracts");
+          }} >Contracts</li>
+          <li className = "text-xl hover:bg-gray-200 cursor-pointer" onClick = {() => {
+            handleUploadOpen("rates");
+          }}>Rates</li>
           </ol> 
           </div>: 
           <div> </div>}
@@ -227,8 +242,6 @@ useEffect(() => {
       </div>
       <div className="flex flex-col items-center justify-center">
        {/* <input ref={ref} type="file" onChange={handleFileLoad} /> */}
-        
-          
         
 
     
@@ -244,14 +257,25 @@ useEffect(() => {
     </tr>
   </thead>
   <tbody className="bg-white divide-y divide-gray-200">
+
     {files.map((file, i) => (
-      
       
 
       <tr key={file.key}>
+    
         <td className="px-6 py-4 whitespace-nowrap">{file.lastModified.toDateString()}</td>
-        <td className={`px-6 py-4 text-center rounded-xl whitespace-nowrap ${mode === "policies" ? "bg-green-100": ""}`} >{mode}</td>
-        <td className="px-6 py-4 whitespace-nowrap">{file.key}</td>
+        <div className = "items-center justify-center px- py-3 ">
+        <td className={`px-8 text-center font-semibold rounded-lg whitespace-nowrap ${
+        file.key.split("_")[1] === "policies" ? "bg-green-100" : ""
+      } ${
+        file.key.split("_")[1] === "contracts" ? "bg-red-100" : ""
+      } ${
+        file.key.split("_")[1] === "rates" ? "bg-yellow-100" : ""
+      }`}>
+      {file.key.split("_")[1]}
+    </td>
+    </div>
+        <td className="px-6 py-4 whitespace-nowrap">{file.key.split("_").slice(3).join("_")}</td>
         <td className="px-6 py-4 whitespace-nowrap">
           <button className="border-2 border-gray-200 rounded-xl bg-gray-100 p-2 mr-4" onClick={() => handleDelete(file.key)}>
           <Image src = {trash} height = "auto" width = "auto" alt = "trash"/>

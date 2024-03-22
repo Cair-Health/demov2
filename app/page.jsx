@@ -197,7 +197,7 @@ const handlePaperPlaneClick = async () => {
       },
       body: JSON.stringify({
         "query": inputValue,
-        "customer_id": "customer1",
+        "customer_id": "test",
         "session_id": sessionID_policies,
       }),
       redirect: 'follow',
@@ -328,7 +328,7 @@ const handlePaperPlaneClick = async () => {
          />
        </div>
    ) : */} 
-<div style={{ backgroundColor: '#FAF9F6' }} className='h-screen text-black flex z-0'>
+<div className='h-screen text-black flex z-0 bg-white'>
      {/* sidebar div*/}
      {/* sidebar extends full height of screen and is using rounded property because I'm trying to overlap it with the top nav */}
      <VerticalNav
