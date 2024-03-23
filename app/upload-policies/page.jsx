@@ -109,6 +109,9 @@ useEffect(() => {
 
 
   const rag_upload = async (key) => {
+    console.log(key)
+    console.log(mode)
+
     try {
       const requestOptions = {
         method: 'POST',
@@ -166,7 +169,7 @@ useEffect(() => {
       rag_upload(`${user}_${mode}_main_${file.name}`);
 
 
-      window.location.reload();
+
 
       
 

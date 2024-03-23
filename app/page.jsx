@@ -294,7 +294,7 @@ const handlePaperPlaneClick = async () => {
      }
 
      if(selectedDocType === "Contracts"){
-       setHistory_contracts([...history_contracts, { query: inputValue, response: answer }]);
+       setHistory_contracts([...history_policies, { query: inputValue, response: answer }]);
      }
 
        if(selectedDocType === "Rates"){
@@ -430,19 +430,19 @@ const handlePaperPlaneClick = async () => {
 
 {(history.length >= 0 && selectedDocType === "Contracts") && (
    <div className='pl-[8%] mx-auto'>
-     <RecentQueries_contracts history={history_contracts} currentQuery={currentQuery} />
+     <RecentQueries_policies history={history_policies} currentQuery={currentQuery} />
    </div>
  )}
 
 {(history.length >= 0 && selectedDocType === "Financial Reports") && (
    <div className='pl-[8%] mx-auto'>
-     <RecentQueries_financial_reports history={history_financial_reports} currentQuery={currentQuery} />
+     <RecentQueries_policies history={history_financial_reports} currentQuery={currentQuery} />
    </div>
  )}
 
 {(history.length >= 0 && selectedDocType === "Rates") && (
    <div className='pl-[8%] mx-auto'>
-     <RecentQueries_rates history={history_rates} currentQuery={currentQuery} />
+     <RecentQueries_policies history={history_rates} currentQuery={currentQuery} />
    </div>
  )}
 
@@ -491,7 +491,7 @@ const handlePaperPlaneClick = async () => {
            <p className = "mt-[1.5rem] font-semibold">Related Questions:</p>
            <div className="pt-[1rem] pb-[1rem] flex gap-10">
             
-  <div className="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-100 hover:bg-gray-300 cursor-pointer border-2 border-teal-700 items-center justify-center" onClick={() => setInputValue(question1)}>
+  <div className="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-50 hover:bg-gray-300 cursor-pointer border-2 border-teal-700 items-center justify-center" onClick={() => setInputValue(question1)}>
     <div className="px-6 ">
       <div className="font-bold text-xl mb-2 "></div>
       <p className="text-gray-700 text-base  ">
@@ -500,7 +500,7 @@ const handlePaperPlaneClick = async () => {
     </div>
   </div>
 
-  <div className="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-100 hover:bg-gray-300 cursor-pointer border-2 border-teal-700 items-center justify-center" onClick={() => setInputValue(question2)}>
+  <div className="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-50 hover:bg-gray-300 cursor-pointer border-2 border-teal-700 items-center justify-center" onClick={() => setInputValue(question2)}>
     <div className="px-6">
       <div className="font-bold text-xl mb-2"></div>
       <p className="text-gray-700 text-base">
@@ -509,7 +509,7 @@ const handlePaperPlaneClick = async () => {
     </div>
   </div>
 
-  <div className="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-100 hover:bg-gray-300 cursor-pointer border-2 border-teal-700" onClick={() => setInputValue(question3)}>
+  <div className="max-w-sm rounded overflow-hidden shadow-2xl bg-gray-50 hover:bg-gray-300 cursor-pointer border-2 border-teal-700" onClick={() => setInputValue(question3)}>
     <div className="px-6">
       <div className="font-bold text-xl mb-2"></div>
       <p className="text-gray-700 text-base">
