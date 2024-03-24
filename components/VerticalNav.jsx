@@ -53,14 +53,14 @@ const [isOpen3, setIsOpen3] = useState(false);
 
  if(sidebar){
  return (
-   <div className = 'navbar-menu justify-center items-center text-black -rounded-full'>
+   <div className = 'navbar-menu flex flex-col items-center text-black -rounded-full'>
     
      <div className = "relative top-[2rem] flex justify-center items-center cursor-pointer" >
      <Image src= {close} width="auto" height="35" alt="close" onClick={() => setSidebar(false)}/>
    </div>
 
 
-   <div className = "relative top-[4rem] flex justify-center items-center cursor-pointer">
+   <div className = "relative top-[7rem] px-3 py-3 rounded-xl flex justify-center items-center cursor-pointer hover:bg-brand-primary-100">
     <Link href = {`/?user=garv`}>
      <Image src= {message} width= "auto" height= {35} alt="close"/>
      </Link>
@@ -68,67 +68,17 @@ const [isOpen3, setIsOpen3] = useState(false);
      </div>
 
 
-     <section className="flex items-center flex-col relative top-1/4 ">
-       State Dropdown 
-
 
      
-       Document Type Dropdown 
-       <select className="w-[95%] mb-12 flex items-center rounded-xl" style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}
-               value={selectedDocType}
-               onChange={handleDoctypeChange}>
-         <option value="">Medical Policies</option>
-         {doctypes.map((item) => (
-           <option key={item.doctype}>{item.doctype}</option>
-         ))}
-       </select>
-      
-
-
-        {/* Provider Dropdown */}
-      
-      <button className={`pl-[rem] hover:bg-teal-600 font-bold text-2xl w-full items-center justify-center mb-[3rem] rounded cursor-pointer ${selectedDocType === "Policies" ? 'bg-teal-600' : ''}`} onClick={() => {setSelectedDocType("Policies"); onDocTypeChange("Policies");}}>
-        Policies
-      </button>
-      {/*isOpen1 && (
-        <div className="absolute left-0 mt-[2rem] w-48 bg-white rounded-md shadow-lg z-10">
-          <button className="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left" onClick={() => { setSelectedDocType("Policies"); onDocTypeChange("Policies"); setIsOpen1(false)}}>Chat</button>
-          <Link href = {`/upload-policies?user=${user}&mode=policies`}>
-          <button className="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left" >Upload</button>
-          </Link>
-        </div>
-      )*
-
-<button className={`pl-[rem] hover:bg-teal-600 font-bold text-2xl w-full items-center justify-center mb-[3rem] rounded cursor-pointer ${selectedDocType === "Contracts" ? 'bg-teal-600' : ''}`} onClick={() => { setSelectedDocType("Contracts"); onDocTypeChange("Contracts");}}>
-        Contracts
-      </button>
-      {/*isOpen2 && (
-        <div className="absolute left-0 mt-[7rem] w-48 bg-white rounded-md shadow-lg z-10">
-          <button className="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left" onClick={() => { setSelectedDocType("Contracts"); onDocTypeChange("Contracts"); setIsOpen2(false)}}>Chat</button>
-          <Link href ={`/upload-policies?user=${user}&mode=contracts`}>
-          <button className="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left" >Upload</button>
-          </Link>
-        </div>
-      )*/
-
-<button className={`pl-[rem] hover:bg-teal-600 font-bold text-2xl w-full items-center justify-center mb-[3rem] rounded cursor-pointer ${selectedDocType === "Rates" ? 'bg-teal-600' : ''}`} onClick={() => {setSelectedDocType("Rates"); onDocTypeChange("Rates");}}>
-        Rates
-      </button>    
-      
-  /*}
-
-     
-
+     <div className = "relative top-[7rem] px-3 py-3 rounded-xl flex justify-center items-center cursor-pointer hover:bg-brand-primary-100">
 <Link href = {`/upload-policies?user=${user}&mode=policies`}>
-        <div className = "px-5 py-5 cursor-pointer rounded-xl">
+        
         <Image src = {attach} height = "35" width = "auto" alt ="upload" />
-        </div>
+
       </Link>
-
-
+</div>
       
       
-     </section>
 
 
 
@@ -141,8 +91,8 @@ const [isOpen3, setIsOpen3] = useState(false);
  );
    } else {
            return (
-             <div className = "navbar-menu-closed">
-               <div className = "ml-[1rem] mt-[1rem]" >
+             <div className = "navbar-menu-closed justify-center">
+               <div className = "justify-center content-center" >
                    <Image src={open} width="auto" height={35} alt="open" onClick = { () => setSidebar(true)} />
                  </div>
 
