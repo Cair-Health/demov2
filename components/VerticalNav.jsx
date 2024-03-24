@@ -91,8 +91,8 @@ const [isOpen3, setIsOpen3] = useState(false);
  );
    } else {
            return (
-             <div className = "navbar-menu-closed justify-center">
-               <div className = "justify-center content-center" >
+             <div className = "navbar-menu-closed ">
+               <div className = "justify-center top-[4rem] content-center" >
                    <Image src={open} width="auto" height={35} alt="open" onClick = { () => setSidebar(true)} />
                  </div>
 

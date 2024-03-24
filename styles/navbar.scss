@@ -476,7 +476,7 @@ textarea {
 }
 
 .navbar-menu {
-  width: 6.3rem; /* Set the width of the navbar */
+  width: 5rem; /* Set the width of the navbar */
   height: 100vh;
   background-color: #DDECED;
   box-shadow: 1px 1px 7px rgba(0, 0, 0, 0.15);
@@ -485,8 +485,11 @@ textarea {
 }
 
 .navbar-menu-closed {
-  width: 4rem; /* Set the width of the navbar */
+  width: 3rem; /* Set the width of the navbar */
   height: 100vh;
+  padding-top: 1.2rem;
+  justify-content: center;
+  padding-left:0.5rem;
   background-color: #DDECED;
   box-shadow: 1px 1px 7px rgba(0, 0, 0, 0.15);
   transition: all 0.5s ease;
