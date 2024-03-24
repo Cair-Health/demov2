@@ -5,6 +5,7 @@ import open from '/public/open.svg'
 import home from '/public/home.svg'
 import Link from "next/link"
 import attach from "/public/attach.svg"
+import message from "/public/message-chat-01(1).svg"
 
 
 
@@ -52,27 +53,27 @@ const [isOpen3, setIsOpen3] = useState(false);
 
  if(sidebar){
  return (
-   <div className = 'navbar-menu text-black -rounded-full'>
+   <div className = 'navbar-menu justify-center items-center text-black -rounded-full'>
     
-     <div className = "ml-[6.5rem] mt-[1rem]" >
+     <div className = "relative top-[2rem] flex justify-center items-center cursor-pointer" >
      <Image src= {close} width="auto" height="35" alt="close" onClick={() => setSidebar(false)}/>
    </div>
 
 
-   <div className = "relative top-[10rem] flex justify-center items-center cursor-pointer">
+   <div className = "relative top-[4rem] flex justify-center items-center cursor-pointer">
     <Link href = {`/?user=garv`}>
-     <Image src= {home} width= "auto" height= {35} alt="close"/>
+     <Image src= {message} width= "auto" height= {35} alt="close"/>
      </Link>
 
      </div>
 
 
      <section className="flex items-center flex-col relative top-1/4 ">
-       {/* State Dropdown */}
+       State Dropdown 
 
 
      
-       {/* Document Type Dropdown 
+       Document Type Dropdown 
        <select className="w-[95%] mb-12 flex items-center rounded-xl" style={{ fontSize: '20px', fontFamily: 'Inter, sans-serif' }}
                value={selectedDocType}
                onChange={handleDoctypeChange}>
@@ -85,8 +86,6 @@ const [isOpen3, setIsOpen3] = useState(false);
 
 
         {/* Provider Dropdown */}
-
-
       
       <button className={`pl-[rem] hover:bg-teal-600 font-bold text-2xl w-full items-center justify-center mb-[3rem] rounded cursor-pointer ${selectedDocType === "Policies" ? 'bg-teal-600' : ''}`} onClick={() => {setSelectedDocType("Policies"); onDocTypeChange("Policies");}}>
         Policies
@@ -98,7 +97,7 @@ const [isOpen3, setIsOpen3] = useState(false);
           <button className="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left" >Upload</button>
           </Link>
         </div>
-      )*/}
+      )*
 
 <button className={`pl-[rem] hover:bg-teal-600 font-bold text-2xl w-full items-center justify-center mb-[3rem] rounded cursor-pointer ${selectedDocType === "Contracts" ? 'bg-teal-600' : ''}`} onClick={() => { setSelectedDocType("Contracts"); onDocTypeChange("Contracts");}}>
         Contracts
@@ -110,11 +109,14 @@ const [isOpen3, setIsOpen3] = useState(false);
           <button className="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left" >Upload</button>
           </Link>
         </div>
-      )*/}
+      )*/
 
 <button className={`pl-[rem] hover:bg-teal-600 font-bold text-2xl w-full items-center justify-center mb-[3rem] rounded cursor-pointer ${selectedDocType === "Rates" ? 'bg-teal-600' : ''}`} onClick={() => {setSelectedDocType("Rates"); onDocTypeChange("Rates");}}>
         Rates
-      </button>
+      </button>    
+      
+  /*}
+
      
 
 <Link href = {`/upload-policies?user=${user}&mode=policies`}>
@@ -122,8 +124,13 @@ const [isOpen3, setIsOpen3] = useState(false);
         <Image src = {attach} height = "35" width = "auto" alt ="upload" />
         </div>
       </Link>
+
+
+      
       
      </section>
+
+
 
 
     
