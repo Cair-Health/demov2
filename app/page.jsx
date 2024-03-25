@@ -7,7 +7,7 @@ import {
  HandThumbUpIcon,
  PaperAirplaneIcon,
  PencilSquareIcon,
- SunIcon
+ SunIcon, ArrowUpIcon
 } from "@heroicons/react/24/outline";
 import Image from 'next/image';
 import VerticalNav from "../components/VerticalNav";
@@ -349,7 +349,7 @@ const handlePaperPlaneClick = async () => {
        {/* Cair Banner */}
 
        <div>
-        <div className="relative flex bg-white border-gray-200 rounded" style={{ backgroundColor: '#40929B', height: '6vh' }}>
+        <div className="relative flex border-gray-200 rounded" style={{ backgroundColor: '#40929B', height: '6vh' }}>
           <div className="w-full flex items-center justify-between mx-auto p-5">
             <Image src={CairLogo} width={300} height='auto' alt="Not found"></Image>
             <span className="self-center text-2xl font-semibold dark:text-white"></span>
@@ -503,16 +503,21 @@ const handlePaperPlaneClick = async () => {
 {instructions && (
         <div className='fixed inset-0 flex items-center justify-center'>
           <div className='bg-black bg-opacity-50 absolute inset-0' onClick={() => setInstructions(false)}></div>
-          <div className='text-black border border-gray-400 bg-white flex justify-center items-center space-x-2 shadow-md rounded px-2'>
+          <div className='text-black border border-gray-200 bg-white flex justify-center items-center space-x-2 shadow-md rounded px-2'>
             {/* Popup content */}
             <div className = "bg-white opacity-100">This is where the instructions would go</div>
             <button onClick={() => setInstructions(false)}>Close</button>
           </div>
         </div>
       )}
-       <div className='absolute bottom-0 inset-x-0 mx-auto px-2 my-5 max-w-3xl'>
+
+       <div className='absolute bottom-0 inset-x-0 mx-auto px-2 my-4 max-w-3xl'>
+
+
+        
       
-         <div className='text-black border border-gray-400 flex justify-center items-center shadow-md rounded-xl px-2'>
+      
+         <div className='text-black border border-gray-400 flex justify-center items-center shadow-md rounded-xl  px-2'>
 
          
            <textarea
@@ -531,11 +536,20 @@ const handlePaperPlaneClick = async () => {
             }}
             
            />
-           <div className = "bg-gray-200 py-2 mx-1 px-2 rounded cursor-pointer">
-           <Image src = {lightning} width = "" height = "auto" alt = "faq" className = ""/>
-           </div>
-           <PaperAirplaneIcon
-             className='h-7 w-7 rounded p-1 m-1 text-right -rotate-90 cursor-pointer bg-brand-primary-600'
+           <BoltIcon
+             stroke = "gray"
+             stroke-width = "2"
+             className='h-8 w-8 rounded p-1 m-1 text-right  cursor-pointer bg-gray-300 border-2 border-gray-400'
+             onClick={() => {
+               handlePaperPlaneClick();
+           }}
+           />
+          
+
+           <ArrowUpIcon
+             stroke = "#C7E2E5"
+             stroke-width = "2"
+             className='h-8 w-8 rounded p-1 m-1 text-right  cursor-pointer bg-brand-primary-500 border-2 border-brand-primary-600'
              onClick={() => {
                handlePaperPlaneClick();
            }}
@@ -554,7 +568,7 @@ const handlePaperPlaneClick = async () => {
         </div>
       </div>
 
-      <div className="max-w-sm my-4 mx-7 rounded-xl overflow-hidden shadow-2xl border-2 border-gray-400 items-center justify-center cursor-pointer"  onClick={() => { setSelectedDocType("Contracts"); setTutorial(false)}}>
+      <div className="max-w-sm my-4 mx-7 rounded-xl overflow-hidden shadow-2xl border-2 border-gray-400 items-center justify-center cursor-pointer"  onClick={() => { setSelectedDocType("Contracts"); setTutorial(false); console.log("contracts")}}>
         <div className="px-6 py-4">
           <div className="font-semibold text-2xl mb-2">Contracts</div>
           <p className="text-black">Ask questions about contracts</p>

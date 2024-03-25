@@ -131,8 +131,10 @@ useEffect(() => {
 
       console.log(response_policies)
       console.log(error)
+      window.location.reload()
     } catch(error){
       console.log("RAG upload error:", error)
+      window.location.reload()
     }
   }
 
@@ -154,7 +156,7 @@ useEffect(() => {
             if (totalBytes) {
               setProgress(
                 `Upload progress ${
-                  Math.round((transferredBytes / totalBytes) * 100)
+                  Math.round(((transferredBytes - 10) / totalBytes) * 100)
                 } %`
               );
             }
@@ -366,7 +368,7 @@ useEffect(() => {
       <Image src = {upload} height = "24" width = "auto" alt="upload" className = "mr-2" />
       <label className="cursor-pointer">Browse Files
       <input ref={ref} type="file" className = "hidden" onChange = {() => handleFileLoad()}/>
-      <h1>{progress}</h1>
+      <h1>{progress-'2'}</h1>
       
       </label>
       </div>
