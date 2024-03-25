@@ -53,7 +53,7 @@ const Upload = () => {
         'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-        "customer_id": "test",
+        "customer_id": "demo",
         "s3_bucket": "cair-user-uploads163557-dev",
         "s3_key": `public/${fileKey}`,
         "file_type": "pdf",

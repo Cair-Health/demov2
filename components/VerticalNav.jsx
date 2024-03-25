@@ -4,7 +4,7 @@ import close from '/public/close.svg'
 import open from '/public/open.svg'
 import home from '/public/home.svg'
 import Link from "next/link"
-import attach from "/public/attach.svg"
+import folder from "/public/folder.svg"
 import message from "/public/message-chat-01(1).svg"
 
 
@@ -73,7 +73,7 @@ const [isOpen3, setIsOpen3] = useState(false);
      <div className = "relative top-[7rem] px-3 py-3 rounded-xl flex justify-center items-center cursor-pointer hover:bg-brand-primary-100">
 <Link href = {`/upload-policies?user=${user}&mode=policies`}>
         
-        <Image src = {attach} height = "35" width = "auto" alt ="upload" />
+        <Image src = {folder} height = "35" width = "auto" alt ="upload" />
 
       </Link>
 </div>

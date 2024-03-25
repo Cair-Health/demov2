@@ -13,6 +13,8 @@ import Image from 'next/image';
 import VerticalNav from "../components/VerticalNav";
 import CairLogo from "/public/CairHealthLogo.png";
 import Bot from '/public/carbonbot.svg'
+import arrowup from '/public/arrow-up.svg';
+import lightning from '/public/lightning-filled.svg';
 import ClipLoader from 'react-spinners/BeatLoader';
 import ReactMarkdown from 'react-markdown';
 import RecentQueries_policies from '../components/RecentQueries_policies'
@@ -96,7 +98,7 @@ const Home = () => {
 
 
  const [selectedState, setSelectedState] = useState("California");
- const [selectedDocType, setSelectedDocType] = useState("");
+ const [selectedDocType, setSelectedDocType] = useState("Policies");
  const [selectedProvider, setSelectedProvider] = useState("");
 
 
@@ -197,7 +199,7 @@ const handlePaperPlaneClick = async () => {
       },
       body: JSON.stringify({
         "query": inputValue,
-        "customer_id": "test",
+        "customer_id": "demo",
         "session_id": sessionID_policies,
       }),
       redirect: 'follow',
@@ -211,7 +213,7 @@ const handlePaperPlaneClick = async () => {
       },
       body: JSON.stringify({
         "query": inputValue,
-        "customer_id": "test",
+        "customer_id": "demo",
         "session_id": sessionID_contracts,
       }),
       redirect: 'follow',
@@ -225,7 +227,7 @@ const handlePaperPlaneClick = async () => {
       },
       body: JSON.stringify({
         "query": inputValue,
-        "customer_id": "test",
+        "customer_id": "demo",
         "session_id": sessionID_financial_reports,
       }),
       redirect: 'follow',
@@ -328,29 +330,32 @@ const handlePaperPlaneClick = async () => {
          />
        </div>
    ) : */} 
-<div className='h-screen text-black flex z-0 bg-white'>
+<div className='h-screen text-black flex bg-white'>
      {/* sidebar div*/}
      {/* sidebar extends full height of screen and is using rounded property because I'm trying to overlap it with the top nav */}
      <VerticalNav
        onDocTypeChange={handleDocTypeChange}
        user={user}
-       className = "z-10"
+       className = ""
      />
 
 
      {/* End of Sidebar content */}
      <div className='relative flex flex-1 flex-col h-full'>
-       {!hasAnswered && <div className='flex flex-col space-y-4 justify-center items-center absolute inset-x-0 top-0 bottom-0'></div>}
+       {!hasAnswered && <div className='flex flex-col space-y-4 justify-center items-center inset-x-0 top-0 bottom-0'></div>}
 
 
 
        {/* Cair Banner */}
 
        <div>
-        <div className="relative flex bg-white border-gray-200 rounded" style={{ backgroundColor: '#40929B', zIndex:1, height: '7vh' }}>
+        <div className="relative flex bg-white border-gray-200 rounded" style={{ backgroundColor: '#40929B', height: '6vh' }}>
           <div className="w-full flex items-center justify-between mx-auto p-5">
             <Image src={CairLogo} width={300} height='auto' alt="Not found"></Image>
-            <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"></span>
+            <span className="self-center text-2xl font-semibold dark:text-white"></span>
+            
+
+     
             <div className="hidden w-full md:block md:w-auto" id="navbar-default">
               {!user ? <Link href="/log-in">
               <button className = "bg-green-50 rounded-3xl px-5 py-2 font-semibold text-xl">Log In</button>
@@ -363,57 +368,11 @@ const handlePaperPlaneClick = async () => {
 
 
        
- 
-       {!hasAnswered && tutorial && (
-         <div className='flex flex-col space-y-4 justify-center items-center h-full '>
-           <div className='mt-[5%] space-y-2'>
-             <div className='grid grid-cols-3 gap-4 text-center text-lg'>
-               <div className='p-2 font-semibold flex flex-col justify-center items-center'>
-                 <SunIcon className='h-5 w-5' />Coverage Examples
-               </div>
-               <div className='p-2 font-semibold flex flex-col justify-center items-center'>
-                 <BoltIcon className='h-5 w-5' />Policy Capabilities
-               </div>
-               <div className='p-2 font-semibold flex flex-col justify-center items-center'>
-                 <ExclamationTriangleIcon className='h-5 w-5' />Policy Limitations
-               </div>
-             </div>
-             <div className='grid grid-cols-3 gap-4 text-center text-black'>
-               <div className='p-2 bg-gray-300 hover:bg-gray-400 rounded-md text-sm shadow-sm w-60'>
-                 Understanding coverage in simple terms
-               </div>
-               <div className='p-2 bg-gray-300 hover:bg-gray-400 rounded-md text-sm shadow-sm w-60'>
-                 Retaining information about policy details
-               </div>
-               <div className='p-2 bg-gray-300 hover:bg-gray-400 rounded-md text-sm shadow-sm w-60'>
-                 Potential limitations in policy coverage
-               </div>
-             </div>
-             <div className='grid grid-cols-3 gap-4 text-center'>
-               <div className='p-2 bg-gray-300 hover:bg-gray-400 rounded-md text-sm shadow-sm w-60'>
-                 Clarifying coverage terms and conditions
-               </div>
-               <div className='p-2 bg-gray-300 hover:bg-gray-400 rounded-md text-sm shadow-sm w-60'>
-                 Providing insights on policy-related queries
-               </div>
-               <div className='p-2 bg-gray-300 hover:bg-gray-400 rounded-md text-sm shadow-sm w-60'>
-                 Addressing common questions about insurance
-               </div>
-             </div>
-             <div className='grid grid-cols-3 gap-4 text-center'>
-               <div className='p-2 bg-gray-300 hover:bg-gray-400 rounded-md text-sm shadow-sm w-60'>
-                 Explain insurance terms in simple language
-               </div>
-               <div className='p-2 bg-gray-300 hover:bg-gray-400 rounded-md text-sm shadow-sm w-60'>
-                 Tips for maximizing policy benefits
-               </div>
-               <div className='p-2 bg-gray-300 hover:bg-gray-400 rounded-md text-sm shadow-sm w-60'>
-                 Handling claim-related inquiries
-               </div>
-             </div>
-           </div>
-         </div>
-       )}
+
+
+
+
+
 
 
 
@@ -451,7 +410,7 @@ const handlePaperPlaneClick = async () => {
 
  {/* New Query and Response Section */}
  <div className='pl-[8%] w-full flex items-center  pb-1'>
-   <div className='h-10 w-10 bg-indigo-500 text-center p-1 px-2 rounded text-white text-lg'>Pr</div>
+   <div className='h-10 w-10 bg-indigo-500 text-center p-1 px-2 rounded-full text-white text-lg'>Pr</div>
    <div className='flex space-x-4 items-center justify-between px-6 py-6 w-4/5'>
      <div className='flex space-x-4 items-center'>
        {/* User Query */}
@@ -464,8 +423,8 @@ const handlePaperPlaneClick = async () => {
  </div>
 
 
- <div className='pl-[8%] w-full flex items-center border-t border-b' style={{ background: '#FAF9F6' }}>
-   <div className='flex items-center justify-center h-10 w-10 bg-teal-600 rounded text-white relative'>
+ <div className='pl-[8%] w-full flex items-center border-t border-b' style={{ background: '#ECF5F6' }}>
+   <div className='flex items-center justify-center h-10 w-10 bg-teal-600 rounded-full text-white relative'>
      <Image src={Bot} height="30" width="30" alt="bot" />
    </div>
    <div className='flex space-x-4 items-center justify-between px-6 py-6 w-4/5'>
@@ -536,6 +495,11 @@ const handlePaperPlaneClick = async () => {
  </div>
 </div>
 )}
+
+
+
+
+
 {instructions && (
         <div className='fixed inset-0 flex items-center justify-center'>
           <div className='bg-black bg-opacity-50 absolute inset-0' onClick={() => setInstructions(false)}></div>
@@ -546,15 +510,13 @@ const handlePaperPlaneClick = async () => {
           </div>
         </div>
       )}
-       <div className='absolute bottom-0 inset-x-0 mx-auto px-4 py-6 max-w-3xl'>
+       <div className='absolute bottom-0 inset-x-0 mx-auto px-2 my-5 max-w-3xl'>
       
-         <div className='text-black border border-gray-400 flex justify-center items-center space-x-2 shadow-md rounded px-2'>
+         <div className='text-black border border-gray-400 flex justify-center items-center shadow-md rounded-xl px-2'>
 
-          <div className = 'px-3 py-1 rounded-full bg-teal-500 font-bold text-white' onClick ={() => {
-            setInstructions(true);
-          }}>?</div>
+         
            <textarea
-             className='flex-1 bg-white p-2 border-0 text-xl focus:outline-none rounded-2xl resize-y'
+             className='flex-1 bg-white  border-0 text-xl focus:outline-none rounded-2xl resize-y'
              style={{ minHeight: '20px', resize: 'none' }}
              value = {inputValue}
              onChange={(e) => {
@@ -569,17 +531,51 @@ const handlePaperPlaneClick = async () => {
             }}
             
            />
+           <div className = "bg-gray-200 py-2 mx-1 px-2 rounded cursor-pointer">
+           <Image src = {lightning} width = "" height = "auto" alt = "faq" className = ""/>
+           </div>
            <PaperAirplaneIcon
-             className='h-4 w-4 text-right -rotate-45 cursor-pointer'
+             className='h-7 w-7 rounded p-1 m-1 text-right -rotate-90 cursor-pointer bg-brand-primary-600'
              onClick={() => {
                handlePaperPlaneClick();
            }}
            />
+          
          </div>
        </div>
+       {!hasAnswered && tutorial && (
+  <div className='flex flex-col pt-7 items-center'>
+    <h1 className="text-4xl font-semibold">How can I assist you today?</h1>
+    <div className="flex flex-row">
+      <div className="max-w-sm my-4 rounded-xl overflow-hidden shadow-2xl border-2 border-gray-400 items-center justify-center cursor-pointer" onClick={() => { setSelectedDocType("Policies"); setTutorial(false)}}>
+        <div className="px-6 py-4">
+          <div className="font-semibold text-2xl mb-2">Policies</div>
+          <p className="text-black">Ask questions about policies</p>
+        </div>
+      </div>
+
+      <div className="max-w-sm my-4 mx-7 rounded-xl overflow-hidden shadow-2xl border-2 border-gray-400 items-center justify-center cursor-pointer"  onClick={() => { setSelectedDocType("Contracts"); setTutorial(false)}}>
+        <div className="px-6 py-4">
+          <div className="font-semibold text-2xl mb-2">Contracts</div>
+          <p className="text-black">Ask questions about contracts</p>
+        </div>
+      </div>
+
+      <div className="max-w-sm my-4 rounded-xl overflow-hidden shadow-2xl border-2 border-gray-400 items-center justify-center cursor-pointer"  onClick={() => { setSelectedDocType("Rates"); setTutorial(false)}}>
+        <div className="px-6 py-4">
+          <div className="font-semibold text-2xl mb-2">Rates</div>
+          <p className="text-black">Ask questions about rates</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+)}
      </div>
    </div>
- )
+
+
+
  </>
  );
 };
