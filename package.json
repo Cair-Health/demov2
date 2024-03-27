@@ -32,7 +32,8 @@
     "react-spinners": "^0.13.8",
     "remark-gfm": "^4.0.0",
     "remark-react": "^9.0.1",
-    "sass": "^1.70.0"
+    "sass": "^1.70.0",
+    "shorturl": "^0.0.3"
   },
   "devDependencies": {
     "@types/node": "^20",

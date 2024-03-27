@@ -7,7 +7,7 @@ import {
  HandThumbUpIcon,
  PaperAirplaneIcon,
  PencilSquareIcon,
- SunIcon, ArrowUpIcon
+ SunIcon, ArrowUpIcon, QuestionMarkCircleIcon
 } from "@heroicons/react/24/outline";
 import Image from 'next/image';
 import VerticalNav from "../components/VerticalNav";
@@ -30,6 +30,8 @@ import Linkify from 'react-linkify'
 import Link from "next/link"
 import Dropdown from "../components/Dropdown";
 import { getUrl } from 'aws-amplify/storage';
+import x from '../public/x-02.svg'
+import { Transition } from '@headlessui/react'
 
 
 
@@ -59,7 +61,6 @@ const Home = () => {
  const [history, setHistory] = useState([]);
 
 
-
  const [currentQuery, setCurrentQuery] = useState("");
  const scrollRef = useRef(null);
  const [password, setPassword] = useState("");
@@ -70,8 +71,7 @@ const Home = () => {
  const [guidebot, setGuidebot] = useState(false)
  const [instructions, setInstructions] = useState(false)
  const [user, setUser] = useState("")
-
-
+ const [faq, setFaq] = useState(false)
  Amplify.configure(amplifyconfig);
 
 
@@ -261,18 +261,20 @@ const handlePaperPlaneClick = async () => {
     if (urls) {
       for (const url of urls) {
           // Process URL to get S3 key
-          const s3Key = url.split('/').pop().replace(/%20/g, ' '); // Get last part of the URL and replace %20 with spaces
+          const s3Key = url.split('/').pop().replace(/%20/g, ' ').replace(/,$/, '');; // Get last part of the URL and replace %20 with spaces
           
           // Call your API with the S3 key
           try {
             const getUrlResult = await getUrl({
-              key: s3Key,
+              key: s3Key ,
               options: {
                 accessLevel: 'guest' , // can be 'private', 'protected', or 'guest' but defaults to `guest` // defaults to false
               },
             });
+            
 
             answer = answer.replace(url, getUrlResult.url);
+
             console.log('API Response:', getUrlResult.url);
             
             }catch(error) {
@@ -282,7 +284,7 @@ const handlePaperPlaneClick = async () => {
           }
 
         } else {
-          answer = answer;
+          answer = answer
         }
 
     const question1 = jsonAnswer.questions[0]
@@ -362,12 +364,72 @@ const handlePaperPlaneClick = async () => {
        className = ""
      />
 
+<Transition
+        show={faq}
+        enter="transition-opacity duration-75"
+        enterFrom="opacity-0"
+        enterTo="opacity-100"
+        leave="transition-opacity duration-150"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
+      >
+
+
+
+    <div className="border pt-10 border-gray-400 absolute h-full right-0 opacity-97 w-1/6 flex flex-col items-start" style={{ background: '#F2F4F5' }}>
+      <div className="p-12 flex flex-row">
+        <Image src={x} width="auto" height="auto" className = "cursor-pointer hover:focus" onClick = {() => setFaq(false)} style={{ zIndex: 999 }}/>
+        <h1 className="pl-1 text-xl">FAQ</h1>
+      </div>
+      <div className="pl-10 flex flex-col  w-full h-full">
+        <h1 className=" font-semibold border-b-2 border-gray-300">How do you use Cair Assistant?</h1>
+        <div className = "justify-center pt-4 align-center">
+        <h1 className = "font-semibold">
+          Policies RAG:
+          </h1>
+        <div className = "w-3/4 py-4 px-2 rounded-xl border border-gray-200">
+          <p>Users should include details like Insurance Provider (Payer), Plan (optional), Location</p>
+        </div>
+
+        <h1 className = "font-semibold">
+          Policies RAG:
+          </h1>
+        <div className = "w-3/4 py-4 px-2  rounded-xl border border-gray-200">
+          <p>Users should include details like Insurance Provider (Payer), Plan (optional), Location</p>
+        </div>
+
+        <h1 className = "font-semibold">
+          Policies RAG:
+          </h1>
+        <div className = "w-3/4 py-4 px-2 rounded-xl border border-gray-200">
+          <p>Users should include details like Insurance Provider (Payer), Plan (optional), Location</p>
+        </div>
+        <h1 className=" font-semibold border-b-2 border-gray-300">Example:</h1>
+        <div className = "justify-center pt-4 align-center">
+        <h1 className = "font-semibold">
+          Policy Question:
+          </h1>
+        <div className = "w-3/4 py-4 px-2 rounded-xl border bg-white border-gray-200">
+          <p>If an Anthem claim filed in California has modifier 22 and the allowance is $1,000, how much should be paid via reimbursement?
+</p>
+        </div>
+
+        
+        </div>
+        </div>
+      </div>
+    </div>
+    </Transition>
+
+
+    
+
 
      {/* End of Sidebar content */}
      <div className='relative flex flex-1 flex-col h-full'>
        {!hasAnswered && <div className='flex flex-col space-y-4 justify-center items-center inset-x-0 top-0 bottom-0'></div>}
 
-
+    
 
        {/* Cair Banner */}
 
@@ -388,6 +450,7 @@ const handlePaperPlaneClick = async () => {
           </div>
         </div>
       </div>
+
 
 
        
@@ -428,6 +491,8 @@ const handlePaperPlaneClick = async () => {
  </div>
 
 
+
+
  <div className='pl-[8%] w-full flex items-center border-t border-b' style={{ background: '#ECF5F6' }}>
    <div className='flex items-center justify-center h-10 w-10 bg-teal-600 rounded-full text-white relative'>
      <Image src={Bot} height="30" width="30" alt="bot" />
@@ -451,9 +516,23 @@ const handlePaperPlaneClick = async () => {
            />
          ) : (<div>
            <div>
-           <Linkify>{responseText}</Linkify>;
+                         <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  a: props => {
+                    return props.href.startsWith('https://') ? (
+                      <a href={props.href} className="text-teal-800 underline" target="_blank">source</a>// Render Twitter links with custom component
+                    ) : (
+                      <a href={props.href} className="text-teal-600 underline">{props.children}</a> // All other links
+                    )
+                  }
+                }}
+              >
+                {responseText}
+              </ReactMarkdown>
                
            </div>
+
            <p className = "mt-[1.5rem] font-semibold">Related Questions:</p>
            <div className="pt-[1rem] pb-[1rem] flex gap-10">
             
@@ -542,12 +621,12 @@ const handlePaperPlaneClick = async () => {
             }}
             
            />
-           <BoltIcon
+           <QuestionMarkCircleIcon
              stroke = "gray"
              stroke-width = "2"
-             className='h-8 w-8 rounded-lg p-1 m-1 text-right  cursor-pointer bg-gray-300 border-2 border-gray-400'
+             className='h-8 w-8 rounded-lg p- m-1 text-right  cursor-pointer bg-gray-300 border-2 border-gray-400'
              onClick={() => {
-               handlePaperPlaneClick();
+               setFaq(!faq);
            }}
            />
           
@@ -571,6 +650,7 @@ const handlePaperPlaneClick = async () => {
     <h1 className="text-4xl font-semibold">{`How can I assist you today`}</h1>
     <h1 className="text-4xl pl-2 font-semibold text-brand-primary-600">{user}</h1>
     <h1 className="text-4xl pl-2 font-semibold">{`?`}</h1>
+
 
     </span>
     <div className="flex flex-row">
@@ -598,9 +678,15 @@ const handlePaperPlaneClick = async () => {
   </div>
   
 )}
-     </div>
-   </div>
 
+
+
+
+
+</div>
+
+     </div>
+ 
 
 
  </>
