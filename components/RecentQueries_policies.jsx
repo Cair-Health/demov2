@@ -3,6 +3,9 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Bot from '/public/carbonbot.svg';
 import Image from 'next/image';
+import { Fragment } from 'react'
+import { Menu, Transition } from '@headlessui/react'
+import { ChevronDownIcon } from '@heroicons/react/20/solid'
 
 const RecentQueriesTable_policies = ({ history, currentQuery }) => {
   // Filter queries to exclude the current query
@@ -16,12 +19,12 @@ const RecentQueriesTable_policies = ({ history, currentQuery }) => {
         {displayQueries.map(({ query, response }, index) => ( 
           <div key={index} className="mb-4 text-xl">
             <div className="flex space-x-4 items-center pb-12 " >
-              <div className="h-10 w-10 bg-indigo-500 text-center p-1 px-2 rounded text-white" style={{ fontSize: '1.18rem' }}>Pr</div>
+              <div className="h-10 w-10 bg-indigo-500 text-center p-1 px-2 rounded-full text-white" style={{ fontSize: '1.18rem' }}>Pr</div>
               <p className="font-semibold">{query}</p>
             </div>
-            <div className="flex items-center border" style={{ background: '#FAF9F6' }} >
+            <div className="flex items-center" style={{ background: '' }} >
               {/* Bot Image */}
-              <div className="h-10 w-10 bg-teal-600 justify-center items-center flex rounded mr-5">
+              <div className="h-10 w-10 bg-teal-600 justify-center items-center flex rounded-full mr-5">
                 <Image src={Bot} height="30" width="30" alt="bot" />
               </div>
               {/* Recent Query */}

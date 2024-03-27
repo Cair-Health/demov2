@@ -13,6 +13,10 @@ import Image from 'next/image';
 import VerticalNav from "../components/VerticalNav";
 import CairLogo from "/public/CairHealthLogo.png";
 import Bot from '/public/carbonbot.svg'
+import { Amplify } from 'aws-amplify';
+import amplifyconfig from '../src/amplifyconfiguration.json';
+import { uploadData, list } from 'aws-amplify/storage';
+import { remove } from 'aws-amplify/storage';
 import arrowup from '/public/arrow-up.svg';
 import lightning from '/public/lightning-filled.svg';
 import ClipLoader from 'react-spinners/BeatLoader';
@@ -24,6 +28,8 @@ import RecentQueries_rates from '../components/RecentQueries_rates'
 import remarkGfm from 'remark-gfm'
 import Linkify from 'react-linkify'
 import Link from "next/link"
+import Dropdown from "../components/Dropdown";
+import { getUrl } from 'aws-amplify/storage';
 
 
 
@@ -41,9 +47,10 @@ const Home = () => {
  const [inputValue, setInputValue] = useState("");
  const [responseText, setResponseText] = useState("...try again");
  const [returnQuery, setReturnQuery] = useState("");
+ const [sessionID, setSessionID] = useState("");
  const [sessionID_policies, setSessionID_policies] = useState("");
  const [sessionID_contracts, setSessionID_contracts] = useState("");
- const [sessionID_financial_reports, setSessionID_financial_reports] = useState("");
+ const [sessionID_rates, setSessionID_rates] = useState("");
  const [loading, setLoading] = useState(false);
  const [history_policies, setHistory_policies] = useState([]);
  const [history_contracts, setHistory_contracts] = useState([]);
@@ -64,6 +71,8 @@ const Home = () => {
  const [instructions, setInstructions] = useState(false)
  const [user, setUser] = useState("")
 
+
+ Amplify.configure(amplifyconfig);
 
 
  useEffect(() => {
@@ -128,30 +137,19 @@ const Home = () => {
       method: 'PUT',
       redirect: 'follow',
     };
-    const response_policies = await fetch("https://chat.cairhealth.com/start_chat_policies/", requestOptions);
-    const response_contracts = await fetch("https://chat.cairhealth.com/start_chat_contracts/", requestOptions);
-    const response_financial_report = await fetch("https://chat.cairhealth.com/start_chat_financial_reports/", requestOptions);
+    const response_policies = await fetch("https://chat.cairhealth.com/start_chat/", requestOptions);
+  
     if (!response_policies.ok) {
-      throw new Error('Failed to start policies');
-    }
-    if (!response_contracts.ok) {
-      throw new Error('Failed to start contracts');
-    }
-    if (!response_financial_report.ok) {
-      throw new Error('Failed to start financial reports');
+      throw new Error('Failed to start');
     }
     const result = await response_policies.text();
-    const result2 = await response_contracts.text();
-    const result3 = await response_financial_report.text();
 
 
-    setSessionID_policies(result);
-    setSessionID_contracts(result2);
-    setSessionID_financial_reports(result3);
+
+    setSessionID(result)
     // Now you can use the sessionID in your application
-    console.log('Session ID - policies:', result);
-    console.log('Session ID - contracts:', result2);
-    console.log('Session ID - financial reports:', result3);
+    console.log('Session ID', result);
+
 
 
     // Other logic related to getting a response
@@ -168,7 +166,7 @@ const handleLoading_policies = async () => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      "session_id": sessionID_policies,
+      "session_id": sessionID,
     }),
     redirect: 'follow',
   };
@@ -200,7 +198,7 @@ const handlePaperPlaneClick = async () => {
       body: JSON.stringify({
         "query": inputValue,
         "customer_id": "demo",
-        "session_id": sessionID_policies,
+        "session_id": sessionID,
       }),
       redirect: 'follow',
     };
@@ -214,13 +212,13 @@ const handlePaperPlaneClick = async () => {
       body: JSON.stringify({
         "query": inputValue,
         "customer_id": "demo",
-        "session_id": sessionID_contracts,
+        "session_id": sessionID,
       }),
       redirect: 'follow',
     };
 
 
-    const getResponseOptions_financial_reports = {
+    const getResponseOptions_rates = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -228,7 +226,7 @@ const handlePaperPlaneClick = async () => {
       body: JSON.stringify({
         "query": inputValue,
         "customer_id": "demo",
-        "session_id": sessionID_financial_reports,
+        "session_id": sessionID,
       }),
       redirect: 'follow',
     };
@@ -244,8 +242,8 @@ const handlePaperPlaneClick = async () => {
     }
 
 
-    if(selectedDocType === "Financial Reports"){
-      getResponseResponse = await fetch("https://chat.cairhealth.com/get_response_financial_reports/", getResponseOptions_financial_reports);
+    if(selectedDocType === "Rates"){
+      getResponseResponse = await fetch("https://chat.cairhealth.com/get_response_rates/", getResponseOptions_rates);
     }
 
 
@@ -257,7 +255,36 @@ const handlePaperPlaneClick = async () => {
     const getResponseResult = await getResponseResponse.text();
     console.log(getResponseResult)
     const jsonAnswer = JSON.parse(getResponseResult)
-    const answer = jsonAnswer.answer
+    let answer = jsonAnswer.answer
+    const urlRegex = /https?:\/\/[^)\s]+/g;
+    const urls = answer.match(urlRegex);
+    if (urls) {
+      for (const url of urls) {
+          // Process URL to get S3 key
+          const s3Key = url.split('/').pop().replace(/%20/g, ' '); // Get last part of the URL and replace %20 with spaces
+          
+          // Call your API with the S3 key
+          try {
+            const getUrlResult = await getUrl({
+              key: s3Key,
+              options: {
+                accessLevel: 'guest' , // can be 'private', 'protected', or 'guest' but defaults to `guest` // defaults to false
+              },
+            });
+
+            answer = answer.replace(url, getUrlResult.url);
+            console.log('API Response:', getUrlResult.url);
+            
+            }catch(error) {
+              console.error(error)
+            }
+
+          }
+
+        } else {
+          answer = answer;
+        }
+
     const question1 = jsonAnswer.questions[0]
     const question2 = jsonAnswer.questions[1]
     const question3 = jsonAnswer.questions[2]
@@ -287,8 +314,8 @@ const handlePaperPlaneClick = async () => {
 
     // Store the current query and response in the history
 
-    if(selectedDocType === "Financial Reports"){
-    setHistory_financial_reports([...history_financial_reports, { query: inputValue, response: answer }]);
+    if(selectedDocType === "Rates"){
+      setHistory_policies([...history_policies, { query: inputValue, response: answer }]);
     }
 
     if(selectedDocType === "Policies"){
@@ -296,13 +323,9 @@ const handlePaperPlaneClick = async () => {
      }
 
      if(selectedDocType === "Contracts"){
-       setHistory_contracts([...history_policies, { query: inputValue, response: answer }]);
+      setHistory_policies([...history_policies, { query: inputValue, response: answer }]);
      }
 
-       if(selectedDocType === "Rates"){
-         setHistory_rates([...history_rates, { query: inputValue, response: answer }]);
-     }
-   
  
   } catch (error) {
     console.error('Error getting response:', error);
@@ -348,10 +371,10 @@ const handlePaperPlaneClick = async () => {
 
        {/* Cair Banner */}
 
-       <div>
-        <div className="relative flex border-gray-200 rounded" style={{ backgroundColor: '#40929B', height: '6vh' }}>
+       <div className = "">
+        <div className="relative flex border-gray-200 shadow-md" style={{ backgroundColor: '#40929B', height: '6vh' }}>
           <div className="w-full flex items-center justify-between mx-auto p-5">
-            <Image src={CairLogo} width={300} height='auto' alt="Not found"></Image>
+            <Image src={CairLogo} width={250} height='auto' alt="Not found"></Image>
             <span className="self-center text-2xl font-semibold dark:text-white"></span>
             
 
@@ -383,27 +406,9 @@ const handlePaperPlaneClick = async () => {
 {hasAnswered && (
  <div className='flex flex-col pt-5 text-black overflow-auto pb-40 '>
  {/* Recent Queries Component */}
- {(history.length >= 0 && selectedDocType === "Policies") && (
+ {(history.length >= 0) && (
    <div className='pl-[7.9%] mx-auto w-full ' >
      <RecentQueries_policies history={history_policies} currentQuery={currentQuery} />
-   </div>
- )}
-
-{(history.length >= 0 && selectedDocType === "Contracts") && (
-   <div className='pl-[8%] mx-auto'>
-     <RecentQueries_policies history={history_policies} currentQuery={currentQuery} />
-   </div>
- )}
-
-{(history.length >= 0 && selectedDocType === "Financial Reports") && (
-   <div className='pl-[8%] mx-auto'>
-     <RecentQueries_policies history={history_financial_reports} currentQuery={currentQuery} />
-   </div>
- )}
-
-{(history.length >= 0 && selectedDocType === "Rates") && (
-   <div className='pl-[8%] mx-auto'>
-     <RecentQueries_policies history={history_rates} currentQuery={currentQuery} />
    </div>
  )}
 
@@ -446,7 +451,7 @@ const handlePaperPlaneClick = async () => {
            />
          ) : (<div>
            <div>
-            <Linkify>{responseText}</Linkify>
+           <Linkify>{responseText}</Linkify>;
                
            </div>
            <p className = "mt-[1.5rem] font-semibold">Related Questions:</p>
@@ -516,7 +521,8 @@ const handlePaperPlaneClick = async () => {
 
         
       
-      
+        <Dropdown setSelectedDocType={setSelectedDocType} selectedDocType = {selectedDocType}/>
+
          <div className='text-black border border-gray-400 flex justify-center items-center shadow-md rounded-xl  px-2'>
 
          
@@ -539,7 +545,7 @@ const handlePaperPlaneClick = async () => {
            <BoltIcon
              stroke = "gray"
              stroke-width = "2"
-             className='h-8 w-8 rounded p-1 m-1 text-right  cursor-pointer bg-gray-300 border-2 border-gray-400'
+             className='h-8 w-8 rounded-lg p-1 m-1 text-right  cursor-pointer bg-gray-300 border-2 border-gray-400'
              onClick={() => {
                handlePaperPlaneClick();
            }}
@@ -549,7 +555,7 @@ const handlePaperPlaneClick = async () => {
            <ArrowUpIcon
              stroke = "#C7E2E5"
              stroke-width = "2"
-             className='h-8 w-8 rounded p-1 m-1 text-right  cursor-pointer bg-brand-primary-500 border-2 border-brand-primary-600'
+             className='h-8 w-8 rounded-lg p-1 m-1 text-right  cursor-pointer bg-brand-primary-500 border-2 border-brand-primary-600'
              onClick={() => {
                handlePaperPlaneClick();
            }}
@@ -557,9 +563,16 @@ const handlePaperPlaneClick = async () => {
           
          </div>
        </div>
+
        {!hasAnswered && tutorial && (
   <div className='flex flex-col pt-7 items-center'>
-    <h1 className="text-4xl font-semibold">How can I assist you today?</h1>
+    <h1 className="text-4xl font-semibold">Hello,</h1>
+    <span className = "flex flex-row">
+    <h1 className="text-4xl font-semibold">{`How can I assist you today`}</h1>
+    <h1 className="text-4xl pl-2 font-semibold text-brand-primary-600">{user}</h1>
+    <h1 className="text-4xl pl-2 font-semibold">{`?`}</h1>
+
+    </span>
     <div className="flex flex-row">
       <div className="max-w-sm my-4 rounded-xl overflow-hidden shadow-2xl border-2 border-gray-400 items-center justify-center cursor-pointer" onClick={() => { setSelectedDocType("Policies"); setTutorial(false)}}>
         <div className="px-6 py-4">

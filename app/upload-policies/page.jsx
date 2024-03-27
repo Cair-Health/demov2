@@ -170,6 +170,8 @@ useEffect(() => {
 
       rag_upload(`${user}_${mode}_main_${file.name}`);
 
+      window.location.reload();
+
 
 
 
