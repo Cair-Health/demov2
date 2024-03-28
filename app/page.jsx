@@ -682,40 +682,40 @@ const Home = () => {
               </span>
               <div className="flex flex-row">
                 <div
-                  className="max-w-sm my-4 rounded-xl overflow-hidden shadow-2xl border-2 border-gray-400 items-center justify-center cursor-pointer"
+                  className="max-w-sm my-4 rounded-xl hover:border-brand-primary-500 overflow-hidden shadow-2xl border-2 border-gray-400 items-center justify-center cursor-pointer"
                   onClick={() => {
                     setSelectedDocType("Policies");
                     setTutorial(false);
                   }}
                 >
-                  <div className="px-6 py-4">
+                  <div className="px-6 py-4 hover:bg-brand-primary-100 ">
                     <div className="font-semibold text-2xl mb-2">Policies</div>
                     <p className="text-black">Ask questions about policies</p>
                   </div>
                 </div>
 
                 <div
-                  className="max-w-sm my-4 mx-7 rounded-xl overflow-hidden shadow-2xl border-2 border-gray-400 items-center justify-center cursor-pointer"
+                  className="max-w-sm my-4 mx-7 rounded-xl overflow-hidden shadow-2xl border-2 hover:border-brand-primary-500 border-gray-400 items-center justify-center cursor-pointer"
                   onClick={() => {
                     setSelectedDocType("Contracts");
                     setTutorial(false);
                     console.log("contracts");
                   }}
                 >
-                  <div className="px-6 py-4">
+                  <div className="px-6 py-4 hover:bg-brand-primary-100">
                     <div className="font-semibold text-2xl mb-2">Contracts</div>
                     <p className="text-black">Ask questions about contracts</p>
                   </div>
                 </div>
 
                 <div
-                  className="max-w-sm my-4 rounded-xl overflow-hidden shadow-2xl border-2 border-gray-400 items-center justify-center cursor-pointer"
+                  className="max-w-sm my-4 rounded-xl overflow-hidden shadow-2xl border-2 hover:border-brand-primary-500 border-gray-400 items-center justify-center cursor-pointer"
                   onClick={() => {
                     setSelectedDocType("Rates");
                     setTutorial(false);
                   }}
                 >
-                  <div className="px-6 py-4">
+                  <div className="px-6 py-4 hover:bg-brand-primary-100">
                     <div className="font-semibold text-2xl mb-2">Rates</div>
                     <p className="text-black">Ask questions about rates</p>
                   </div>
