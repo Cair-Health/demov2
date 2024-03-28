@@ -1,10 +1,10 @@
 'use client'
-import { useState }  from 'react'
+import { useState }  from "react";
 import React from 'react'
 import { useRouter } from 'next/navigation'
 import Router from 'next/router'
 
-const page = () => {
+const LogIn = () => {
     const [text, setText] = useState("")
     const router = useRouter();
 
@@ -42,4 +42,4 @@ const page = () => {
   )
 }
 
-export default page
+export default LogIn
