@@ -164,6 +164,7 @@ const Home = () => {
     setCurrentQuery(inputValue);
     setInputValue("");
     let getResponseResponse;
+    let status
 
     console.log(selectedDocType);
     console.log(inputValue);
@@ -207,8 +208,14 @@ const Home = () => {
         redirect: "follow",
       };
 
+
+
       if (selectedDocType === "Policies") {
         getResponseResponse = await fetch(
+          "https://chat.cairhealth.com/get_response_policies/",
+          getResponseOptions_policies,
+        );
+        status = await fetch(
           "https://chat.cairhealth.com/get_response_policies/",
           getResponseOptions_policies,
         );
@@ -292,7 +299,7 @@ const Home = () => {
         }, 10);
       };
 
-      responseStreaming(answer);
+      setResponseText(answer);
 
       // Store the current query and response in the history
 
@@ -359,7 +366,7 @@ const Home = () => {
         >
           <div
             className="border pt-10 border-gray-400 absolute h-full right-0 opacity-97 w-1/6 flex flex-col items-start"
-            style={{ background: "#F2F4F5" }}
+            style={{ background: "#F2F4F5", zIndex: 998 }}
           >
             <div className="p-12 flex flex-row">
               <Image
@@ -426,7 +433,7 @@ const Home = () => {
 
           {/* Cair Banner */}
 
-          <div className="">
+          <div style = {{zIndex: 1000}}>
             <div
               className="relative flex border-gray-200 shadow-md"
               style={{ backgroundColor: "#40929B", height: "6vh" }}
@@ -667,11 +674,11 @@ const Home = () => {
             <div className="flex flex-col pt-7 items-center">
               <h1 className="text-4xl font-semibold">Hello,</h1>
               <span className="flex flex-row">
-                <h1 className="text-4xl font-semibold">{`How can I assist you today`}</h1>
-                <h1 className="text-4xl pl-2 font-semibold text-brand-primary-600">
+                <h1 className="text-4xl pt-2 font-semibold">{`How can I assist you today,`}</h1>
+                <h1 className="text-4xl pl-2 pt-2 font-semibold text-brand-primary-600">
                   {user}
                 </h1>
-                <h1 className="text-4xl pl-2 font-semibold">{`?`}</h1>
+                <h1 className="text-4xl pl-2 pt-2 font-semibold">{`?`}</h1>
               </span>
               <div className="flex flex-row">
                 <div
