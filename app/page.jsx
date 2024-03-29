@@ -384,7 +384,7 @@ const Home = () => {
                 How do you use Cair Assistant?
               </h1>
               <div className="justify-center pt-4 align-center">
-                <h1 className="font-semibold">Policies RAG:</h1>
+                <h1 className="font-semibold">Policies Mode:</h1>
                 <div className="w-3/4 py-4 px-2 rounded-xl border border-gray-200">
                   <p>
                     Users should include details like Insurance Provider
@@ -392,7 +392,7 @@ const Home = () => {
                   </p>
                 </div>
 
-                <h1 className="font-semibold">Policies RAG:</h1>
+                <h1 className="font-semibold">Contracts Mode:</h1>
                 <div className="w-3/4 py-4 px-2  rounded-xl border border-gray-200">
                   <p>
                     Users should include details like Insurance Provider
@@ -400,11 +400,10 @@ const Home = () => {
                   </p>
                 </div>
 
-                <h1 className="font-semibold">Policies RAG:</h1>
+                <h1 className="font-semibold">Rates Mode:</h1>
                 <div className="w-3/4 py-4 px-2 rounded-xl border border-gray-200">
                   <p>
-                    Users should include details like Insurance Provider
-                    (Payer), Plan (optional), Location
+                  Users should include details like Insurer (Payer), Provider or NPI, Code and Code Type
                   </p>
                 </div>
                 <h1 className=" font-semibold border-b-2 border-gray-300">
