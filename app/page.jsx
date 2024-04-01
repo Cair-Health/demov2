@@ -365,7 +365,7 @@ const Home = () => {
           leaveTo="opacity-0"
         >
           <div
-            className="border pt-10 border-gray-400 absolute h-full right-0 opacity-97 w-1/6 flex flex-col items-start"
+            className="border pt-10 h-full border-gray-400 absolute right-0 opacity-97 lg:w-[24rem] md:w-[35rem] sm:w-[40rem] flex flex-col items-start"
             style={{ background: "#F2F4F5", zIndex: 998 }}
           >
             <div className="p-12 flex flex-row">
@@ -379,7 +379,7 @@ const Home = () => {
               />
               <h1 className="pl-1 text-xl">FAQ</h1>
             </div>
-            <div className="pl-10 flex flex-col  w-full h-full">
+            <div className="pl-10 flex flex-col  w-full">
               <h1 className=" font-semibold border-b-2 border-gray-300">
                 How do you use Cair Assistant?
               </h1>
