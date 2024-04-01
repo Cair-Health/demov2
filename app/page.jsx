@@ -68,6 +68,7 @@ const Home = () => {
   const [instructions, setInstructions] = useState(false);
   const [user, setUser] = useState("");
   const [faq, setFaq] = useState(false);
+  const bottomOfPageRef = useRef();
   Amplify.configure(amplifyconfig);
 
   useEffect(() => {
@@ -75,6 +76,13 @@ const Home = () => {
     setUser(params.get("user"));
     startChat();
   }, []);
+
+
+  useEffect(() => {
+    if (bottomOfPageRef.current){
+      bottomOfPageRef.current.scrollIntoView();
+    }
+  }, [history_policies])
 
   {
     /*useEffect(() => {
@@ -609,6 +617,7 @@ const Home = () => {
                   </div>
                 </div>
               </div>
+              <div className = " bg-red-500" ref = {bottomOfPageRef}> </div>
             </div>
           )}
 
