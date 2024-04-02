@@ -145,34 +145,17 @@ const Home = () => {
     }
   };
 
-  const handleLoading_policies = async () => {
-    const getLoadingOptions_policies = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        session_id: sessionID,
-      }),
-      redirect: "follow",
-    };
-    while (response != "Completed.") {
-      const response = await fetch(
-        "https://chat.cairhealth.com/get_status_policies/",
-        requestOptions,
-      );
-      console.log(response);
-    }
-  };
+
 
   const handlePaperPlaneClick = async () => {
+    console.log("started")
     setLoading(true); // Set loading state to true when making the request
     setReturnQuery(inputValue);
     setHasAnswered(true);
     setCurrentQuery(inputValue);
     setInputValue("");
-    let getResponseResponse;
-    let status
+    
+    
 
     console.log(selectedDocType);
     console.log(inputValue);
@@ -216,17 +199,44 @@ const Home = () => {
         redirect: "follow",
       };
 
+      const getStatusOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          session_id: sessionID,
+        }),
+        redirect: "follow",
+      };
+
+      let getResponseResponse = null;
+
 
 
       if (selectedDocType === "Policies") {
-        getResponseResponse = await fetch(
+        console.log("step1")
+        getResponseResponse = fetch(
           "https://chat.cairhealth.com/get_response_policies/",
           getResponseOptions_policies,
         );
-        status = await fetch(
-          "https://chat.cairhealth.com/get_response_policies/",
-          getResponseOptions_policies,
-        );
+        
+        console.log(getResponseResponse)
+
+        console.log("step2")
+      
+        // Keep calling the status endpoint until getResponseResponse returns a response
+        let statusResponse;
+         while (getResponseResponse) {
+          console.log("asking");
+          statusResponse = await fetch(
+            "https://chat.cairhealth.com/get_status/",
+            getStatusOptions,
+          ).then((statusResponse) => statusResponse.body).then((body) => console.log(body.getReader()))
+          // Process statusResponse as needed
+          // Optionally, you might want to add some delay here to avoid overwhelming the server with too many requests
+          await new Promise(resolve => setTimeout(resolve, 5000)); // Wait for 1 second
+        }
       }
 
       if (selectedDocType === "Contracts") {
@@ -248,7 +258,7 @@ const Home = () => {
       }
 
       const getResponseResult = await getResponseResponse.text();
-      console.log(getResponseResult);
+  
       const jsonAnswer = JSON.parse(getResponseResult);
       let answer = jsonAnswer.answer;
       const urlRegex = /https?:\/\/[^)\s]+/g;
@@ -273,7 +283,7 @@ const Home = () => {
 
             answer = answer.replace(url, getUrlResult.url);
 
-            console.log("API Response:", getUrlResult.url);
+      
           } catch (error) {
             console.error(error);
           }
@@ -285,13 +295,10 @@ const Home = () => {
       const question1 = jsonAnswer.questions[0];
       const question2 = jsonAnswer.questions[1];
       const question3 = jsonAnswer.questions[2];
-      console.log(question1);
-      console.log(question2);
-      console.log(question3);
       setQuestion1(question1);
       setQuestion2(question2);
       setQuestion3(question3);
-      console.log(answer);
+
       setResponseText(answer[0]);
       const responseStreaming = (answer) => {
         let index = 0;
