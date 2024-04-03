@@ -135,9 +135,9 @@ const Home = () => {
       if (progress === "Stage 1.") {
         setLoadNumber(Math.floor(Math.random() * 30) + 1);
       } else if (progress === "Stage 2.") {
-        setLoadNumber(Math.floor(Math.random() * 10) + 21);
+        setLoadNumber(Math.floor(Math.random() * 20) + loadNumber);
       } else if (progress === "Stage 3.") {
-        setLoadNumber(Math.floor(Math.random() * 20) + 41);
+        setLoadNumber(Math.floor(Math.random() * 20) + loadNumber);
       } else if (progress === "Stage 4.") {
         setLoadNumber(Math.floor(Math.random() * 20) + loadNumber);
       } else if (progress === "Stage 5.") {
