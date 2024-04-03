@@ -70,6 +70,7 @@ const Home = () => {
   const [user, setUser] = useState("");
   const [faq, setFaq] = useState(false);
   const [progress, setProgress] = useState("")
+  const [loadNumber, setLoadNumber] = useState(5);
 
   const bottomOfPageRef = useRef();
   Amplify.configure(amplifyconfig);
@@ -117,7 +118,7 @@ const Home = () => {
   
           // If not completed, schedule next check after 1 second
           if (stattext !== "Completed.") {
-            await new Promise((resolve) => setTimeout(resolve, 1000));
+            await new Promise((resolve) => setTimeout(resolve, 4000));
           }
         }
       } catch (error) {
@@ -128,7 +129,23 @@ const Home = () => {
   }, [loading])
 
 
-
+  useEffect(() => {
+    console.log(progress);
+    const loadSetter = (progress) => {
+      if (progress === "Stage 1.") {
+        setLoadNumber(Math.floor(Math.random() * 30) + 1);
+      } else if (progress === "Stage 2.") {
+        setLoadNumber(Math.floor(Math.random() * 10) + 21);
+      } else if (progress === "Stage 3.") {
+        setLoadNumber(Math.floor(Math.random() * 20) + 41);
+      } else if (progress === "Stage 4.") {
+        setLoadNumber(Math.floor(Math.random() * 20) + loadNumber);
+      } else if (progress === "Stage 5.") {
+        setLoadNumber(Math.floor(Math.random() * 5) + 95);
+      }
+    };
+    loadSetter(progress);
+  }, [progress]);
 
   {
     /*useEffect(() => {
@@ -194,6 +211,7 @@ const Home = () => {
 
 
   const handlePaperPlaneClick = async () => {
+    setLoadNumber(5)
     console.log("started")
     setLoading(true); // Set loading state to true when making the request
     setReturnQuery(inputValue);
@@ -554,7 +572,23 @@ const Home = () => {
                       }}
                     >
                       {loading ? (
-                         <ProgressBar now={60} label={`${60}%`} />
+                        <div className = "flex flex-row">
+                    <ClipLoader
+                          css={{
+                            display: "block",
+                            margin: "0 auto",
+                            borderColor: "red",
+                          }}
+                          size={15}
+                          color={"#40929B"}
+                          loading={loading}
+                          speedMultiplier={1.5}
+                          aria-label="Loading Spinner"
+                          data-testid="loader"
+                        />
+
+                         <h1 className = "pl-4 text-teal-700 text-xl font-semibold">{loadNumber}%</h1>
+                         </div>
                        ) : (
                         <div>
                           <div>
