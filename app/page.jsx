@@ -34,6 +34,7 @@ import Dropdown from "../components/Dropdown";
 import { getUrl } from "aws-amplify/storage";
 import x from "../public/x-02.svg";
 import { Transition } from "@headlessui/react";
+import ProgressBar from 'react-bootstrap/ProgressBar';
 
 // Define your password here
 const PASSWORD = "reesespieces";
@@ -68,13 +69,18 @@ const Home = () => {
   const [instructions, setInstructions] = useState(false);
   const [user, setUser] = useState("");
   const [faq, setFaq] = useState(false);
+  const [progress, setProgress] = useState("")
+
   const bottomOfPageRef = useRef();
   Amplify.configure(amplifyconfig);
+
+  useEffect(() =>{
+    startChat();
+  }, [])
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     setUser(params.get("user"));
-    startChat();
   }, []);
 
 
@@ -83,6 +89,46 @@ const Home = () => {
       bottomOfPageRef.current.scrollIntoView();
     }
   }, [history_policies])
+
+
+  useEffect(() => {
+    const checkStatus = async () => {
+      try {
+        // Wait for the fetch request to resolve 
+        // Now that the response has been received, proceed with status checks
+        while (progress !== "Completed.") {
+          const statusResponse = await fetch(
+            "https://chat.cairhealth.com/get_status/",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                session_id: sessionID,
+              }),
+              redirect: "follow",
+            }
+          );
+          
+          const stattext = await statusResponse.text();
+          console.log(stattext)
+          setProgress(stattext);
+  
+          // If not completed, schedule next check after 1 second
+          if (stattext !== "Completed.") {
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+          }
+        }
+      } catch (error) {
+        console.error("Error occurred while fetching response:", error);
+      }
+    };
+    checkStatus();
+  }, [loading])
+
+
+
 
   {
     /*useEffect(() => {
@@ -199,46 +245,24 @@ const Home = () => {
         redirect: "follow",
       };
 
-      const getStatusOptions = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          session_id: sessionID,
-        }),
-        redirect: "follow",
-      };
 
-      let getResponseResponse = null;
+
+    let getResponseResponse;
 
 
 
       if (selectedDocType === "Policies") {
-        console.log("step1")
-        getResponseResponse = fetch(
-          "https://chat.cairhealth.com/get_response_policies/",
-          getResponseOptions_policies,
-        );
-        
-        console.log(getResponseResponse)
-
-        console.log("step2")
+        console.log("step1");
       
-        // Keep calling the status endpoint until getResponseResponse returns a response
-        let statusResponse;
-         while (getResponseResponse) {
-          console.log("asking");
-          statusResponse = await fetch(
-            "https://chat.cairhealth.com/get_status/",
-            getStatusOptions,
-          ).then((statusResponse) => statusResponse.body).then((body) => console.log(body.getReader()))
-          // Process statusResponse as needed
-          // Optionally, you might want to add some delay here to avoid overwhelming the server with too many requests
-          await new Promise(resolve => setTimeout(resolve, 5000)); // Wait for 1 second
-        }
+        // Start fetching response
+         getResponseResponse = await fetch(
+          "https://chat.cairhealth.com/get_response_policies/",
+          getResponseOptions_policies
+        );
+      
+        // Start checking status
       }
-
+      
       if (selectedDocType === "Contracts") {
         getResponseResponse = await fetch(
           "https://chat.cairhealth.com/get_response_contracts/",
@@ -343,7 +367,6 @@ const Home = () => {
       setResponseText("Failed to get response due to server error: 500");
     } finally {
       setLoading(false);
-      startChat();
     }
   };
 
@@ -531,20 +554,8 @@ const Home = () => {
                       }}
                     >
                       {loading ? (
-                        <ClipLoader
-                          css={{
-                            display: "block",
-                            margin: "0 auto",
-                            borderColor: "red",
-                          }}
-                          size={15}
-                          color={"#40929B"}
-                          loading={loading}
-                          speedMultiplier={1.5}
-                          aria-label="Loading Spinner"
-                          data-testid="loader"
-                        />
-                      ) : (
+                         <ProgressBar now={60} label={`${60}%`} />
+                       ) : (
                         <div>
                           <div>
                             <ReactMarkdown
