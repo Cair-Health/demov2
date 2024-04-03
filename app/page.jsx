@@ -10,6 +10,7 @@ import {
   SunIcon,
   ArrowUpIcon,
   QuestionMarkCircleIcon,
+  BookOpenIcon
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import VerticalNav from "../components/VerticalNav";
@@ -46,31 +47,21 @@ const Home = () => {
   const [responseText, setResponseText] = useState("...try again");
   const [returnQuery, setReturnQuery] = useState("");
   const [sessionID, setSessionID] = useState("");
-  const [sessionID_policies, setSessionID_policies] = useState("");
-  const [sessionID_contracts, setSessionID_contracts] = useState("");
-  const [sessionID_rates, setSessionID_rates] = useState("");
   const [loading, setLoading] = useState(false);
   const [history_policies, setHistory_policies] = useState([]);
-  const [history_contracts, setHistory_contracts] = useState([]);
-  const [history_financial_reports, setHistory_financial_reports] = useState(
-    [],
-  );
-  const [history_rates, setHistory_rates] = useState([]);
   const [history, setHistory] = useState([]);
 
   const [currentQuery, setCurrentQuery] = useState("");
-  const scrollRef = useRef(null);
-  const [password, setPassword] = useState("");
-  const [authenticated, setAuthenticated] = useState(false);
   const [question1, setQuestion1] = useState("");
   const [question2, setQuestion2] = useState("");
   const [question3, setQuestion3] = useState("");
-  const [guidebot, setGuidebot] = useState(false);
   const [instructions, setInstructions] = useState(false);
   const [user, setUser] = useState("");
   const [faq, setFaq] = useState(false);
   const [progress, setProgress] = useState("")
   const [loadNumber, setLoadNumber] = useState((Math.floor(Math.random() * 5) + 1));
+  const [notes, setNotes] = useState(false)
+  const [noteContent, setNoteContent] = useState("")
 
   const bottomOfPageRef = useRef();
   Amplify.configure(amplifyconfig);
@@ -113,7 +104,6 @@ const Home = () => {
           );
           
           const stattext = await statusResponse.text();
-          console.log(stattext)
           setProgress(stattext);
   
           // If not completed, schedule next check after 1 second
@@ -130,7 +120,7 @@ const Home = () => {
 
 
   useEffect(() => {
-    console.log(progress);
+
     const loadSetter = (progress) => {
       if (progress === "Stage 1.") {
         setLoadNumber(Math.floor(Math.random() * 30) + 1);
@@ -303,6 +293,7 @@ const Home = () => {
   
       const jsonAnswer = JSON.parse(getResponseResult);
       let answer = jsonAnswer.answer;
+
       const urlRegex = /https?:\/\/[^)\s]+/g;
       const urls = answer.match(urlRegex);
       if (urls) {
@@ -340,6 +331,10 @@ const Home = () => {
       setQuestion1(question1);
       setQuestion2(question2);
       setQuestion3(question3);
+
+      const notes = jsonAnswer.notes
+      setNoteContent(notes)
+      console.log(notes)
 
       setResponseText(answer[0]);
       const responseStreaming = (answer) => {
@@ -666,9 +661,37 @@ const Home = () => {
                   <div className="flex space-x-1">
                     <HandThumbUpIcon className="h-6 w-6" />
                     <HandThumbDownIcon className="h-6 w-6" />
+                    <BookOpenIcon className="mx-2 h-6 w-6 cursor-pointer" onClick = {() => setNotes(!notes)} />
                   </div>
+                  
                 </div>
               </div>
+              <Transition
+          show={notes}
+          enter="transition-opacity duration-75"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="transition-opacity duration-150"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+              
+              <div className = "py-3 flex flex-col bg-teal-50 items-center" style = {{background: "#faffff" }}> 
+              
+              <h1 className = "font-semibold text-xl text-black pb-3">Model Notes</h1>
+
+                <ReactMarkdown>
+
+                {noteContent}
+
+                </ReactMarkdown>
+
+              
+              
+               </div>
+
+              </Transition>
+
               <div className = " bg-red-500" ref = {bottomOfPageRef}> </div>
             </div>
           )}
