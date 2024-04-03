@@ -676,7 +676,7 @@ const Home = () => {
           leaveTo="opacity-0"
         >
               
-              <div className = "py-3 flex flex-col bg-teal-50 items-center" style = {{background: "#faffff" }}> 
+              <div className = "py-3 flex flex-col bg-teal-50 items-center border-b-2 border-dashed border-gray-500" style = {{background: "#faffff" }}> 
               
               <h1 className = "font-semibold text-xl text-black pb-3">Model Notes</h1>
 
