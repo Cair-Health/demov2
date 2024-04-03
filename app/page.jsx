@@ -70,7 +70,7 @@ const Home = () => {
   const [user, setUser] = useState("");
   const [faq, setFaq] = useState(false);
   const [progress, setProgress] = useState("")
-  const [loadNumber, setLoadNumber] = useState(5);
+  const [loadNumber, setLoadNumber] = useState((Math.floor(Math.random() * 5) + 1));
 
   const bottomOfPageRef = useRef();
   Amplify.configure(amplifyconfig);
@@ -211,7 +211,7 @@ const Home = () => {
 
 
   const handlePaperPlaneClick = async () => {
-    setLoadNumber(5)
+    setLoadNumber((Math.floor(Math.random() * 5) + 1))
     console.log("started")
     setLoading(true); // Set loading state to true when making the request
     setReturnQuery(inputValue);
