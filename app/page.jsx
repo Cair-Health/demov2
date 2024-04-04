@@ -772,11 +772,11 @@ const Home = () => {
               
               <h1 className = "font-semibold text-xl text-black pb-3">Model Notes</h1>
 
-            
+              <div className = "">
 
                 <NotesSection note = {noteContent} />
 
-     
+                </div>
 
               
               

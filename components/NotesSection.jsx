@@ -7,7 +7,7 @@ const NotesSection = ({ note }) => {
   const notesArray = notes.split('\n').filter(note => note.trim() !== '');
 
   return (
-    <div>
+    <div className = "">
       <ul>
         {notesArray.map((note, index) => (
           <li key={index}>{note}</li>
