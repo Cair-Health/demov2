@@ -479,8 +479,8 @@ const Home = () => {
     </ul>
     <p className = "font-semibold pt-2">Example Queries:</p>
     <ol>
-      <li className = "pb-4">1. What is the cost of an inpatient psychiatric stay if you enroll in Aetna's Choice PPO Plan in California?</li>
-      <li>2. I live in California and my insurance provider is Aspire Health Plan. I'm considering enrolling in Aspire Health's PROTECT HMO Plan. What are the membership eligibility criteria and which zip codes are serviced?</li>
+      <li className = "pb-4"> `1. What is the cost of an inpatient psychiatric stay if you enroll in Aetna's Choice PPO Plan in California?`</li>
+      <li>`2. I live in California and my insurance provider is Aspire Health Plan. I'm considering enrolling in Aspire Health's PROTECT HMO Plan. What are the membership eligibility criteria and which zip codes are serviced?`</li>
     </ol>
   </div>
                 </div>
@@ -512,7 +512,7 @@ const Home = () => {
     </ul>
     <p className = "font-semibold pt-2">Example Query:</p>
     <ol>
-      <li>What definition of "Medical Necessity" applies to individuals not covered by EPSDT according to the Anthem BlueCross Provider Agreement with El Camino Health in Mountain View, CA?
+      <li>`What definition of "Medical Necessity" applies to individuals not covered by EPSDT according to the Anthem BlueCross Provider Agreement with El Camino Health in Mountain View, CA?`
 </li>
       
     </ol>
@@ -551,9 +551,9 @@ const Home = () => {
     </ul>
     <p className = "font-semibold pt-2">Example Queries:</p>
     <ol>
-      <li className = "pb-4">1. What is the professional rate for Aetna and Ojai Valley Community Health Center for HCPCS code E2312 with modifier MS for a claim in CA and for NPI 1063446896 across Taxonomy 208VP0014X Interventional Pain Medicine Physician?
+      <li className = "pb-4">`1. What is the professional rate for Aetna and Ojai Valley Community Health Center for HCPCS code E2312 with modifier MS for a claim in CA and for NPI 1063446896 across Taxonomy 208VP0014X Interventional Pain Medicine Physician?`
 </li>
-      <li>2. What is the institutional rate for Aetna and El Camino Hospital and for local code SURG054 for a claim in CA and for NPI 1093712374 across Taxonomy 282N00000X General Acute Care Hospital?
+      <li>`2. What is the institutional rate for Aetna and El Camino Hospital and for local code SURG054 for a claim in CA and for NPI 1093712374 across Taxonomy 282N00000X General Acute Care Hospital?`
 </li>
     </ol>
   </div>
