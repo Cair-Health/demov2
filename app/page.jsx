@@ -208,6 +208,7 @@ const Home = () => {
 
 
   const handlePaperPlaneClick = async () => {
+    setNotes(false)
     setLoadNumber((Math.floor(Math.random() * 5) + 1))
     console.log("started")
     setLoading(true); // Set loading state to true when making the request
