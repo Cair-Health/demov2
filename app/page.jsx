@@ -38,6 +38,7 @@ import { getUrl } from "aws-amplify/storage";
 import x from "../public/x-02.svg";
 import { Transition } from "@headlessui/react";
 import ProgressBar from 'react-bootstrap/ProgressBar';
+import NotesSection from "../components/NotesSection";
 
 // Define your password here
 const PASSWORD = "reesespieces";
@@ -771,11 +772,11 @@ const Home = () => {
               
               <h1 className = "font-semibold text-xl text-black pb-3">Model Notes</h1>
 
-                <ReactMarkdown>
+            
 
-                {noteContent}
+                <NotesSection note = {noteContent} />
 
-                </ReactMarkdown>
+     
 
               
               
