@@ -10,7 +10,9 @@ import {
   SunIcon,
   ArrowUpIcon,
   QuestionMarkCircleIcon,
-  BookOpenIcon
+  BookOpenIcon,
+  ArrowDownIcon,
+  ChevronDownIcon
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import VerticalNav from "../components/VerticalNav";
@@ -62,6 +64,10 @@ const Home = () => {
   const [loadNumber, setLoadNumber] = useState((Math.floor(Math.random() * 5) + 1));
   const [notes, setNotes] = useState(false)
   const [noteContent, setNoteContent] = useState("")
+  const [policiesFAQ, setPoliciesFAQ] = useState(false)
+  const [contractsFAQ, setContractsFAQ] = useState(false)
+  const [ratesFAQ, setRatesFAQ] = useState(false)
+
 
   const bottomOfPageRef = useRef();
   Amplify.configure(amplifyconfig);
@@ -125,11 +131,11 @@ const Home = () => {
       if (progress === "Stage 1.") {
         setLoadNumber(Math.floor(Math.random() * 30) + 1);
       } else if (progress === "Stage 2.") {
-        setLoadNumber(Math.floor(Math.random() * 20) + loadNumber);
+        setLoadNumber(Math.floor(Math.random() * 30) + loadNumber);
       } else if (progress === "Stage 3.") {
-        setLoadNumber(Math.floor(Math.random() * 20) + loadNumber);
+        setLoadNumber(Math.floor(Math.random() * 30) + loadNumber);
       } else if (progress === "Stage 4.") {
-        setLoadNumber(Math.floor(Math.random() * 20) + loadNumber);
+        setLoadNumber(Math.floor(Math.random() * 30) + loadNumber);
       } else if (progress === "Stage 5.") {
         setLoadNumber(Math.floor(Math.random() * 5) + 95);
       }
@@ -416,7 +422,7 @@ const Home = () => {
           leaveTo="opacity-0"
         >
           <div
-            className="border pt-10 h-full border-gray-400 absolute right-0 opacity-97 lg:w-[24rem] md:w-[35rem] sm:w-[40rem] flex flex-col items-start"
+            className="border pt-10 h-full overflow-auto border-gray-400 absolute right-0 opacity-97 lg:w-[24rem] md:w-[35rem] sm:w-[40rem] flex flex-col items-start"
             style={{ background: "#F2F4F5", zIndex: 998 }}
           >
             <div className="p-12 flex flex-row">
@@ -430,46 +436,131 @@ const Home = () => {
               />
               <h1 className="pl-1 text-xl">FAQ</h1>
             </div>
-            <div className="pl-10 flex flex-col  w-full">
+            <div className="pl-4 flex flex-col  w-full">
               <h1 className=" font-semibold border-b-2 border-gray-300">
                 How do you use Cair Assistant?
               </h1>
               <div className="justify-center pt-4 align-center">
-                <h1 className="font-semibold">Policies Mode:</h1>
-                <div className="w-3/4 py-4 px-2 rounded-xl border border-gray-200">
+                <h1 className="font-semibold">For all Modes:</h1>
+                <div className="w-[95%] py-5 px-3 rounded-xl border-dashed border-2 border-gray-300">
+                  <p className = "pb-4">
+                  1. We will only accept questions related to medical (health/dental/pharmaceutical/etc.) insurance.
+                  </p>
+                  <p className = "pb-4">
+2. The more specific you are with your questions, the better. Our co-pilots aim to provide solely definitive information and can give you the most accurate answers when you include all the details you know, like payer name, plan name, location, etc.
+                  </p>
                   <p>
-                    Users should include details like Insurance Provider
-                    (Payer), Plan (optional), Location
+3. While our model can handle queries that reference previous ones, we recommend inputting standalone queries to ensure all desired details are captured.
+
                   </p>
                 </div>
 
-                <h1 className="font-semibold">Contracts Mode:</h1>
-                <div className="w-3/4 py-4 px-2  rounded-xl border border-gray-200">
-                  <p>
-                    Users should include details like Insurance Provider
-                    (Payer), Plan (optional), Location
-                  </p>
+
+                <div className = "font-semibold bg-white py-4 mr-16 pl-1 mt-4 rounded-xl justify-between flex flex-grow flex-row border border-gray-400 cursor-pointer hover:bg-brand-primary-100" onClick = {() => setPoliciesFAQ(!policiesFAQ)}>
+                <h1 className=" ">Policies Mode FAQ</h1>
+                <ChevronDownIcon className="mr-1 h-5 w-5 text-gray-400 " aria-hidden="true"/>
+                </div>
+                <Transition
+          show={policiesFAQ}
+          enter="transition-opacity duration-75"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="transition-opacity duration-150"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+                <div className="w-[90%] py-4 px-2  rounded-xl border-2 border-dashed border-gray-300">
+                <div>
+    <p>When applicable, include details such as…</p>
+    <ul>
+      <li>a. Insurance Payer</li>
+      <li>b. Insurance Plan</li>
+      <li>c. Location</li>
+    </ul>
+    <p className = "font-semibold pt-2">Example Queries:</p>
+    <ol>
+      <li className = "pb-4">1. What is the cost of an inpatient psychiatric stay if you enroll in Aetna's Choice PPO Plan in California?</li>
+      <li>2. I live in California and my insurance provider is Aspire Health Plan. I'm considering enrolling in Aspire Health's PROTECT HMO Plan. What are the membership eligibility criteria and which zip codes are serviced?</li>
+    </ol>
+  </div>
                 </div>
 
-                <h1 className="font-semibold">Rates Mode:</h1>
-                <div className="w-3/4 py-4 px-2 rounded-xl border border-gray-200">
-                  <p>
-                  Users should include details like Insurer (Payer), Provider or NPI, Code and Code Type
-                  </p>
+
+                </Transition>                
+
+                <div className = "font-semibold bg-white py-4 mr-16 pl-1 mt-4 rounded-xl justify-between flex flex-grow flex-row border border-gray-400 cursor-pointer hover:bg-brand-primary-100" onClick = {() => setContractsFAQ(!contractsFAQ)}>
+                <h1 className=" ">Contracts Mode FAQ</h1>
+                <ChevronDownIcon className="mr-1 h-5 w-5 text-gray-400 " aria-hidden="true"/>
                 </div>
-                <h1 className=" font-semibold border-b-2 border-gray-300">
-                  Example:
-                </h1>
-                <div className="justify-center pt-4 align-center">
-                  <h1 className="font-semibold">Policy Question:</h1>
-                  <div className="w-3/4 py-4 px-2 rounded-xl border bg-white border-gray-200">
-                    <p>
-                      If an Anthem claim filed in California has modifier 22 and
-                      the allowance is $1,000, how much should be paid via
-                      reimbursement?
-                    </p>
-                  </div>
+                <Transition
+          show={contractsFAQ}
+          enter="transition-opacity duration-75"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="transition-opacity duration-150"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+                <div className="w-[90%] py-4 px-2  rounded-xl border-2 border-dashed border-gray-300">
+                <div>
+    <p>When applicable, include details such as…</p>
+    <ul>
+      <li>a. Insurance Payer</li>
+      <li>b. Insurance Plan</li>
+      <li>c. Hospital Provider</li>
+      <li>c. Location</li>
+    </ul>
+    <p className = "font-semibold pt-2">Example Query:</p>
+    <ol>
+      <li>What definition of "Medical Necessity" applies to individuals not covered by EPSDT according to the Anthem BlueCross Provider Agreement with El Camino Health in Mountain View, CA?
+</li>
+      
+    </ol>
+  </div>
                 </div>
+
+
+                </Transition>
+
+                <div className = "font-semibold bg-white py-4 mr-16 pl-1 mt-4 rounded-xl justify-between flex flex-grow flex-row border border-gray-400 cursor-pointer hover:bg-brand-primary-100" onClick = {() => setRatesFAQ(!ratesFAQ)}>
+                <h1 className=" ">Rates Mode FAQ</h1>
+                <ChevronDownIcon className="mr-1 h-5 w-5 text-gray-400 " aria-hidden="true"/>
+                </div>
+                <Transition
+          show={ratesFAQ}
+          enter="transition-opacity duration-75"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="transition-opacity duration-150"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+                <div className="w-[90%] py-4 px-2  rounded-xl border-2 border-dashed border-gray-300">
+                <div>
+    <p>When applicable, include details such as…</p>
+    <ul>
+      <li>a. Insurance Payer</li>
+      <li>b. Insurance Plan</li>
+      <li>c. Hospital Provider</li>
+      <li>d. Healthcare Provider NPI</li>
+      <li>e. “[CPT/HCPCS/Local] code” if asking about a specific code </li>
+      <li>g. Relevant Modifiers </li>
+      <li>h. Location (State) </li>
+      <li>i. Taxonomy Code/Description</li>
+      
+    </ul>
+    <p className = "font-semibold pt-2">Example Queries:</p>
+    <ol>
+      <li className = "pb-4">1. What is the professional rate for Aetna and Ojai Valley Community Health Center for HCPCS code E2312 with modifier MS for a claim in CA and for NPI 1063446896 across Taxonomy 208VP0014X Interventional Pain Medicine Physician?
+</li>
+      <li>2. What is the institutional rate for Aetna and El Camino Hospital and for local code SURG054 for a claim in CA and for NPI 1093712374 across Taxonomy 282N00000X General Acute Care Hospital?
+</li>
+    </ol>
+  </div>
+                </div>
+
+                </Transition>
+
               </div>
             </div>
           </div>
@@ -676,7 +767,7 @@ const Home = () => {
           leaveTo="opacity-0"
         >
               
-              <div className = "py-3 flex flex-col bg-teal-50 items-center border-b-2 border-dashed border-gray-500" style = {{background: "#faffff" }}> 
+              <div className = "py-3 flex flex-col bg-teal-50 items-center border-b-2 border-dashed rounded-2xl border-gray-500" style = {{background: "#faffff" }}> 
               
               <h1 className = "font-semibold text-xl text-black pb-3">Model Notes</h1>
 
