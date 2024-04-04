@@ -688,7 +688,7 @@ const Home = () => {
                                       className="text-teal-800 underline"
                                       target="_blank"
                                     >
-                                      source
+                                      See Source: 
                                     </a> // Render Twitter links with custom component
                                   ) : (
                                     <a
