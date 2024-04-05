@@ -68,6 +68,15 @@ const Home = () => {
   const [policiesFAQ, setPoliciesFAQ] = useState(false)
   const [contractsFAQ, setContractsFAQ] = useState(false)
   const [ratesFAQ, setRatesFAQ] = useState(false)
+  const [modalContent, setModalContent] = useState(null);
+
+  const openModal = (content) => {
+    setModalContent(content);
+  };
+
+  const closeModal = () => {
+    setModalContent(null);
+  };
 
 
   const bottomOfPageRef = useRef();
@@ -680,31 +689,36 @@ const Home = () => {
                        ) : (
                         <div>
                           <div>
-                            <ReactMarkdown
-                              remarkPlugins={[remarkGfm]}
-                              components={{
-                                a: (props) => {
-                                  return props.href.startsWith("https://") ? (
-                                    <a
-                                      href={props.href}
-                                      className="text-teal-800 underline"
-                                      target="_blank"
-                                    >
-                                      See Source: 
-                                    </a> // Render Twitter links with custom component
-                                  ) : (
-                                    <a
-                                      href={props.href}
-                                      className="text-teal-600 underline"
-                                    >
-                                      {props.children}
-                                    </a> // All other links
-                                  );
-                                },
-                              }}
-                            >
-                              {responseText}
-                            </ReactMarkdown>
+                          <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        components={{
+          a: (props) => {
+            const handleClick = (e) => {
+              e.preventDefault();
+              openModal(props.href);
+            };
+
+            return props.href.startsWith('https://') ? (
+              <a
+                href="#"
+                className="text-teal-800 underline"
+                onClick={handleClick}
+              >
+                See Source
+              </a>
+            ) : (
+              <a
+                href={props.href}
+                className="text-teal-600 underline"
+              >
+                {props.children}
+              </a>
+            );
+          },
+        }}
+      >
+        {responseText}
+      </ReactMarkdown>
                           </div>
 
                           <p className="mt-[1.5rem] font-semibold">
@@ -899,6 +913,33 @@ const Home = () => {
               </div>
             </div>
           )}
+          {modalContent && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="fixed inset-0 bg-black opacity-75"></div>
+          <div className="z-50 bg-white rounded-lg overflow-hidden shadow-xl max-w-md w-full">
+            <div className="flex justify-end px-4 pt-2">
+              <button
+                className="text-gray-500 hover:text-gray-700 focus:outline-none"
+                onClick={closeModal}
+              >
+                <svg
+                  className="h-6 w-6 fill-current"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    className="heroicon-ui"
+                    d="M6.293 7.293a1 1 0 011.414 0L12 10.586l4.293-4.293a1 1 0 111.414 1.414L13.414 12l4.293 4.293a1 1 0 01-1.414 1.414L12 13.414l-4.293 4.293a1 1 0 01-1.414-1.414L10.586 12 6.293 7.707a1 1 0 010-1.414z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div className="p-4">
+              <iframe title="Modal Content" src={modalContent} className="w-full h-64" />
+            </div>
+          </div>
+        </div>
+      )}
         </div>
       </div>
     </>
