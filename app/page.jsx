@@ -916,7 +916,7 @@ const Home = () => {
           {modalContent && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           <div className="fixed inset-0 bg-black opacity-75"></div>
-          <div className="z-50 bg-white rounded-lg overflow-hidden shadow-xl max-w-md w-full">
+          <div className="z-50 bg-white rounded-lg overflow-hidden shadow-xl h-3/4  w-3/6">
             <div className="flex justify-end px-4 pt-2">
               <button
                 className="text-gray-500 hover:text-gray-700 focus:outline-none"
@@ -934,8 +934,8 @@ const Home = () => {
                 </svg>
               </button>
             </div>
-            <div className="p-4">
-              <iframe title="Modal Content" src={modalContent} className="w-full h-64" />
+            <div className="p-4 h-full">
+              <iframe title="Modal Content" src={modalContent} className="" style={{ width: '100%', height: '100%' }}/>
             </div>
           </div>
         </div>
