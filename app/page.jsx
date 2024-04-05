@@ -1,17 +1,12 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import {
-  BoltIcon,
-  ExclamationTriangleIcon,
   HandThumbDownIcon,
   HandThumbUpIcon,
-  PaperAirplaneIcon,
   PencilSquareIcon,
-  SunIcon,
   ArrowUpIcon,
   QuestionMarkCircleIcon,
   BookOpenIcon,
-  ArrowDownIcon,
   ChevronDownIcon
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
@@ -20,24 +15,15 @@ import CairLogo from "/public/CairHealthLogo.png";
 import Bot from "/public/carbonbot.svg";
 import { Amplify } from "aws-amplify";
 import amplifyconfig from "../src/amplifyconfiguration.json";
-import { uploadData, list } from "aws-amplify/storage";
-import { remove } from "aws-amplify/storage";
-import arrowup from "/public/arrow-up.svg";
-import lightning from "/public/lightning-filled.svg";
 import ClipLoader from "react-spinners/BeatLoader";
 import ReactMarkdown from "react-markdown";
 import RecentQueries_policies from "../components/RecentQueries_policies";
-import RecentQueries_contracts from "../components/RecentQueries_contracts";
-import RecentQueries_financial_reports from "../components/RecentQueries_financial_reports";
-import RecentQueries_rates from "../components/RecentQueries_rates";
 import remarkGfm from "remark-gfm";
-import Linkify from "react-linkify";
 import Link from "next/link";
 import Dropdown from "../components/Dropdown";
 import { getUrl } from "aws-amplify/storage";
 import x from "../public/x-02.svg";
 import { Transition } from "@headlessui/react";
-import ProgressBar from 'react-bootstrap/ProgressBar';
 import NotesSection from "../components/NotesSection";
 
 // Define your password here
@@ -170,23 +156,14 @@ const Home = () => {
   const renderers = {
     link: CustomLink,
   };
-  const [selectedMode, setSelectedMode] = useState("");
 
-  const [selectedState, setSelectedState] = useState("California");
   const [selectedDocType, setSelectedDocType] = useState("Policies");
-  const [selectedProvider, setSelectedProvider] = useState("");
 
-  const handleStateChange = (value) => {
-    setSelectedState(value);
-  };
 
   const handleDocTypeChange = (value) => {
     setSelectedDocType(value);
   };
 
-  const handleProviderChange = (value) => {
-    setSelectedProvider(value);
-  };
 
   const startChat = async () => {
     try {

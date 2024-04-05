@@ -208,7 +208,10 @@ const Upload = () => {
             <h1 className="text-3xl font-semibold">File Manager</h1>
             <div className="flex-grow"></div>
             <div className="flex-col">
-              <div className=" flex text-medium font-semibold border-2 px-2 rounded-xl py-1 border-brand-primary-500 bg-brand-primary-600 text-white ">
+              <div className=" flex text-medium font-semibold border-2 px-2 rounded-xl py-1 border-brand-primary-500 bg-brand-primary-600 text-white " onClick={() => {
+                    setShowUploadDropdown(!showUploadDropdown);
+                    console.log("showing");
+                  }}>
                 <Image
                   src={upload}
                   height="auto"
@@ -219,10 +222,6 @@ const Upload = () => {
                 />
                 <button
                   className=""
-                  onClick={() => {
-                    setShowUploadDropdown(!showUploadDropdown);
-                    console.log("showing");
-                  }}
                 >
                   Upload Files
                 </button>
