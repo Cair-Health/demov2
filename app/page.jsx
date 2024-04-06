@@ -55,9 +55,11 @@ const Home = () => {
   const [contractsFAQ, setContractsFAQ] = useState(false)
   const [ratesFAQ, setRatesFAQ] = useState(false)
   const [modalContent, setModalContent] = useState(null);
+  const [showInPage, setShowInPage] = useState(false);
 
   const openModal = (content) => {
     setModalContent(content);
+    setShowInPage(true)
   };
 
   const closeModal = () => {
@@ -554,6 +556,49 @@ const Home = () => {
           </div>
         </Transition>
 
+
+
+
+        <Transition
+          show={showInPage}
+          enter="transition-opacity duration-75"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="transition-opacity duration-150"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div
+            className="border pt-20 h-full w-[30%] overflow-auto border-gray-400 absolute right-0 opacity-97  flex flex-col items-start"
+            style={{ background: "#F2F4F5", zIndex: 998 }}
+          >
+            <div className="pl-5 flex flex-row">
+              <Image
+                src={x}
+                width="auto"
+                height="auto"
+                className="cursor-pointer hover:focus"
+                onClick={() => setShowInPage(false)}
+                style={{ zIndex: 999 }}
+              />
+
+</div>
+        
+           <div className="flex justify-end px-4 pt-2">
+             
+            
+           </div>
+           <div className="p-2 w-full h-full">
+             <iframe title="Modal Content" src={modalContent} className="" style={{ width: '100%', height: '100%' }}/>
+        
+         </div>
+ 
+
+
+            
+          </div>
+        </Transition>
+
         {/* End of Sidebar content */}
         <div className="relative flex flex-1 flex-col h-full">
           {!hasAnswered && (
@@ -890,33 +935,7 @@ const Home = () => {
               </div>
             </div>
           )}
-          {modalContent && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="fixed inset-0 bg-black opacity-75"></div>
-          <div className="z-50 bg-white rounded-lg overflow-hidden shadow-xl h-3/4  w-3/6">
-            <div className="flex justify-end px-4 pt-2">
-              <button
-                className="text-gray-500 hover:text-gray-700 focus:outline-none"
-                onClick={closeModal}
-              >
-                <svg
-                  className="h-6 w-6 fill-current"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    className="heroicon-ui"
-                    d="M6.293 7.293a1 1 0 011.414 0L12 10.586l4.293-4.293a1 1 0 111.414 1.414L13.414 12l4.293 4.293a1 1 0 01-1.414 1.414L12 13.414l-4.293 4.293a1 1 0 01-1.414-1.414L10.586 12 6.293 7.707a1 1 0 010-1.414z"
-                  />
-                </svg>
-              </button>
-            </div>
-            <div className="p-4 h-full">
-              <iframe title="Modal Content" src={modalContent} className="" style={{ width: '100%', height: '100%' }}/>
-            </div>
-          </div>
-        </div>
-      )}
+          
         </div>
       </div>
     </>
