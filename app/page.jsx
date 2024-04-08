@@ -127,15 +127,15 @@ const Home = () => {
 
     const loadSetter = (progress) => {
       if (progress === "Stage 1.") {
-        setLoadNumber(Math.floor(Math.random() * 30) + 1);
+        setLoadNumber(Math.floor(Math.random() * 25) + 1);
       } else if (progress === "Stage 2.") {
-        setLoadNumber(Math.floor(Math.random() * 30) + loadNumber);
+        setLoadNumber(Math.floor(Math.random() * 25) + loadNumber);
       } else if (progress === "Stage 3.") {
-        setLoadNumber(Math.floor(Math.random() * 30) + loadNumber);
+        setLoadNumber(Math.floor(Math.random() * 25) + loadNumber);
       } else if (progress === "Stage 4.") {
-        setLoadNumber(Math.floor(Math.random() * 30) + loadNumber);
+        setLoadNumber(Math.floor(Math.random() * 25) + loadNumber);
       } else if (progress === "Stage 5.") {
-        setLoadNumber(Math.floor(Math.random() * 5) + 95);
+        setLoadNumber(Math.floor(Math.random() * 1) + 95);
       }
     };
     loadSetter(progress);
