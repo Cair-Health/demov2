@@ -7,7 +7,7 @@ import {
   ArrowUpIcon,
   QuestionMarkCircleIcon,
   BookOpenIcon,
-  ChevronDownIcon
+  ChevronDownIcon,
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import VerticalNav from "../components/VerticalNav";
@@ -25,9 +25,6 @@ import { getUrl } from "aws-amplify/storage";
 import x from "../public/x-02.svg";
 import { Transition } from "@headlessui/react";
 import NotesSection from "../components/NotesSection";
-
-// Define your password here
-const PASSWORD = "reesespieces";
 
 const Home = () => {
   const [hasAnswered, setHasAnswered] = useState(false);
@@ -47,50 +44,49 @@ const Home = () => {
   const [instructions, setInstructions] = useState(false);
   const [user, setUser] = useState("");
   const [faq, setFaq] = useState(false);
-  const [progress, setProgress] = useState("")
-  const [loadNumber, setLoadNumber] = useState((Math.floor(Math.random() * 5) + 1));
-  const [notes, setNotes] = useState(false)
-  const [noteContent, setNoteContent] = useState("")
-  const [policiesFAQ, setPoliciesFAQ] = useState(false)
-  const [contractsFAQ, setContractsFAQ] = useState(false)
-  const [ratesFAQ, setRatesFAQ] = useState(false)
+  const [progress, setProgress] = useState("");
+  const [loadNumber, setLoadNumber] = useState(
+    Math.floor(Math.random() * 5) + 1,
+  );
+  const [notes, setNotes] = useState(false);
+  const [noteContent, setNoteContent] = useState("");
+  const [policiesFAQ, setPoliciesFAQ] = useState(false);
+  const [contractsFAQ, setContractsFAQ] = useState(false);
+  const [ratesFAQ, setRatesFAQ] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   const [showInPage, setShowInPage] = useState(false);
 
   const openModal = (content) => {
     setModalContent(content);
-    setShowInPage(true)
+    setShowInPage(true);
   };
 
   const closeModal = () => {
     setModalContent(null);
   };
 
-
   const bottomOfPageRef = useRef();
   Amplify.configure(amplifyconfig);
 
-  useEffect(() =>{
+  useEffect(() => {
     startChat();
-  }, [])
+  }, []);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     setUser(params.get("user"));
   }, []);
 
-
   useEffect(() => {
-    if (bottomOfPageRef.current){
+    if (bottomOfPageRef.current) {
       bottomOfPageRef.current.scrollIntoView();
     }
-  }, [history_policies])
-
+  }, [history_policies]);
 
   useEffect(() => {
     const checkStatus = async () => {
       try {
-        // Wait for the fetch request to resolve 
+        // Wait for the fetch request to resolve
         // Now that the response has been received, proceed with status checks
         while (progress !== "Completed.") {
           const statusResponse = await fetch(
@@ -104,12 +100,12 @@ const Home = () => {
                 session_id: sessionID,
               }),
               redirect: "follow",
-            }
+            },
           );
-          
+
           const stattext = await statusResponse.text();
           setProgress(stattext);
-  
+
           // If not completed, schedule next check after 1 second
           if (stattext !== "Completed.") {
             await new Promise((resolve) => setTimeout(resolve, 4000));
@@ -120,11 +116,9 @@ const Home = () => {
       }
     };
     checkStatus();
-  }, [loading])
-
+  }, [loading]);
 
   useEffect(() => {
-
     const loadSetter = (progress) => {
       if (progress === "Stage 1.") {
         setLoadNumber(Math.floor(Math.random() * 25) + 1);
@@ -161,11 +155,9 @@ const Home = () => {
 
   const [selectedDocType, setSelectedDocType] = useState("Policies");
 
-
   const handleDocTypeChange = (value) => {
     setSelectedDocType(value);
   };
-
 
   const startChat = async () => {
     try {
@@ -193,19 +185,15 @@ const Home = () => {
     }
   };
 
-
-
   const handlePaperPlaneClick = async () => {
-    setNotes(false)
-    setLoadNumber((Math.floor(Math.random() * 5) + 1))
-    console.log("started")
+    setNotes(false);
+    setLoadNumber(Math.floor(Math.random() * 5) + 1);
+    console.log("started");
     setLoading(true); // Set loading state to true when making the request
     setReturnQuery(inputValue);
     setHasAnswered(true);
     setCurrentQuery(inputValue);
     setInputValue("");
-    
-    
 
     console.log(selectedDocType);
     console.log(inputValue);
@@ -249,24 +237,20 @@ const Home = () => {
         redirect: "follow",
       };
 
-
-
-    let getResponseResponse;
-
-
+      let getResponseResponse;
 
       if (selectedDocType === "Policies") {
         console.log("step1");
-      
+
         // Start fetching response
-         getResponseResponse = await fetch(
+        getResponseResponse = await fetch(
           "https://chat.cairhealth.com/get_response_policies/",
-          getResponseOptions_policies
+          getResponseOptions_policies,
         );
-      
+
         // Start checking status
       }
-      
+
       if (selectedDocType === "Contracts") {
         getResponseResponse = await fetch(
           "https://chat.cairhealth.com/get_response_contracts/",
@@ -286,7 +270,7 @@ const Home = () => {
       }
 
       const getResponseResult = await getResponseResponse.text();
-  
+
       const jsonAnswer = JSON.parse(getResponseResult);
       let answer = jsonAnswer.answer;
 
@@ -311,8 +295,6 @@ const Home = () => {
             });
 
             answer = answer.replace(url, getUrlResult.url);
-
-      
           } catch (error) {
             console.error(error);
           }
@@ -328,9 +310,9 @@ const Home = () => {
       setQuestion2(question2);
       setQuestion3(question3);
 
-      const notes = jsonAnswer.notes
-      setNoteContent(notes)
-      console.log(notes)
+      const notes = jsonAnswer.notes;
+      setNoteContent(notes);
+      console.log(notes);
 
       setResponseText(answer[0]);
       const responseStreaming = (answer) => {
@@ -433,131 +415,169 @@ const Home = () => {
               <div className="justify-center pt-4 align-center">
                 <h1 className="font-semibold">For all Modes:</h1>
                 <div className="w-[95%] py-5 px-3 rounded-xl border-dashed border-2 border-gray-300">
-                  <p className = "pb-4">
-                  1. We will only accept questions related to medical (health/dental/pharmaceutical/etc.) insurance.
+                  <p className="pb-4">
+                    1. We will only accept questions related to medical
+                    (health/dental/pharmaceutical/etc.) insurance.
                   </p>
-                  <p className = "pb-4">
-2. The more specific you are with your questions, the better. Our co-pilots aim to provide solely definitive information and can give you the most accurate answers when you include all the details you know, like payer name, plan name, location, etc.
+                  <p className="pb-4">
+                    2. The more specific you are with your questions, the
+                    better. Our co-pilots aim to provide solely definitive
+                    information and can give you the most accurate answers when
+                    you include all the details you know, like payer name, plan
+                    name, location, etc.
                   </p>
                   <p>
-3. While our model can handle queries that reference previous ones, we recommend inputting standalone queries to ensure all desired details are captured.
-
+                    3. While our model can handle queries that reference
+                    previous ones, we recommend inputting standalone queries to
+                    ensure all desired details are captured.
                   </p>
                 </div>
 
-
-                <div className = "font-semibold bg-white py-4 mr-16 pl-1 mt-4 rounded-xl justify-between flex flex-grow flex-row border border-gray-400 cursor-pointer hover:bg-brand-primary-100" onClick = {() => setPoliciesFAQ(!policiesFAQ)}>
-                <h1 className=" ">Policies Mode FAQ</h1>
-                <ChevronDownIcon className="mr-1 h-5 w-5 text-gray-400 " aria-hidden="true"/>
+                <div
+                  className="font-semibold bg-white py-4 mr-16 pl-1 mt-4 rounded-xl justify-between flex flex-grow flex-row border border-gray-400 cursor-pointer hover:bg-brand-primary-100"
+                  onClick={() => setPoliciesFAQ(!policiesFAQ)}
+                >
+                  <h1 className=" ">Policies Mode FAQ</h1>
+                  <ChevronDownIcon
+                    className="mr-1 h-5 w-5 text-gray-400 "
+                    aria-hidden="true"
+                  />
                 </div>
                 <Transition
-          show={policiesFAQ}
-          enter="transition-opacity duration-75"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="transition-opacity duration-150"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-                <div className="w-[90%] py-4 px-2  rounded-xl border-2 border-dashed border-gray-300">
-                <div>
-    <p>When applicable, include details such as…</p>
-    <ul>
-      <li>a. Insurance Payer</li>
-      <li>b. Insurance Plan</li>
-      <li>c. Location</li>
-    </ul>
-    <p className = "font-semibold pt-2">Example Queries:</p>
-    <ol>
-      <li className = "pb-4">1. What is the cost of an inpatient psychiatric stay if you enroll in Aetna&apos;s Choice PPO Plan in California?</li>
-      <li>2. I live in California and my insurance provider is Aspire Health Plan. I&apos;m considering enrolling in Aspire Health&apos;s PROTECT HMO Plan. What are the membership eligibility criteria and which zip codes are serviced?</li>
-    </ol>
-  </div>
-                </div>
-
-
-                </Transition>                
-
-                <div className = "font-semibold bg-white py-4 mr-16 pl-1 mt-4 rounded-xl justify-between flex flex-grow flex-row border border-gray-400 cursor-pointer hover:bg-brand-primary-100" onClick = {() => setContractsFAQ(!contractsFAQ)}>
-                <h1 className=" ">Contracts Mode FAQ</h1>
-                <ChevronDownIcon className="mr-1 h-5 w-5 text-gray-400 " aria-hidden="true"/>
-                </div>
-                <Transition
-          show={contractsFAQ}
-          enter="transition-opacity duration-75"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="transition-opacity duration-150"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-                <div className="w-[90%] py-4 px-2  rounded-xl border-2 border-dashed border-gray-300">
-                <div>
-    <p>When applicable, include details such as…</p>
-    <ul>
-      <li>a. Insurance Payer</li>
-      <li>b. Insurance Plan</li>
-      <li>c. Hospital Provider</li>
-      <li>c. Location</li>
-    </ul>
-    <p className = "font-semibold pt-2">Example Query:</p>
-    <ol>
-      <li>What definition of &quot;Medical Necessity&quot; applies to individuals not covered by EPSDT according to the Anthem BlueCross Provider Agreement with El Camino Health in Mountain View, CA?
-</li>
-      
-    </ol>
-  </div>
-                </div>
-
-
+                  show={policiesFAQ}
+                  enter="transition-opacity duration-75"
+                  enterFrom="opacity-0"
+                  enterTo="opacity-100"
+                  leave="transition-opacity duration-150"
+                  leaveFrom="opacity-100"
+                  leaveTo="opacity-0"
+                >
+                  <div className="w-[90%] py-4 px-2  rounded-xl border-2 border-dashed border-gray-300">
+                    <div>
+                      <p>When applicable, include details such as…</p>
+                      <ul>
+                        <li>a. Insurance Payer</li>
+                        <li>b. Insurance Plan</li>
+                        <li>c. Location</li>
+                      </ul>
+                      <p className="font-semibold pt-2">Example Queries:</p>
+                      <ol>
+                        <li className="pb-4">
+                          1. What is the cost of an inpatient psychiatric stay
+                          if you enroll in Aetna&apos;s Choice PPO Plan in
+                          California?
+                        </li>
+                        <li>
+                          2. I live in California and my insurance provider is
+                          Aspire Health Plan. I&apos;m considering enrolling in
+                          Aspire Health&apos;s PROTECT HMO Plan. What are the
+                          membership eligibility criteria and which zip codes
+                          are serviced?
+                        </li>
+                      </ol>
+                    </div>
+                  </div>
                 </Transition>
 
-                <div className = "font-semibold bg-white py-4 mr-16 pl-1 mt-4 rounded-xl justify-between flex flex-grow flex-row border border-gray-400 cursor-pointer hover:bg-brand-primary-100" onClick = {() => setRatesFAQ(!ratesFAQ)}>
-                <h1 className=" ">Rates Mode FAQ</h1>
-                <ChevronDownIcon className="mr-1 h-5 w-5 text-gray-400 " aria-hidden="true"/>
+                <div
+                  className="font-semibold bg-white py-4 mr-16 pl-1 mt-4 rounded-xl justify-between flex flex-grow flex-row border border-gray-400 cursor-pointer hover:bg-brand-primary-100"
+                  onClick={() => setContractsFAQ(!contractsFAQ)}
+                >
+                  <h1 className=" ">Contracts Mode FAQ</h1>
+                  <ChevronDownIcon
+                    className="mr-1 h-5 w-5 text-gray-400 "
+                    aria-hidden="true"
+                  />
                 </div>
                 <Transition
-          show={ratesFAQ}
-          enter="transition-opacity duration-75"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="transition-opacity duration-150"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-                <div className="w-[90%] py-4 px-2  rounded-xl border-2 border-dashed border-gray-300">
-                <div>
-    <p>When applicable, include details such as…</p>
-    <ul>
-      <li>a. Insurance Payer</li>
-      <li>b. Insurance Plan</li>
-      <li>c. Hospital Provider</li>
-      <li>d. Healthcare Provider NPI</li>
-      <li>e. “[CPT/HCPCS/Local] code” if asking about a specific code </li>
-      <li>g. Relevant Modifiers </li>
-      <li>h. Location (State) </li>
-      <li>i. Taxonomy Code/Description</li>
-      
-    </ul>
-    <p className = "font-semibold pt-2">Example Queries:</p>
-    <ol>
-      <li className = "pb-4">1. What is the professional rate for Aetna and Ojai Valley Community Health Center for HCPCS code E2312 with modifier MS for a claim in CA and for NPI 1063446896 across Taxonomy 208VP0014X Interventional Pain Medicine Physician?
-</li>
-      <li>2. What is the institutional rate for Aetna and El Camino Hospital and for local code SURG054 for a claim in CA and for NPI 1093712374 across Taxonomy 282N00000X General Acute Care Hospital?
-</li>
-    </ol>
-  </div>
-                </div>
-
+                  show={contractsFAQ}
+                  enter="transition-opacity duration-75"
+                  enterFrom="opacity-0"
+                  enterTo="opacity-100"
+                  leave="transition-opacity duration-150"
+                  leaveFrom="opacity-100"
+                  leaveTo="opacity-0"
+                >
+                  <div className="w-[90%] py-4 px-2  rounded-xl border-2 border-dashed border-gray-300">
+                    <div>
+                      <p>When applicable, include details such as…</p>
+                      <ul>
+                        <li>a. Insurance Payer</li>
+                        <li>b. Insurance Plan</li>
+                        <li>c. Hospital Provider</li>
+                        <li>c. Location</li>
+                      </ul>
+                      <p className="font-semibold pt-2">Example Query:</p>
+                      <ol>
+                        <li>
+                          What definition of &quot;Medical Necessity&quot;
+                          applies to individuals not covered by EPSDT according
+                          to the Anthem BlueCross Provider Agreement with El
+                          Camino Health in Mountain View, CA?
+                        </li>
+                      </ol>
+                    </div>
+                  </div>
                 </Transition>
 
+                <div
+                  className="font-semibold bg-white py-4 mr-16 pl-1 mt-4 rounded-xl justify-between flex flex-grow flex-row border border-gray-400 cursor-pointer hover:bg-brand-primary-100"
+                  onClick={() => setRatesFAQ(!ratesFAQ)}
+                >
+                  <h1 className=" ">Rates Mode FAQ</h1>
+                  <ChevronDownIcon
+                    className="mr-1 h-5 w-5 text-gray-400 "
+                    aria-hidden="true"
+                  />
+                </div>
+                <Transition
+                  show={ratesFAQ}
+                  enter="transition-opacity duration-75"
+                  enterFrom="opacity-0"
+                  enterTo="opacity-100"
+                  leave="transition-opacity duration-150"
+                  leaveFrom="opacity-100"
+                  leaveTo="opacity-0"
+                >
+                  <div className="w-[90%] py-4 px-2  rounded-xl border-2 border-dashed border-gray-300">
+                    <div>
+                      <p>When applicable, include details such as…</p>
+                      <ul>
+                        <li>a. Insurance Payer</li>
+                        <li>b. Insurance Plan</li>
+                        <li>c. Hospital Provider</li>
+                        <li>d. Healthcare Provider NPI</li>
+                        <li>
+                          e. “[CPT/HCPCS/Local] code” if asking about a specific
+                          code{" "}
+                        </li>
+                        <li>g. Relevant Modifiers </li>
+                        <li>h. Location (State) </li>
+                        <li>i. Taxonomy Code/Description</li>
+                      </ul>
+                      <p className="font-semibold pt-2">Example Queries:</p>
+                      <ol>
+                        <li className="pb-4">
+                          1. What is the professional rate for Aetna and Ojai
+                          Valley Community Health Center for HCPCS code E2312
+                          with modifier MS for a claim in CA and for NPI
+                          1063446896 across Taxonomy 208VP0014X Interventional
+                          Pain Medicine Physician?
+                        </li>
+                        <li>
+                          2. What is the institutional rate for Aetna and El
+                          Camino Hospital and for local code SURG054 for a claim
+                          in CA and for NPI 1093712374 across Taxonomy
+                          282N00000X General Acute Care Hospital?
+                        </li>
+                      </ol>
+                    </div>
+                  </div>
+                </Transition>
               </div>
             </div>
           </div>
         </Transition>
-
-
-
 
         <Transition
           show={showInPage}
@@ -569,8 +589,8 @@ const Home = () => {
           leaveTo="opacity-0"
         >
           <div
-            className="border pt-20 h-full w-[30%] overflow-auto border-gray-400 absolute right-0 opacity-97  flex flex-col items-start"
-            style={{ background: "#F2F4F5", zIndex: 998 }}
+            className="border pt-20 h-full overflow-auto border-gray-400 absolute right-0 opacity-97  flex flex-col items-start hover:resize resize-x"
+            style={{ background: "#F2F4", zIndex: 998 }}
           >
             <div className="pl-5 flex flex-row">
               <Image
@@ -581,21 +601,17 @@ const Home = () => {
                 onClick={() => setShowInPage(false)}
                 style={{ zIndex: 999 }}
               />
+            </div>
 
-</div>
-        
-           <div className="flex justify-end px-4 pt-2">
-             
-            
-           </div>
-           <div className="p-2 w-full h-full">
-             <iframe title="Modal Content" src={modalContent} className="" style={{ width: '100%', height: '100%' }}/>
-        
-         </div>
- 
-
-
-            
+            <div className="flex justify-end px-4 pt-2"></div>
+            <div className="p-2 w-full h-full">
+              <iframe
+                title="Modal Content"
+                src={modalContent}
+                className=""
+                style={{ width: "100%", height: "100%" }}
+              />
+            </div>
           </div>
         </Transition>
 
@@ -607,7 +623,7 @@ const Home = () => {
 
           {/* Cair Banner */}
 
-          <div style = {{zIndex: 1000}}>
+          <div style={{ zIndex: 1000 }}>
             <div
               className="relative flex border-gray-200 shadow-md"
               style={{ backgroundColor: "#40929B", height: "6vh" }}
@@ -691,56 +707,58 @@ const Home = () => {
                       }}
                     >
                       {loading ? (
-                        <div className = "flex flex-row">
-                    <ClipLoader
-                          css={{
-                            display: "block",
-                            margin: "0 auto",
-                            borderColor: "red",
-                          }}
-                          size={15}
-                          color={"#40929B"}
-                          loading={loading}
-                          speedMultiplier={1.5}
-                          aria-label="Loading Spinner"
-                          data-testid="loader"
-                        />
+                        <div className="flex flex-row">
+                          <ClipLoader
+                            css={{
+                              display: "block",
+                              margin: "0 auto",
+                              borderColor: "red",
+                            }}
+                            size={15}
+                            color={"#40929B"}
+                            loading={loading}
+                            speedMultiplier={1.5}
+                            aria-label="Loading Spinner"
+                            data-testid="loader"
+                          />
 
-                         <h1 className = "pl-4 text-teal-700 text-xl font-semibold">{loadNumber}%</h1>
-                         </div>
-                       ) : (
+                          <h1 className="pl-4 text-teal-700 text-xl font-semibold">
+                            {loadNumber}%
+                          </h1>
+                        </div>
+                      ) : (
                         <div>
                           <div>
-                          <ReactMarkdown
-        remarkPlugins={[remarkGfm]}
-        components={{
-          a: (props) => {
-            const handleClick = (e) => {
-              e.preventDefault();
-              openModal(props.href);
-            };
+                            <ReactMarkdown
+                              remarkPlugins={[remarkGfm]}
+                              components={{
+                                a: (props) => {
+                                  const handleClick = (e) => {
+                                    e.preventDefault();
+                                    openModal(props.href);
+                                  };
 
-            return props.href.startsWith('https://') ? (
-              <a
-                href="#"
-                className="text-teal-800 underline"
-                onClick={handleClick}
-              >
-                See Source
-              </a>
-            ) : (
-              <a
-                href={props.href}
-                className="text-teal-600 underline"
-              >
-                {props.children}
-              </a>
-            );
-          },
-        }}
-      >
-        {responseText}
-      </ReactMarkdown>
+                                  return props.href.startsWith("https://") ? (
+                                    <a
+                                      href="#"
+                                      className="text-teal-800 underline"
+                                      onClick={handleClick}
+                                    >
+                                      See Source
+                                    </a>
+                                  ) : (
+                                    <a
+                                      href={props.href}
+                                      className="text-teal-600 underline"
+                                    >
+                                      {props.children}
+                                    </a>
+                                  );
+                                },
+                              }}
+                            >
+                              {responseText}
+                            </ReactMarkdown>
                           </div>
 
                           <p className="mt-[1.5rem] font-semibold">
@@ -790,38 +808,39 @@ const Home = () => {
                   <div className="flex space-x-1">
                     <HandThumbUpIcon className="h-6 w-6" />
                     <HandThumbDownIcon className="h-6 w-6" />
-                    <BookOpenIcon className="mx-2 h-6 w-6 cursor-pointer" onClick = {() => setNotes(!notes)} />
+                    <BookOpenIcon
+                      className="mx-2 h-6 w-6 cursor-pointer"
+                      onClick={() => setNotes(!notes)}
+                    />
                   </div>
-                  
                 </div>
               </div>
               <Transition
-          show={notes}
-          enter="transition-opacity duration-75"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="transition-opacity duration-150"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-              
-              <div className = "py-3 flex flex-col bg-teal-50 pl-56 pr-24 border-b-2 border-dashed rounded-2xl border-gray-500" style = {{background: "#faffff" }}> 
-              
-              <h1 className = "font-bold text-xl text-black pb-3">Model Notes:</h1>
+                show={notes}
+                enter="transition-opacity duration-75"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="transition-opacity duration-150"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <div
+                  className="py-3 flex flex-col bg-teal-50 pl-56 pr-24 border-b-2 border-dashed rounded-2xl border-gray-500"
+                  style={{ background: "#faffff" }}
+                >
+                  <h1 className="font-bold text-xl text-black pb-3">
+                    Model Notes:
+                  </h1>
 
-              <div className = "">
-
-                <NotesSection note = {noteContent} />
-
+                  <div className="">
+                    <NotesSection note={noteContent} />
+                  </div>
                 </div>
-
-              
-              
-               </div>
-
               </Transition>
 
-              <div className = " bg-red-500" ref = {bottomOfPageRef}> </div>
+              <div className=" bg-red-500" ref={bottomOfPageRef}>
+                {" "}
+              </div>
             </div>
           )}
 
@@ -935,7 +954,6 @@ const Home = () => {
               </div>
             </div>
           )}
-          
         </div>
       </div>
     </>

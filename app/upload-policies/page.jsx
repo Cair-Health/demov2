@@ -1,8 +1,6 @@
 "use client";
 import React, { useEffect, useState, useRef } from "react";
-import CairLogo from "../../public/CairHealthLogo.png";
 import Image from "next/image";
-import Link from "next/link";
 import { Amplify } from "aws-amplify";
 import amplifyconfig from "../../src/amplifyconfiguration.json";
 import { uploadData, list } from "aws-amplify/storage";
@@ -15,7 +13,6 @@ import eye from "../../public/eye-open.svg";
 import x from "../../public/x-02.svg";
 import { getProperties } from "aws-amplify/storage";
 import { downloadData } from "aws-amplify/storage";
-import { Document, Page } from "@react-pdf/renderer";
 import Iframe from "react-iframe";
 
 const Upload = () => {
@@ -208,10 +205,13 @@ const Upload = () => {
             <h1 className="text-3xl font-semibold">File Manager</h1>
             <div className="flex-grow"></div>
             <div className="flex-col">
-              <div className=" flex text-medium font-semibold border-2 px-2 rounded-xl py-1 border-brand-primary-500 bg-brand-primary-600 text-white " onClick={() => {
-                    setShowUploadDropdown(!showUploadDropdown);
-                    console.log("showing");
-                  }}>
+              <div
+                className=" flex text-medium font-semibold border-2 px-2 rounded-xl py-1 border-brand-primary-500 bg-brand-primary-600 text-white "
+                onClick={() => {
+                  setShowUploadDropdown(!showUploadDropdown);
+                  console.log("showing");
+                }}
+              >
                 <Image
                   src={upload}
                   height="auto"
@@ -220,11 +220,7 @@ const Upload = () => {
                   style={{ filter: "brightness(0) invert(1)" }}
                   alt="upload"
                 />
-                <button
-                  className=""
-                >
-                  Upload Files
-                </button>
+                <button className="">Upload Files</button>
                 <Image
                   src={down}
                   height="auto"
