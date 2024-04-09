@@ -24,7 +24,8 @@ import Dropdown from "../components/Dropdown";
 import { getUrl } from "aws-amplify/storage";
 import x from "../public/x-02.svg";
 import { Transition } from "@headlessui/react";
-import NotesSection from "../components/NotesSection";
+import NotesSection from "../components/NotesSection"
+import { Resizable, ResizableBox } from "react-resizable"
 
 const Home = () => {
   const [hasAnswered, setHasAnswered] = useState(false);
@@ -588,9 +589,11 @@ const Home = () => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
+        
+        <Resizable direction = "vertical">
           <div
-            className="border pt-20 h-full overflow-auto border-gray-400 absolute right-0 opacity-97  flex flex-col items-start hover:resize resize-x"
-            style={{ background: "#F2F4", zIndex: 998 }}
+            className="border pt-20  h-3/4 overflow-auto border-gray-400 absolute right-0 opacity-97  flex flex-col items-start resize"
+            style={{ background: "#F2F4", zIndex: 998, direction: "rtl" }}
           >
             <div className="pl-5 flex flex-row">
               <Image
@@ -613,6 +616,8 @@ const Home = () => {
               />
             </div>
           </div>
+          </Resizable>
+          
         </Transition>
 
         {/* End of Sidebar content */}
