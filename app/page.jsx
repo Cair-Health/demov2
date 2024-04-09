@@ -592,8 +592,8 @@ const Home = () => {
         
         <Resizable direction = "vertical">
           <div
-            className="border pt-20  h-3/4 overflow-auto border-gray-400 absolute right-0 opacity-97  flex flex-col items-start resize"
-            style={{ background: "#F2F4", zIndex: 998, direction: "rtl" }}
+            className="border pt-20  h-[90%] w-1/3 overflow-auto border-gray-400 absolute right-0 opacity-97  flex flex-col items-start resize"
+            style={{ background: "#F2F4F5", zIndex: 998, direction: "rtl" }}
           >
             <div className="pl-5 flex flex-row">
               <Image
@@ -692,7 +692,7 @@ const Home = () => {
                       {returnQuery}
                     </p>
                   </div>
-                  <PencilSquareIcon className="h-6 w-6" />
+                  <PencilSquareIcon className="h-6 w-6 cursor-pointer" onClick = {() => setInputValue(returnQuery)}/>
                 </div>
               </div>
 
@@ -803,9 +803,16 @@ const Home = () => {
                                 <p className="text-gray-700 text-base">
                                   {question3}
                                 </p>
+  
                               </div>
+                              
                             </div>
+                            
                           </div>
+                          See Notes: <BookOpenIcon
+                      className="mx-2 h-6 w-6 cursor-pointer"
+                      onClick={() => setNotes(!notes)}
+                    />
                         </div>
                       )}
                     </div>
@@ -813,10 +820,7 @@ const Home = () => {
                   <div className="flex space-x-1">
                     <HandThumbUpIcon className="h-6 w-6" />
                     <HandThumbDownIcon className="h-6 w-6" />
-                    <BookOpenIcon
-                      className="mx-2 h-6 w-6 cursor-pointer"
-                      onClick={() => setNotes(!notes)}
-                    />
+                   
                   </div>
                 </div>
               </div>
