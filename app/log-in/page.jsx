@@ -3,8 +3,11 @@ import { useState }  from "react";
 import React from 'react'
 import { useRouter } from 'next/navigation'
 import Router from 'next/router'
+import BasicDropdown from "@/components/BasicDropdown";
+
 
 const LogIn = () => {
+  
     const [text, setText] = useState("")
     const router = useRouter();
 
@@ -25,20 +28,18 @@ const LogIn = () => {
       };
 
   return (
-    <div style={{ backgroundColor: '#FAF9F6' }} className='h-screen text-black'>
-        <div className = 'h-screen flex flex-col justify-center items-center '>
-                Cair Beta Log-In: enter username
-            <form onSubmit={handleSubmit}>
-      <input 
-        type="text" 
-        value={text} 
-        onChange={handleInputChange} 
-        placeholder="Enter your username" 
-      />
-      <button type="submit">Submit</button>
-    </form>
+    <div className=' bg-white h-screen flex flex-col font-semibold justify-center items-center'>
+        <div className = ' text-5xl text-teal-700'>
+                Cair Health 
         </div>
-    </div>
+        <div className = "text-3xl mb-20 ">
+        Demo Log-In
+        </div>
+          
+          <BasicDropdown />
+    
+        </div>
+  
   )
 }
 
