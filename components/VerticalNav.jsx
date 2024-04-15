@@ -7,6 +7,16 @@ import Link from "next/link"
 import folder from "/public/folder.svg"
 import message from "/public/message-chat-01(1).svg"
 
+import {
+  HandThumbDownIcon,
+  HandThumbUpIcon,
+  PencilSquareIcon,
+  ArrowUpIcon,
+  QuestionMarkCircleIcon,
+  BookOpenIcon,
+  ChevronDownIcon,
+  ArrowRightStartOnRectangleIcon
+} from "@heroicons/react/24/outline";
 
 
 
@@ -61,7 +71,7 @@ const [isOpen3, setIsOpen3] = useState(false);
 
 
    <div className = "relative top-[7rem] px-3 py-3 rounded-xl flex justify-center items-center cursor-pointer hover:bg-brand-primary-100">
-    <Link href = {`/?user=garv`}>
+    <Link href = {`/?user=${user}`}>
      <Image src= {message} width= "auto" height= {35} alt="close"/>
      </Link>
 
@@ -80,7 +90,14 @@ const [isOpen3, setIsOpen3] = useState(false);
       
       
 
+  
+<div className="relative mt-auto mb-4 rounded-xl flex justify-center items-center cursor-pointer hover:bg-brand-primary-100" onClick={() => window.location.href = '/'}>
+  <Link href="/">
+      <ArrowRightStartOnRectangleIcon height="50" width="50" />
 
+  </Link>
+</div>
+    
 
 
     

@@ -13,7 +13,7 @@ const RecentQueriesTable_policies = ({ history, currentQuery }) => {
   const displayQueries = filteredQueries;
 
   return (
-    <div className="mx-auto" >
+    <div className="mx-auto mr-40" >
       <h2 className="text-2xl font-semibold mb-2" ></h2>
       <div className="rounded-2xl">
         {displayQueries.map(({ query, response }, index) => ( 

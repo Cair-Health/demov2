@@ -39,11 +39,11 @@ const Upload = () => {
     const fetchInitialData = async () => {
       const params = new URLSearchParams(window.location.search);
       setUser(params.get("user"));
-      setMode(params.get("mode"));
+      console.log(user)
 
       try {
         const result = await list({
-          prefix: `${params.get("user")}`,
+          prefix: `user-uploads/`,
           options: {
             listAll: true,
           },
@@ -128,7 +128,7 @@ const Upload = () => {
   const handleFileLoad = async () => {
     try {
       const file = ref.current.files[0]; // Get the file from the input element
-      const key = `${user}_${mode}_main_${file.name}`;
+      const key = `user-uploads/${user}_${mode}_main_${file.name}`;
       await fileKeySetter(key);
       const result = await uploadData({
         key: key,
@@ -199,7 +199,7 @@ const Upload = () => {
   return (
     <div className="">
       <div className={`flex ${isUploadOpen ? "contrast-50" : ""}`}>
-        <VerticalNav />
+        <VerticalNav user = {user}/>
         <div className="h-screen w-full bg-white text-black">
           <div className="flex py-12 px-[9rem] ">
             <h1 className="text-3xl font-semibold">File Manager</h1>
@@ -290,6 +290,18 @@ const Upload = () => {
                   >
                     File Name
                   </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Uploaded By
+                  </th>
 
                   <th
                     scope="col"
@@ -350,6 +362,9 @@ const Upload = () => {
                           alt="view"
                         />
                       </button>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap font-semibold">
+                      {file.key.split("_")[0].split("/")[1]}
                     </td>
                   </tr>
                 ))}

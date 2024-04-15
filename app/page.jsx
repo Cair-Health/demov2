@@ -59,6 +59,7 @@ const Home = () => {
 
   const openModal = (content) => {
     setModalContent(content);
+    console.log(content)
     setShowInPage(true);
   };
 
@@ -281,10 +282,14 @@ const Home = () => {
         for (const url of urls) {
           // Process URL to get S3 key
           const s3Key = url
-            .split("/")
-            .pop()
-            .replace(/%20/g, " ")
-            .replace(/,$/, ""); // Get last part of the URL and replace %20 with spaces
+          .replace("public", "")
+          .split("/")
+          .pop()
+          .replace(/%20/g, " ")
+          .replace(/,$/, "");
+
+          console.log(s3Key)
+// Get last part of the URL and replace %20 with spaces
 
           // Call your API with the S3 key
           try {
@@ -294,6 +299,9 @@ const Home = () => {
                 accessLevel: "guest", // can be 'private', 'protected', or 'guest' but defaults to `guest` // defaults to false
               },
             });
+
+            
+
 
             answer = answer.replace(url, getUrlResult.url);
           } catch (error) {
@@ -809,7 +817,10 @@ const Home = () => {
                             </div>
                             
                           </div>
-                          See Notes: <BookOpenIcon
+                        {responseText === "I apologize, but I cannot assist with this question." ? <h1>See Notes</h1>  :
+                          <h1>See Explanation</h1>}
+                          
+                           <BookOpenIcon
                       className="mx-2 h-6 w-6 cursor-pointer"
                       onClick={() => setNotes(!notes)}
                     />
