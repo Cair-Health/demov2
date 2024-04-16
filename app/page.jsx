@@ -925,11 +925,11 @@ const Home = () => {
             <div className="flex flex-col pt-7 items-center">
               <h1 className="text-4xl font-semibold">Hello,</h1>
               <span className="flex flex-row">
-                <h1 className="text-4xl pt-2 font-semibold">{`How can I assist you today,`}</h1>
+                <h1 className="text-4xl pt-2 font-semibold">{`How can I assist you today`}</h1>
                 <h1 className="text-4xl pl-2 pt-2 font-semibold text-brand-primary-600">
                   {user}
                 </h1>
-                <h1 className="text-4xl pl-2 pt-2 font-semibold">{`?`}</h1>
+                <h1 className="text-4xl pl-1 pt-2 font-semibold">{`?`}</h1>
               </span>
               <div className="flex flex-row">
                 <div

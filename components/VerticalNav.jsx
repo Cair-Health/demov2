@@ -69,26 +69,26 @@ const [isOpen3, setIsOpen3] = useState(false);
      <Image src= {close} width="auto" height="35" alt="close" onClick={() => setSidebar(false)}/>
    </div>
 
-
+   <Link href = {`/?user=${user}`}>
    <div className = "relative top-[7rem] px-3 py-3 rounded-xl flex justify-center items-center cursor-pointer hover:bg-brand-primary-100">
-    <Link href = {`/?user=${user}`}>
+   
      <Image src= {message} width= "auto" height= {35} alt="close"/>
-     </Link>
+     
 
      </div>
+     </Link>
 
 
-
-     
+     <Link href = {`/upload-policies?user=${user}&mode=policies`}>
      <div className = "relative top-[7rem] px-3 py-3 rounded-xl flex justify-center items-center cursor-pointer hover:bg-brand-primary-100">
-<Link href = {`/upload-policies?user=${user}&mode=policies`}>
+
         
         <Image src = {folder} height = "35" width = "auto" alt ="upload" />
 
-      </Link>
+     
 </div>
       
-      
+</Link>
 
   
 <div className="relative mt-auto mb-4 rounded-xl flex justify-center items-center cursor-pointer hover:bg-brand-primary-100" onClick={() => window.location.href = '/'}>

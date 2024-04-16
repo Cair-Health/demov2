@@ -13,7 +13,8 @@ import eye from "../../public/eye-open.svg";
 import x from "../../public/x-02.svg";
 import { getProperties } from "aws-amplify/storage";
 import { downloadData } from "aws-amplify/storage";
-import Iframe from "react-iframe";
+import { Transition } from "@headlessui/react";
+import { Resizable, ResizableBox } from "react-resizable"
 
 const Upload = () => {
   const ref = useRef(null);
@@ -175,11 +176,52 @@ const Upload = () => {
 
     console.log(body);
     const blobUrl = URL.createObjectURL(body);
+    setIsShowOpen(true);
     setPdfContent(blobUrl);
     console.log(blobUrl);
-    window.open(blobUrl, "_blank");
-    setIsShowOpen(true);
+    
   };
+
+
+  <Transition
+  show={isShowOpen}
+  enter="transition-opacity duration-75"
+  enterFrom="opacity-0"
+  enterTo="opacity-100"
+  leave="transition-opacity duration-150"
+  leaveFrom="opacity-100"
+  leaveTo="opacity-0"
+>
+
+<Resizable direction = "vertical">
+  <div
+    className="border pt-20  h-[90%] w-1/3 overflow-auto border-gray-400 absolute right-0 opacity-97  flex flex-col items-start resize"
+    style={{ background: "#F2F4F5", zIndex: 998, direction: "rtl" }}
+  >
+    <div className="pl-5 flex flex-row">
+      <Image
+        src={x}
+        width="auto"
+        height="auto"
+        className="cursor-pointer hover:focus"
+        onClick={() => setShowInPage(false)}
+        style={{ zIndex: 999 }}
+      />
+    </div>
+
+    <div className="flex justify-end px-4 pt-2"></div>
+    <div className="p-2 w-full h-full">
+      <iframe
+        title="Modal Content"
+        src={pdfContent}
+        className=""
+        style={{ width: "100%", height: "100%" }}
+      />
+    </div>
+  </div>
+  </Resizable>
+  
+</Transition>
 
   const handleDelete = async (filename) => {
     try {
@@ -202,7 +244,8 @@ const Upload = () => {
         <VerticalNav user = {user}/>
         <div className="h-screen w-full bg-white text-black">
           <div className="flex py-12 px-[9rem] ">
-            <h1 className="text-3xl font-semibold">File Manager</h1>
+          <h1 className="text-3xl font-semibold text-teal-700">{user}'s </h1>
+            <h1 className="text-3xl font-semibold pl-2"> File Manager</h1>
             <div className="flex-grow"></div>
             <div className="flex-col">
               <div

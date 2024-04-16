@@ -40,7 +40,7 @@ export default function BasicDropdown({router}) { // Initialize useRouter hook
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                     'block px-4 py-2 text-sm'
                   )}
-                  onClick = {() => router.push(`/?user=demo`)}
+                  onClick = {() => router.push(`/?user=Demo`)}
                 >
                   Demo
                 </a>
