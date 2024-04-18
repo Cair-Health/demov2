@@ -259,7 +259,7 @@ const Upload = () => {
         <VerticalNav user = {user}/>
         <div className="h-screen w-full bg-white text-black">
           <div className="flex py-12 px-[9rem] ">
-          <h1 className="text-3xl font-semibold text-teal-70">{user}'s </h1>
+          <h1 className="text-3xl font-semibold text-teal-70">{user}&apos;s </h1>
             <h1 className="text-3xl font-semibold pl-2"> File Manager</h1>
             <div className="flex-grow"></div>
             <div className="flex-col">
