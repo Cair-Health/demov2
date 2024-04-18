@@ -59,7 +59,6 @@ const Home = () => {
 
   const openModal = (content) => {
     setModalContent(content);
-    console.log(content)
     setShowInPage(true);
   };
 
@@ -106,6 +105,7 @@ const Home = () => {
           );
 
           const stattext = await statusResponse.text();
+          console.log(stattext)
           setProgress(stattext);
 
           // If not completed, schedule next check after 1 second
@@ -282,14 +282,10 @@ const Home = () => {
         for (const url of urls) {
           // Process URL to get S3 key
           const s3Key = url
-          .replace("public", "")
-          .split("/")
-          .pop()
-          .replace(/%20/g, " ")
-          .replace(/,$/, "");
-
-          console.log(s3Key)
-// Get last part of the URL and replace %20 with spaces
+            .split("/")
+            .pop()
+            .replace(/%20/g, " ")
+            .replace(/,$/, ""); // Get last part of the URL and replace %20 with spaces
 
           // Call your API with the S3 key
           try {
@@ -299,9 +295,6 @@ const Home = () => {
                 accessLevel: "guest", // can be 'private', 'protected', or 'guest' but defaults to `guest` // defaults to false
               },
             });
-
-            
-
 
             answer = answer.replace(url, getUrlResult.url);
           } catch (error) {
@@ -411,6 +404,7 @@ const Home = () => {
                 src={x}
                 width="auto"
                 height="auto"
+                alt = "leave"
                 className="cursor-pointer hover:focus"
                 onClick={() => setFaq(false)}
                 style={{ zIndex: 999 }}
@@ -600,7 +594,7 @@ const Home = () => {
         
         <Resizable direction = "vertical">
           <div
-            className="border pt-20  h-[90%] w-1/3 overflow-auto border-gray-400 absolute right-0 opacity-97  flex flex-col items-start resize"
+            className="border pt-24 h-[90%] w-1/3 overflow-auto border-gray-400 absolute right-0 opacity-97  flex flex-col items-start resize"
             style={{ background: "#F2F4F5", zIndex: 998, direction: "rtl" }}
           >
             <div className="pl-5 flex flex-row">
@@ -817,10 +811,7 @@ const Home = () => {
                             </div>
                             
                           </div>
-                        {responseText === "I apologize, but I cannot assist with this question." ? <h1>See Notes</h1>  :
-                          <h1>See Explanation</h1>}
-                          
-                           <BookOpenIcon
+                          See Notes: <BookOpenIcon
                       className="mx-2 h-6 w-6 cursor-pointer"
                       onClick={() => setNotes(!notes)}
                     />
@@ -925,11 +916,11 @@ const Home = () => {
             <div className="flex flex-col pt-7 items-center">
               <h1 className="text-4xl font-semibold">Hello,</h1>
               <span className="flex flex-row">
-                <h1 className="text-4xl pt-2 font-semibold">{`How can I assist you today`}</h1>
+                <h1 className="text-4xl pt-2 font-semibold">{`How can I assist you today,`}</h1>
                 <h1 className="text-4xl pl-2 pt-2 font-semibold text-brand-primary-600">
                   {user}
                 </h1>
-                <h1 className="text-4xl pl-1 pt-2 font-semibold">{`?`}</h1>
+                <h1 className="text-4xl pl-2 pt-2 font-semibold">{`?`}</h1>
               </span>
               <div className="flex flex-row">
                 <div

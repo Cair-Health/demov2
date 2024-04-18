@@ -11,9 +11,12 @@ import upload from "../../public/upload-03.svg";
 import trash from "../../public/trash-03.svg";
 import eye from "../../public/eye-open.svg";
 import x from "../../public/x-02.svg";
+import { getUrl } from "aws-amplify/storage";
 import { getProperties } from "aws-amplify/storage";
 import { downloadData } from "aws-amplify/storage";
 import Iframe from "react-iframe";
+import { Transition } from "@headlessui/react";
+import { Resizable, ResizableBox } from "react-resizable"
 
 const Upload = () => {
   const ref = useRef(null);
@@ -30,6 +33,21 @@ const Upload = () => {
   const [pdfContent, setPdfContent] = useState("");
   const [ragUpload, setRagUpload] = useState(false);
   const [isShowOpen, setIsShowOpen] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
+  const [showInPage, setShowInPage] = useState(false);
+
+  const openModal = (content) => {
+    setModalContent(content.url.toString());
+    console.log(content)
+    console.log("Here")
+    console.log(modalContent)
+    setShowInPage(true)
+  };
+
+
+  const closeModal = () => {
+    setModalContent(null);
+  };
 
   let start = 0;
 
@@ -43,7 +61,7 @@ const Upload = () => {
 
       try {
         const result = await list({
-          prefix: `user-uploads/`,
+          prefix: `user`,
           options: {
             listAll: true,
           },
@@ -102,7 +120,7 @@ const Upload = () => {
         body: JSON.stringify({
           customer_id: "demo",
           s3_bucket: "cair-user-uploads163557-dev",
-          s3_key: `public/${key}`,
+          s3_key: `${key}`,
           file_type: ".pdf",
           mode: `${mode}`,
         }),
@@ -128,7 +146,7 @@ const Upload = () => {
   const handleFileLoad = async () => {
     try {
       const file = ref.current.files[0]; // Get the file from the input element
-      const key = `user-uploads/${user}_${mode}_main_${file.name}`;
+      const key = `user_${user}_${mode}_main_${file.name}`;
       await fileKeySetter(key);
       const result = await uploadData({
         key: key,
@@ -144,7 +162,9 @@ const Upload = () => {
             }
           },
           metadata: { type: mode, person: user },
+          contentType: "application/pdf"
         },
+        
       }).result;
       console.log("Succeeded: ", result);
       console.log(fileKey);
@@ -160,25 +180,20 @@ const Upload = () => {
 
   const handleShow = async (file, filekey) => {
     console.log(filekey);
-    const { body, eTag } = await downloadData({
-      key: `${filekey}`,
-      file: file,
-      options: {
-        accessLevel: "guest", // access level of the file being downloaded
-        onProgress: (progress) => {
-          console.log(
-            `Downloaded: ${progress.transferredBytes}/${progress.totalBytes}`,
-          );
-        }, // optional progress callback
-      },
-    }).result;
-
-    console.log(body);
-    const blobUrl = URL.createObjectURL(body);
-    setPdfContent(blobUrl);
-    console.log(blobUrl);
-    window.open(blobUrl, "_blank");
-    setIsShowOpen(true);
+    try {
+      const getUrlResult = await getUrl({
+        key: filekey,
+          options: {
+            accessLevel: "guest", // can be 'private', 'protected', or 'guest' but defaults to `guest` // defaults to false
+          },
+      });
+      console.log("FileKey");
+      console.log(filekey)
+      
+      openModal(getUrlResult)
+    }catch(error){
+      console.log(error)
+    }
   };
 
   const handleDelete = async (filename) => {
@@ -198,6 +213,48 @@ const Upload = () => {
 
   return (
     <div className="">
+
+
+<Transition
+  show={showInPage}
+  enter="transition-opacity duration-75"
+  enterFrom="opacity-0"
+  enterTo="opacity-100"
+  leave="transition-opacity duration-150"
+  leaveFrom="opacity-100"
+  leaveTo="opacity-0"
+>
+
+<Resizable direction = "vertical">
+  <div
+    className="border pt-2  h-[80%] w-1/3 overflow-auto border-gray-400 absolute right-0 opacity-97  flex flex-col items-start resize"
+    style={{ background: "#F2F4F5", zIndex: 998, direction: "rtl" }}
+  >
+    <div className="pl-5 flex flex-row">
+      <Image
+        src={x}
+        width="auto"
+        height="auto"
+        className="cursor-pointer hover:focus"
+        onClick={() => setShowInPage(false)}
+        style={{ zIndex: 999 }}
+      />
+    </div>
+
+    <div className="flex justify-end px-4 pt-2"></div>
+    <div className="p-2 w-full h-full">
+      <iframe
+        title="Modal Content"
+        src= {modalContent}
+        className=""
+        style={{ width: "100%", height: "100%" }}
+      />
+    </div>
+  </div>
+  </Resizable>
+  
+</Transition>
+
       <div className={`flex ${isUploadOpen ? "contrast-50" : ""}`}>
         <VerticalNav user = {user}/>
         <div className="h-screen w-full bg-white text-black">
@@ -319,24 +376,24 @@ const Upload = () => {
                     <div className="items-center justify-center px- py-3 ">
                       <td
                         className={`px-8 text-center font-semibold rounded-lg whitespace-nowrap ${
-                          file.key.split("_")[1] === "policies"
+                          file.key.split("_")[2] === "policies"
                             ? "bg-green-100"
                             : ""
                         } ${
-                          file.key.split("_")[1] === "contracts"
+                          file.key.split("_")[2] === "contracts"
                             ? "bg-red-100"
                             : ""
                         } ${
-                          file.key.split("_")[1] === "rates"
+                          file.key.split("_")[2] === "rates"
                             ? "bg-yellow-100"
                             : ""
                         }`}
                       >
-                        {file.key.split("_")[1]}
+                        {file.key.split("_")[2]}
                       </td>
                     </div>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {file.key.split("_").slice(3).join("_")}
+                      {file.key.split("_").slice(4).join("_")}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <button
@@ -354,6 +411,7 @@ const Upload = () => {
                         className="border-2 border-gray-200 rounded-xl bg-gray-100 p-2"
                         onClick={() => {
                           handleShow(file, file.key);
+                          console.log(file.key)
                         }}
                       >
                         <Image
@@ -365,7 +423,7 @@ const Upload = () => {
                       </button>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap font-semibold">
-                      {file.key.split("_")[0].split("/")[1]}
+                      {file.key.split("_")[1]}
                     </td>
                   </tr>
                 ))}
@@ -483,8 +541,10 @@ const Upload = () => {
       ) : (
         <div></div>
       )}
+      
     </div>
   );
+  
 };
 
 export default Upload;
