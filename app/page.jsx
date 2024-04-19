@@ -609,7 +609,8 @@ const Home = () => {
             </div>
 
             <div className="flex justify-end px-4 pt-2"></div>
-            <div className="p-2 w-full h-full">
+            
+                     <div className="p-2 w-full h-full">
               <iframe
                 title="Modal Content"
                 src={modalContent}

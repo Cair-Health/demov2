@@ -143,9 +143,16 @@ const Upload = () => {
     setFileKey(key);
   };
 
-  const handleFileLoad = async () => {
+  const handleDrop = (event) => {
+    event.preventDefault();
+    const droppedFiles = event.dataTransfer.files;
+    Array.from(droppedFiles).forEach((file) => {
+      handleFileLoad(file);
+    });
+  };
+
+  const handleFileLoad = async (file) => {
     try {
-      const file = ref.current.files[0]; // Get the file from the input element
       const key = `user_${user}_${mode}_main_${file.name}`;
       await fileKeySetter(key);
       const result = await uploadData({
@@ -434,8 +441,12 @@ const Upload = () => {
       </div>
       <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
         {isUploadOpen ? (
-          <div className="text-xl flex flex-col z-50 px-[4rem] text-black rounded-2xl py-[5rem] bg-white ">
-            <div className="w-full h-full flex flex-col text-center items-center ">
+          <div className="text-xl flex flex-col z-50 px-[2rem] text-black rounded-2xl py-[3.5rem] bg-white"  onDragOver={(e) => {
+            e.preventDefault()
+          }}
+          onDrop = {handleDrop}>
+
+            <div className="w-full p-4 border-4 border-dashed rounded-xl h-full flex flex-col text-center items-center ">
               <div className="bg-background-light rounded-full items-center align-center justify-center px-4 py-4 ">
                 <Image
                   src={upload}
@@ -463,7 +474,7 @@ const Upload = () => {
                     ref={ref}
                     type="file"
                     className="hidden"
-                    onChange={() => handleFileLoad()}
+                    onChange={(e) => handleFileLoad(e.target.files[0])}
                   />
                   <h1>{progress}</h1>
                 </label>
