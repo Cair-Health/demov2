@@ -132,10 +132,8 @@ const Upload = () => {
 
       console.log(response_policies);
       console.log(error);
-      window.location.reload();
     } catch (error) {
       console.log("RAG upload error:", error);
-      window.location.reload();
     }
   };
 
@@ -176,13 +174,17 @@ const Upload = () => {
       console.log("Succeeded: ", result);
       console.log(fileKey);
       console.log(mode);
+      
 
-      rag_upload(`${user}_${mode}_main_${file.name}`);
+      setFiles(prevFiles => [...prevFiles, { key: key, lastModified: new Date() }]);
 
-      window.location.reload();
+      fetchInitialData();
+
+
     } catch (error) {
       console.log("Error : ", error);
     }
+    rag_upload(`${user}_${mode}_main_${file.name}`);
   };
 
   const handleShow = async (file, filekey) => {
@@ -476,9 +478,9 @@ const Upload = () => {
                     className="hidden"
                     onChange={(e) => handleFileLoad(e.target.files[0])}
                   />
-                  <h1>{progress}</h1>
+                  <h1>{progress !== 'Upload progress 100 %' ? progress : null}</h1>
                 </label>
-              </div>
+              </div>'
             </div>
 
             <div className="absolute top-0 right-0 mt-4 mr-4">
