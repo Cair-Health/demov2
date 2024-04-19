@@ -480,7 +480,7 @@ const Upload = () => {
                   />
                   <h1>{progress !== 'Upload progress 100 %' ? progress : null}</h1>
                 </label>
-              </div>'
+              </div>
             </div>
 
             <div className="absolute top-0 right-0 mt-4 mr-4">
