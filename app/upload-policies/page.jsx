@@ -35,6 +35,8 @@ const Upload = () => {
   const [isShowOpen, setIsShowOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   const [showInPage, setShowInPage] = useState(false);
+  const [uploadStatuses, setUploadStatuses] = useState({});
+
 
   const openModal = (content) => {
     setModalContent(content.url.toString());
@@ -107,6 +109,25 @@ const Upload = () => {
     fetchInitialMeta();
   }, [files]);
 
+  useEffect(() => {
+    const fetchStatuses = async () => {
+      const statuses = {};
+      for (const file of files) {
+        try {
+          const response = await checkUploadStatus(`public/${file.key}`);
+          const responseBody = await response.json();
+          statuses[file.key] = responseBody.response;
+        } catch (error) {
+          console.error(`Error fetching upload status for file ${file.key}:`, error);
+          statuses[file.key] = "Error"; // Set error status for the file
+        }
+      }
+      setUploadStatuses(statuses);
+    };
+
+    fetchStatuses();
+  }, [files]);
+
   const rag_upload = async (key) => {
     console.log(key);
     console.log(mode);
@@ -140,6 +161,29 @@ const Upload = () => {
   const fileKeySetter = async (key) => {
     setFileKey(key);
   };
+
+  const checkUploadStatus = async (filekey) => {
+    try {
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          s3_key: `public/${filekey}`,
+        }),
+      };
+      const upload_status = await fetch(
+        "https://chat.cairhealth.com/check_document_upload_status/",
+        requestOptions,
+      );
+
+      console.log(upload_status);
+
+    } catch (error) {
+      console.log("Pinecone Status Check error:", error);
+    }
+  }
 
   const handleDrop = (event) => {
     event.preventDefault();
@@ -373,6 +417,13 @@ const Upload = () => {
                   <th
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Ready to Chat?
+                  </th>
+
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   ></th>
                 </tr>
               </thead>
@@ -433,6 +484,9 @@ const Upload = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap font-semibold">
                       {file.key.split("_")[1]}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap font-semibold">
+                    {uploadStatuses[file.key] ? uploadStatuses[file.key] : "No status found"}
                     </td>
                   </tr>
                 ))}
