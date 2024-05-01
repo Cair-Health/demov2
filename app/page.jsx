@@ -1,3 +1,4 @@
+// Importing required modules and components
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import {
@@ -24,20 +25,24 @@ import Dropdown from "../components/Dropdown";
 import { getUrl } from "aws-amplify/storage";
 import x from "../public/x-02.svg";
 import { Transition } from "@headlessui/react";
-import NotesSection from "../components/NotesSection"
-import { Resizable, ResizableBox } from "react-resizable"
+import NotesSection from "../components/NotesSection";
+import { Resizable, ResizableBox } from "react-resizable";
+import line from "/public/line-chart-up-01.svg"
 
+// Defining the Home component
 const Home = () => {
-  const [hasAnswered, setHasAnswered] = useState(false);
-  const [tutorial, setTutorial] = useState(true);
-  const [inputValue, setInputValue] = useState("");
-  const [responseText, setResponseText] = useState("...try again");
-  const [returnQuery, setReturnQuery] = useState("");
-  const [sessionID, setSessionID] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [history_policies, setHistory_policies] = useState([]);
-  const [history, setHistory] = useState([]);
+  // State variables initialization using useState hook
+  const [hasAnswered, setHasAnswered] = useState(false); // Indicates if the user has answered
+  const [tutorial, setTutorial] = useState(true); // Indicates if the tutorial is being displayed
+  const [inputValue, setInputValue] = useState(""); // Stores user input
+  const [responseText, setResponseText] = useState("...try again"); // Stores response text
+  const [returnQuery, setReturnQuery] = useState(""); // Stores return query
+  const [sessionID, setSessionID] = useState(""); // Stores session ID
+  const [loading, setLoading] = useState(false); // Indicates loading state
+  const [history_policies, setHistory_policies] = useState([]); // Stores history of policies
+  const [history, setHistory] = useState([]); // Stores general history
 
+  // More state variables...
   const [currentQuery, setCurrentQuery] = useState("");
   const [question1, setQuestion1] = useState("");
   const [question2, setQuestion2] = useState("");
@@ -57,33 +62,42 @@ const Home = () => {
   const [modalContent, setModalContent] = useState(null);
   const [showInPage, setShowInPage] = useState(false);
 
+  // Function to open a modal with content
   const openModal = (content) => {
     setModalContent(content);
     setShowInPage(true);
   };
 
+  // Function to close the modal
   const closeModal = () => {
     setModalContent(null);
   };
 
+  // Ref to the bottom of the page
   const bottomOfPageRef = useRef();
+
+  // Configuration for Amplify
   Amplify.configure(amplifyconfig);
 
+  // Effect hook to start the chat session when the component mounts
   useEffect(() => {
     startChat();
   }, []);
 
+  // Effect hook to parse user parameters from the URL
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     setUser(params.get("user"));
   }, []);
 
+  // Effect hook to scroll to the bottom of the page when chat history updates
   useEffect(() => {
     if (bottomOfPageRef.current) {
       bottomOfPageRef.current.scrollIntoView();
     }
   }, [history_policies]);
 
+  // Effect hook to check the status of the chat session
   useEffect(() => {
     const checkStatus = async () => {
       try {
@@ -105,7 +119,7 @@ const Home = () => {
           );
 
           const stattext = await statusResponse.text();
-          console.log(stattext)
+          console.log(stattext);
           setProgress(stattext);
 
           // If not completed, schedule next check after 1 second
@@ -120,6 +134,7 @@ const Home = () => {
     checkStatus();
   }, [loading]);
 
+  // Effect hook to update load number based on progress
   useEffect(() => {
     const loadSetter = (progress) => {
       if (progress === "Stage 1.") {
@@ -137,30 +152,16 @@ const Home = () => {
     loadSetter(progress);
   }, [progress]);
 
-  {
-    /*useEffect(() => {
-   if (password === PASSWORD) {
-     setAuthenticated(true);
-   }
- }, [password]);*/
-  }
 
-  const CustomLink = ({ href, children }) => (
-    <a href={href} style={{ color: "blue", textDecoration: "underline" }}>
-      {children}
-    </a>
-  );
-
-  const renderers = {
-    link: CustomLink,
-  };
-
+  // State variable for selected document type
   const [selectedDocType, setSelectedDocType] = useState("Policies");
 
+  // Function to handle document type change
   const handleDocTypeChange = (value) => {
     setSelectedDocType(value);
   };
 
+  // Function to start the chat session
   const startChat = async () => {
     try {
       const requestOptions = {
@@ -187,6 +188,7 @@ const Home = () => {
     }
   };
 
+  // Function to handle click on paper plane icon
   const handlePaperPlaneClick = async () => {
     setNotes(false);
     setLoadNumber(Math.floor(Math.random() * 5) + 1);
@@ -331,7 +333,7 @@ const Home = () => {
         }, 10);
       };
 
-      setResponseText(answer);
+      setResponseText(answer.replace("NO DATE FOUND,", ""));
 
       // Store the current query and response in the history
 
@@ -404,7 +406,7 @@ const Home = () => {
                 src={x}
                 width="auto"
                 height="auto"
-                alt = "leave"
+                alt="leave"
                 className="cursor-pointer hover:focus"
                 onClick={() => setFaq(false)}
                 style={{ zIndex: 999 }}
@@ -591,36 +593,34 @@ const Home = () => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-        
-        <Resizable direction = "vertical">
-          <div
-            className="border pt-24 h-[90%] w-1/3 overflow-auto border-gray-400 absolute right-0 opacity-97  flex flex-col items-start resize"
-            style={{ background: "#F2F4F5", zIndex: 998, direction: "rtl" }}
-          >
-            <div className="pl-5 flex flex-row">
-              <Image
-                src={x}
-                width="auto"
-                height="auto"
-                className="cursor-pointer hover:focus"
-                onClick={() => setShowInPage(false)}
-                style={{ zIndex: 999 }}
-              />
-            </div>
+          <Resizable direction="vertical">
+            <div
+              className="border pt-24 h-[90%] w-1/3 overflow-auto border-gray-400 absolute right-0 opacity-97  flex flex-col items-start resize"
+              style={{ background: "#F2F4F5", zIndex: 998, direction: "rtl" }}
+            >
+              <div className="pl-5 flex flex-row">
+                <Image
+                  src={x}
+                  width="auto"
+                  height="auto"
+                  className="cursor-pointer hover:focus"
+                  onClick={() => setShowInPage(false)}
+                  style={{ zIndex: 999 }}
+                />
+              </div>
 
-            <div className="flex justify-end px-4 pt-2"></div>
-            
-                     <div className="p-2 w-full h-full">
-              <iframe
-                title="Modal Content"
-                src={modalContent}
-                className=""
-                style={{ width: "100%", height: "100%" }}
-              />
+              <div className="flex justify-end px-4 pt-2"></div>
+
+              <div className="p-2 w-full h-full">
+                <iframe
+                  title="Modal Content"
+                  src={modalContent}
+                  className=""
+                  style={{ width: "100%", height: "100%" }}
+                />
+              </div>
             </div>
-          </div>
           </Resizable>
-          
         </Transition>
 
         {/* End of Sidebar content */}
@@ -695,7 +695,10 @@ const Home = () => {
                       {returnQuery}
                     </p>
                   </div>
-                  <PencilSquareIcon className="h-6 w-6 cursor-pointer" onClick = {() => setInputValue(returnQuery)}/>
+                  <PencilSquareIcon
+                    className="h-6 w-6 cursor-pointer"
+                    onClick={() => setInputValue(returnQuery)}
+                  />
                 </div>
               </div>
 
@@ -768,7 +771,6 @@ const Home = () => {
                               {responseText}
                             </ReactMarkdown>
                           </div>
-
                           <p className="mt-[1.5rem] font-semibold">
                             Related Questions:
                           </p>
@@ -806,16 +808,14 @@ const Home = () => {
                                 <p className="text-gray-700 text-base">
                                   {question3}
                                 </p>
-  
                               </div>
-                              
                             </div>
-                            
                           </div>
-                          See Notes: <BookOpenIcon
-                      className="mx-2 h-6 w-6 cursor-pointer"
-                      onClick={() => setNotes(!notes)}
-                    />
+                          See Notes:{" "}
+                          <BookOpenIcon
+                            className="mx-2 h-6 w-6 cursor-pointer"
+                            onClick={() => setNotes(!notes)}
+                          />
                         </div>
                       )}
                     </div>
@@ -823,7 +823,6 @@ const Home = () => {
                   <div className="flex space-x-1">
                     <HandThumbUpIcon className="h-6 w-6" />
                     <HandThumbDownIcon className="h-6 w-6" />
-                   
                   </div>
                 </div>
               </div>
@@ -958,9 +957,15 @@ const Home = () => {
                     setTutorial(false);
                   }}
                 >
-                  <div className="px-6 py-4 hover:bg-brand-primary-100">
-                    <div className="font-semibold text-2xl mb-2">Rates</div>
-                    <p className="text-black">Ask questions about rates</p>
+                  <div className="px-4 py-4 hover:bg-brand-primary-100">
+                    <div className="font-semibold text-2xl mb-2 flex flex-row">Rates-Mode
+                    <div className = "pl-4">
+                    <Image src = {line} width = "30" height = "auto" alt = "line graph"/>
+                    </div>
+                    
+                    </div>
+
+                    <p className="text-black">Access Our Beta Rates-Builder</p>
                   </div>
                 </div>
               </div>

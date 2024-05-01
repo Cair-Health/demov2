@@ -6,6 +6,7 @@ import home from '/public/home.svg'
 import Link from "next/link"
 import folder from "/public/folder.svg"
 import message from "/public/message-chat-01(1).svg"
+import line from "/public/line-chart-up-01.svg"
 
 import {
   HandThumbDownIcon,
@@ -84,6 +85,19 @@ const [isOpen3, setIsOpen3] = useState(false);
 
         
         <Image src = {folder} height = "35" width = "auto" alt ="upload" />
+
+     
+</div>
+      
+</Link>
+
+
+
+<Link href = {`/rates-builder?user=${user}`}>
+     <div className = "relative top-[7rem] px-3 py-3 rounded-xl flex justify-center items-center cursor-pointer hover:bg-brand-primary-100">
+
+        
+        <Image src = {line} height = "35" width = "auto" alt ="upload" />
 
      
 </div>

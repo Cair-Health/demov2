@@ -114,8 +114,11 @@ const Upload = () => {
       const statuses = {};
       for (const file of files) {
         try {
-          const response = await checkUploadStatus(`public/${file.key}`);
-          const responseBody = await response.json();
+          const response = await checkUploadStatus(file.key);
+          if (!response.ok) {
+            throw new Error(`Response wasn't okay`);
+          }
+          const responseBody = response.body
           statuses[file.key] = responseBody.response;
         } catch (error) {
           console.error(`Error fetching upload status for file ${file.key}:`, error);
