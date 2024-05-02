@@ -19,14 +19,14 @@ import { Transition } from "@headlessui/react";
 import { Resizable, ResizableBox } from "react-resizable"
 import { userInfo } from "os";
 
-const Upload = ({passeduser}) => {
+const Upload = () => {
   const ref = useRef(null);
   const [files, setFiles] = useState([]);
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState();
   const [ragData, setRagData] = useState("");
   const [fileKey, setFileKey] = useState("");
-  const [user, setUser] = useState(passeduser);
+  const [user, setUser] = useState();
   const [mode, setMode] = useState("policies");
   const [showUploadDropdown, setShowUploadDropdown] = useState(false);
   const [isUploadOpen, setIsUploadOpen] = useState(false);
