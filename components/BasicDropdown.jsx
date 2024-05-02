@@ -55,9 +55,9 @@ export default function BasicDropdown({router}) { // Initialize useRouter hook
                       active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                       'block w-full px-4 py-2 text-left text-sm'
                     )}
-                    onClick = {() => router.push(`/?user=garv`)}
+                    onClick = {() => router.push(`/?user=Demo2`)}
                   >
-                    garv
+                    Demo2
                   </button>
                 )}
               </Menu.Item>
@@ -71,9 +71,9 @@ export default function BasicDropdown({router}) { // Initialize useRouter hook
                       active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                       'block w-full px-4 py-2 text-left text-sm'
                     )}
-                    onClick = {() => router.push(`/?user=test`)}
+                    onClick = {() => router.push(`/?user=Demo3`)}
                   >
-                    test
+                    Demo3
                   </button>
                 )}
               </Menu.Item>

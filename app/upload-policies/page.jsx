@@ -17,15 +17,16 @@ import { downloadData } from "aws-amplify/storage";
 import Iframe from "react-iframe";
 import { Transition } from "@headlessui/react";
 import { Resizable, ResizableBox } from "react-resizable"
+import { userInfo } from "os";
 
-const Upload = () => {
+const Upload = ({passeduser}) => {
   const ref = useRef(null);
   const [files, setFiles] = useState([]);
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState();
   const [ragData, setRagData] = useState("");
   const [fileKey, setFileKey] = useState("");
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState(passeduser);
   const [mode, setMode] = useState("policies");
   const [showUploadDropdown, setShowUploadDropdown] = useState(false);
   const [isUploadOpen, setIsUploadOpen] = useState(false);
@@ -62,8 +63,10 @@ const Upload = () => {
       console.log(user)
 
       try {
+        const params = new URLSearchParams(window.location.search);
+        setUser(params.get("user"));
         const result = await list({
-          prefix: `user`,
+          prefix: `${params.get("user")}`,
           options: {
             listAll: true,
           },
@@ -198,7 +201,7 @@ const Upload = () => {
 
   const handleFileLoad = async (file) => {
     try {
-      const key = `user_${user}_${mode}_main_${file.name}`;
+      const key = `${user}_user_${mode}_main_${file.name}`;
       await fileKeySetter(key);
       const result = await uploadData({
         key: key,
@@ -486,10 +489,10 @@ const Upload = () => {
                       </button>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap font-semibold">
-                      {file.key.split("_")[1]}
+                      {file.key.split("_")[0]}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap font-semibold">
-                    {uploadStatuses[file.key] ? uploadStatuses[file.key] : "No status found"}
+                    <td className="px-6 py-4 whitespace-nowrap font-semibold text-red-900">
+                        Access Restricted
                     </td>
                   </tr>
                 ))}

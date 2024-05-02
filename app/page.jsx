@@ -957,6 +957,8 @@ const Home = () => {
                     setTutorial(false);
                   }}
                 >
+
+                  <Link href = {`/rates-builder?user=${user}`}>
                   <div className="px-4 py-4 hover:bg-brand-primary-100">
                     <div className="font-semibold text-2xl mb-2 flex flex-row">Rates-Mode
                     <div className = "pl-4">
@@ -967,6 +969,7 @@ const Home = () => {
 
                     <p className="text-black">Access Our Beta Rates-Builder</p>
                   </div>
+                  </Link>
                 </div>
               </div>
             </div>
