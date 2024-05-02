@@ -1,0 +1,73 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-cairdemo-dev-163557-authRole",
+      "UnauthRoleArn": "arn:aws:iam::933973357502:role/amplify-cairdemo-dev-163557-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::933973357502:role/amplify-cairdemo-dev-163557-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-cairdemo-dev-163557-deployment",
+      "UnauthRoleName": "amplify-cairdemo-dev-163557-unauthRole",
+      "StackName": "amplify-cairdemo-dev-163557",
+      "StackId": "arn:aws:cloudformation:us-east-1:933973357502:stack/amplify-cairdemo-dev-163557/72250e50-e192-11ee-8df8-1249a7b9a0e9",
+      "AmplifyAppId": "d39dygenf8iv4j"
+    }
+  },
+  "auth": {
+    "cairdemo7947218c": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "frontendAuthConfig": {
+        "socialProviders": [],
+        "usernameAttributes": [],
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": []
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-cairdemo-dev-163557-deployment/amplify-cfn-templates/auth/cairdemo7947218c-cloudformation-template.json",
+        "logicalId": "authcairdemo7947218c"
+      },
+      "lastPushTimeStamp": "2024-03-13T23:49:40.605Z",
+      "output": {
+        "UserPoolId": "us-east-1_iBb6BMmwe",
+        "AppClientIDWeb": "6ks868gui8dc1r5eijmnohp9sj",
+        "AppClientID": "34orkh3leusmb4vp6857k9t2kj",
+        "IdentityPoolId": "us-east-1:0613b886-b86e-48e7-9d54-53bde2e7c67c",
+        "UserPoolArn": "arn:aws:cognito-idp:us-east-1:933973357502:userpool/us-east-1_iBb6BMmwe",
+        "IdentityPoolName": "cairdemo7947218c_identitypool_7947218c__dev",
+        "UserPoolName": "cairdemo7947218c_userpool_7947218c"
+      },
+      "lastPushDirHash": "01hcD8DHc7j7eN/K19rKVLMoM2k="
+    }
+  },
+  "storage": {
+    "demos3": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "lastPushTimeStamp": "2024-03-13T23:49:40.605Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-cairdemo-dev-163557-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
+        "logicalId": "storagedemos3"
+      },
+      "output": {
+        "BucketName": "cair-user-uploads163557-dev",
+        "Region": "us-east-1"
+      },
+      "lastPushDirHash": "q3WBwgW8SV0Ja6vzKJOknJeGea0="
+    }
+  }
+}
