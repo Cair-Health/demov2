@@ -492,7 +492,7 @@ const Upload = ({passeduser}) => {
                       {file.key.split("_")[0]}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap font-semibold text-red-900">
-                        Access Restricted
+                        Restricted For Demo Access
                     </td>
                   </tr>
                 ))}
