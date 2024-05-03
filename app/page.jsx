@@ -287,6 +287,9 @@ const Home = () => {
             .split("/")
             .pop()
             .replace(/%20/g, " ")
+            .replace(/%28/g, "(")
+            .replace(/%26/g, "&")
+            .replace(/%29/g, ")")
             .replace(/,$/, ""); // Get last part of the URL and replace %20 with spaces
 
           // Call your API with the S3 key
@@ -299,6 +302,7 @@ const Home = () => {
             });
 
             answer = answer.replace(url, getUrlResult.url);
+            console.log(getUrlResult.url)
           } catch (error) {
             console.error(error);
           }
