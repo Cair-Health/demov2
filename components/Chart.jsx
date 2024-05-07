@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Scatter, Bar, Line } from 'react-chartjs-2';
-import Select from 'react-select';
+
+import WindowedSelect from 'react-windowed-select';
 import dataSourceConfigs from '../config/dataSourceConfigs';
 
 const chartComponents = {
@@ -10,7 +11,7 @@ const chartComponents = {
 };
 
 const Chart = ({ config }) => {
-  const { id, dataSourceURI, chartType, showFilters } = config;
+  const { id, dataSourceURI, chartType, showFilters, codesURI, entitiesURI } = config;
   const SelectedChart = chartComponents[chartType];
   const dataSourceConfig = dataSourceConfigs[dataSourceURI];
 
@@ -33,6 +34,22 @@ const Chart = ({ config }) => {
     fetchInitialData();
     // Dependencies include all filter options to ensure updates on change
   }, [dataSourceURI, selectedPayerEntities, selectedCodes]);
+
+  useEffect(() => {
+    (async () => {
+      const response = await fetch(codesURI);
+      const options = await response.json();
+      setCodeOptions(options.map(code => ({ label: code, value: code })))
+    })()
+  }, [])
+  
+  useEffect(() => {
+    (async () => {
+      const response = await fetch(entitiesURI);
+      const options = await response.json();
+      setPayerEntityOptions(options.map(code => ({ label: code, value: code })))
+    })()
+  }, [])
 
 
 
@@ -79,8 +96,6 @@ const Chart = ({ config }) => {
   const initializeFilters = (data) => {
     const payerEntitySet = new Set(data.map(item => item[payerEntityKey]));
     const codeSet = new Set(data.map(item => item.code));
-    setPayerEntityOptions(Array.from(payerEntitySet).map(payer => ({ value: payer, label: payer })));
-    setCodeOptions(Array.from(codeSet).map(code => ({ value: code, label: code })));
   };
 
   const filterAndUpdateChartData = (data) => {
@@ -158,8 +173,8 @@ const Chart = ({ config }) => {
       {/* Check for specific chart config ID */}
       {showFilters && (
         <>
-          <Select options={payerEntityOptions} isMulti onChange={setSelectedPayerEntities} value={selectedPayerEntities} placeholder="Select Payers/Entities" />
-          <Select options={codeOptions} isMulti onChange={setSelectedCodes} value={selectedCodes} placeholder="Select Codes" />
+          <WindowedSelect options={payerEntityOptions} isMulti onChange={setSelectedPayerEntities} value={selectedPayerEntities} placeholder="Select Payers/Entities" />
+          <WindowedSelect options={codeOptions} isMulti onChange={setSelectedCodes} value={selectedCodes} placeholder="Select Codes" />
         </>
       )}
       {chartData && chartData.datasets && chartData.datasets.length > 0 ? (
