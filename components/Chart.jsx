@@ -15,7 +15,6 @@ const Chart = ({ config }) => {
   const dataSourceConfig = dataSourceConfigs[dataSourceURI];
 
   const isSpecialChart = id === 'chart2';
-  console.log(isSpecialChart)
 
   // Handle different configuration names
   const defaultPayerEntities = dataSourceConfig.defaultPayers || dataSourceConfig.defaultEntities;
@@ -26,7 +25,8 @@ const Chart = ({ config }) => {
   const [chartData, setChartData] = useState({});
   const [selectedPayerEntities, setSelectedPayerEntities] = useState(defaultPayerEntities);
   const [selectedCodes, setSelectedCodes] = useState(dataSourceConfig.defaultCodes);
-  const [payerEntityOptions, setPayerEntityOptions] = useState(defaultPayerEntities);
+  const [payerEntityOptions, setPayerEntityOptions] = useState([]);
+
   const [codeOptions, setCodeOptions] = useState(dataSourceConfig.defaultCodes);
 
     useEffect(() => {
@@ -34,19 +34,7 @@ const Chart = ({ config }) => {
     // Dependencies include all filter options to ensure updates on change
   }, [dataSourceURI, selectedPayerEntities, selectedCodes]);
 
-
-
-  // // Effect to handle changes in dataSourceURI
-  // useEffect(() => {
-  //   //Reset the selected and options state based on new dataSourceConfig
-  //   // setSelectedPayerEntities(dataSourceConfig.defaultPayers || dataSourceConfig.defaultEntities);
-  //   // setSelectedCodes(dataSourceConfig.defaultCodes);
-  //   // setPayerEntityOptions(dataSourceConfig.defaultPayers || dataSourceConfig.defaultEntities);
-  //   // setCodeOptions(dataSourceConfig.defaultCodes);
-    
-  //   //Refetch data based on new config
-  //   fetchInitialData();
-  // }, [dataSourceURI]);  // Re-run this effect if dataSourceURI changes
+  
 
   const fetchInitialData = async () => {
     const url = new URL(dataSourceURI, window.location.origin);
@@ -77,7 +65,8 @@ const Chart = ({ config }) => {
   }, [selectedPayerEntities, selectedCodes]);
 
   const initializeFilters = (data) => {
-    const payerEntitySet = new Set(data.map(item => item[payerEntityKey]));
+    // Set payer entity options from the full data set, not affected by selections
+    const payerEntitySet = new Set(data.map(item => item[dataSourceConfig.filterKeys.payer || dataSourceConfig.filterKeys.entity_name]));
     const codeSet = new Set(data.map(item => item.code));
     setPayerEntityOptions(Array.from(payerEntitySet).map(payer => ({ value: payer, label: payer })));
     setCodeOptions(Array.from(codeSet).map(code => ({ value: code, label: code })));
