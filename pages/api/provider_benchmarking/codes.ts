@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Pool } from 'pg';
+import { codes } from '../../../lib/providerBenchmark.js'
 
 const pool = new Pool({
   user: 'chat',
@@ -14,9 +15,8 @@ const pool = new Pool({
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<string[] | { message: string }>): Promise<void> => {
   try {
-    const { rows } = await pool.query<{code: string}>(`SELECT distinct code FROM provider_benchmark`);
 
-    res.status(200).json(rows.map(r => r.code));
+    res.status(200).json(codes);
   } catch (err) {
     console.error('Database or Server error:', err);
     res.status(500).send({ message: 'Server error' });

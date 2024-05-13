@@ -110,3 +110,13 @@ a {
   }
 }
 
+
+.workstation-container {
+  transition: transform 0.5s ease-in-out;
+  transform: translateY(100%); /* Initially completely below the screen */
+}
+
+
+.workstation-container.show {
+  transform: translateY(0); /* Slide into view */
+}

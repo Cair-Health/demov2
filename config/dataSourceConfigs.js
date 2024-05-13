@@ -24,7 +24,21 @@ const dataSourceConfigs = {
         { value: '99215', label: '99215' }
       ],
       filterKeys: { payer: 'entity_name', code: 'code' }
+    },
+    '/api/payer_rate_percentile': {
+      defaultEntities: [
+        { value: 'Aetna', label: 'Aetna' },
+        { value: 'Anthem', label: 'Anthem' },
+        { value: 'UnitedHealthcare', label: 'UnitedHealthCare' }
+      ],
+      defaultCodes: [
+        { value: '99211', label: '99211' },
+        { value: '99212', label: '99212' },
+        { value: '99215', label: '99215' }
+      ],
+      filterKeys: { payer: 'payer', code: 'code' }
     }
+
   };
 
 

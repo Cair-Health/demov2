@@ -7,11 +7,7 @@ interface PayerStat {
   payer: string;              // Assuming 'payer' is a string
   code: string;               // Assuming 'code' is a string
   avg_rate: number;           // Assuming 'average rate' is a number
-  min_rate: number;           // Assuming 'minimum rate' is a number
-  max_rate: number;           // Assuming 'maximum rate' is a number
-  median_rate: number;        // Assuming 'median rate' is a number
-  percentile_25: number;      // Assuming '25th percentile rate' is a number
-  percentile_75: number;      // Assuming '75th percentile rate' is a number
+  percentile_rank: number;     
 }
 
 const pool = new Pool({
@@ -31,12 +27,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<PayerStat[] | {
   try {
     // Ensure the query parameters are strings; this may require additional validation or casting
     const query = payer && code ? 
-      'SELECT * FROM payer_code_stats WHERE payer = $1 AND code = $2' : 
-      'SELECT * FROM payer_code_stats';
+      'SELECT * FROM payer_rate_percentile WHERE payer = $1 AND code = $2' : 
+      'SELECT * FROM payer_rate_percentile';
 
     const params = payer && code ? [payer as string, code as string] : [];
     const { rows } = await pool.query<PayerStat>(query, params);
-    //console.log("payer_stats",rows)
     res.status(200).json(rows);
   } catch (err) {
     console.error(err);

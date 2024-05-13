@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Pool } from 'pg';
-import { entities } from '../../../lib/providerBenchmark.js'
+import { entities } from '../../../lib/payerStats.js'
 const pool = new Pool({
   user: 'chat',
   host: 'localhost',
@@ -22,4 +22,3 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<string[] | { me
 };
 
 export default handler;
-

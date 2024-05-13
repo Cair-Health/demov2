@@ -29,6 +29,7 @@ function convertArrayOfObjectsToCSV(array) {
 }
 
 function downloadCSV(array) {
+	console.log(array)
 	const link = document.createElement('a');
 	let csv = convertArrayOfObjectsToCSV(array);
 	if (csv == null) return;
@@ -51,7 +52,9 @@ Export
 
 
 const DataTableView = ({ data, headers }) => {
-  const actionsMemo = React.useMemo(() => <Export onExport={() => downloadCSV(data)} />, []);
+console.log("DTV:", data)
+console.log("DTV", headers)
+  const actionsMemo = React.useMemo(() => <Export onExport={() => downloadCSV(data)} />, [data]);
   return (
     <div>
       {data.length > 0 && headers.length > 0 ? (

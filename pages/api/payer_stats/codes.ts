@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Pool } from 'pg';
-import { entities } from '../../../lib/providerBenchmark.js'
+import { codes } from '../../../lib/payerStats.js'
+
 const pool = new Pool({
   user: 'chat',
   host: 'localhost',
@@ -14,7 +15,8 @@ const pool = new Pool({
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<string[] | { message: string }>): Promise<void> => {
   try {
-    res.status(200).json(entities);
+
+    res.status(200).json(codes);
   } catch (err) {
     console.error('Database or Server error:', err);
     res.status(500).send({ message: 'Server error' });
@@ -22,4 +24,3 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<string[] | { me
 };
 
 export default handler;
-
